@@ -13,8 +13,8 @@ module "single_gateway_new_vnet" {
   source = "./modules/single-gateway-new-vnet"
   
   # Basic Configuration
-  single_gateway_name          = "guy-gateway2"
-  resource_group_name          = "guy-resource-group"
+  single_gateway_name          = "guy-gateway3"
+  resource_group_name          = "guy-resource-group3"
   location                     = "East US"
   admin_password               = "YourSecurePassword123!"
   template_name                = "single"
@@ -32,7 +32,7 @@ module "single_gateway_new_vnet" {
   bootstrap_script             = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
 
   # Networking
-  vnet_name            = "guy-vnet"
+  vnet_name            = "guy-vnet3"
   address_space        = "10.12.0.0/16"
   frontend_subnet_prefix = "10.12.0.0/24"
   backend_subnet_prefix  = "10.12.1.0/24"
