@@ -10,7 +10,7 @@ provider "azurerm" {
 
 # Main Module Invocation
 module "single_gateway_new_vnet" {
-  source = "./modules/single-gateway-new-vnet"
+  source  = "chkp-guybarak/guy-test1/azure//modules/single-gateway-new-vnet"
   
   # Basic Configuration
   single_gateway_name          = "guy-gateway3"
