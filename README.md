@@ -6,6 +6,7 @@ This repository provides a structured set of Terraform modules for deploying Che
 
 ## Repository Layout
 Submodules: Contains modular, reusable, production-grade Terraform components, each with its own documentation.
+
 Examples: Demonstrates how to use the modules together.
 
 ## Available Submodules
@@ -14,6 +15,7 @@ Examples: Demonstrates how to use the modules together.
 
 **high-availability-existing-vnet**
 Deploys a high-availability CloudGuard setup in an existing Virtual Network.
+
 **high-availability-new-vnet**
 Creates a new Virtual Network and deploys a high-availability CloudGuard setup.
 **management-existing-vnet**
@@ -40,7 +42,10 @@ Creates a new Virtual Network and deploys CloudGuard gateways using VMSS.
 * Internal Submodules
 **common**
 Contains shared configurations and reusable components for all modules.
+
 **network-security-group**
 Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
+
+
 **vnet**
 Simplifies Virtual Network and subnet configurations.
