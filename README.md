@@ -18,28 +18,39 @@ Deploys a high-availability CloudGuard setup in an existing Virtual Network.
 
 **high-availability-new-vnet**
 Creates a new Virtual Network and deploys a high-availability CloudGuard setup.
+
 **management-existing-vnet**
 Configures Check Point Management Servers within an existing Virtual Network.
+
 **management-new-vnet**
 Sets up Check Point Management Servers in a newly created Virtual Network.
+
 **mds-existing-vnet**
 Deploys Check Point Multi-Domain Servers in an existing Virtual Network.
+
 **mds-new-vnet**
 Creates a new Virtual Network and deploys Multi-Domain Servers.
+
 **nva-into-existing-hub**
 Integrates Network Virtual Appliances (NVAs) into an existing hub-and-spoke architecture.
+
 **nva-into-new-vwan**
 Configures NVAs into a new Virtual WAN for centralized management.
+
 **single-gateway-existing-vnet**
 Deploys a single CloudGuard gateway in an existing Virtual Network.
+
 **single-gateway-new-vnet**
 Creates a new Virtual Network and deploys a single CloudGuard gateway.
+
 **vmss-existing-vnet**
 Provisions Virtual Machine Scale Sets (VMSS) within an existing Virtual Network.
+
 **vmss-new-vnet**
 Creates a new Virtual Network and deploys CloudGuard gateways using VMSS.
 
 * Internal Submodules
+
 **common**
 Contains shared configurations and reusable components for all modules.
 
