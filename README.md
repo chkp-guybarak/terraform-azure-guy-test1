@@ -10,7 +10,7 @@ Examples: Demonstrates how to use the modules together.
 
 ## Available Submodules
 
-* Submodules
+* Submodulesgit status
 **high-availability-existing-vnet**
 Deploys a high-availability CloudGuard setup in an existing Virtual Network.
 **high-availability-new-vnet**
