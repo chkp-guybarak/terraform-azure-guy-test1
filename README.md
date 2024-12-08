@@ -59,8 +59,33 @@ Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
 * **vnet**
 Simplifies Virtual Network and subnet configurations.
 
-# Best Practices for Using Our Modules
 
+## Security Rules Default Configuration
+Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Adding any security rule will override the default "allow all inbound traffic" configuration.
+
+**Example:** To restrict inbound traffic, update the security_rules attribute in the network-security-group submodule configuration:
+<pre>
+<code>
+security_rules = [
+  {
+    name                       = "AllowSSH"
+    priority                   = "100"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_ranges         = "*"
+    destination_port_ranges    = "22"
+    description                = "Allow SSH inbound connections"
+    source_address_prefix      = "10.0.0.0/8"
+    destination_address_prefix = "*"
+  }
+]
+</code>
+</pre>
+
+**Recommendation:** Always follow the principle of least privilege when configuring security rules to reduce exposure to threats.
+
+# Best Practices for Using Our Modules
 
 ## Step 1: Use the Required Module
 Add the required module in your Terraform configuration file (`main.tf`) to deploy resources. For example:
@@ -78,28 +103,25 @@ module "example_module" {
 }
 </code>
 </pre>
-
 ---
 
 ## Step 2: Open the Terminal
-Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli).
-Navigate to the directory where your `main.tf` file is located, using the appropriate terminal: 
+Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) and navigate to the directory where your `main.tf` file is located, using the appropriate terminal: 
 
-- **Linux/macOS**: use **Terminal**.
-- **Windows**: Use **PowerShell** or **Command Prompt**.
-
+- **Linux/macOS**: **Terminal**.
+- **Windows**: **PowerShell** or **Command Prompt**.
 ---
 
 ## Step 3: Set Environment Variables and Log in with Azure CLI
-Set the required environment variables and authenticate with Azure using your Service Principal. Additionally, select the correct subscription.
+Set the required environment variables and authenticate with Azure using your Service Principal. Then, select the correct subscription.
 
 ### Linux/macOS
 <pre>
 <code>
-export TF_VAR_client_id="your-client-id"
-export TF_VAR_client_secret="your-client-secret"
-export TF_VAR_subscription_id="your-subscription-id"
-export TF_VAR_tenant_id="your-tenant-id"
+export TF_VAR_client_id="{your-client-id}"
+export TF_VAR_client_secret="{your-client-secret}"
+export TF_VAR_subscription_id="{your-subscription-id}"
+export TF_VAR_tenant_id="{your-tenant-id}"
 
 az login --service-principal -u $TF_VAR_client_id -p $TF_VAR_client_secret --tenant $TF_VAR_tenant_id --allow-no-subscriptions
 az account set --subscription $TF_VAR_subscription_id
@@ -109,10 +131,10 @@ az account set --subscription $TF_VAR_subscription_id
 ### PowerShell (Windows)
 <pre>
 <code>
-$env:TF_VAR_client_id = "your-client-id"
-$env:TF_VAR_client_secret = "your-client-secret"
-$env:TF_VAR_subscription_id = "your-subscription-id"
-$env:TF_VAR_tenant_id = "your-tenant-id"
+$env:TF_VAR_client_id="{your-client-id}"
+$env:TF_VAR_client_secret="{your-client-secret}"
+$env:TF_VAR_subscription_id="{your-subscription-id}"
+$env:TF_VAR_tenant_id="{your-tenant-id}"
 
 az login --service-principal -u $env:TF_VAR_client_id -p $env:TF_VAR_client_secret --tenant $env:TF_VAR_tenant_id --allow-no-subscriptions
 az account set --subscription $env:TF_VAR_subscription_id
@@ -122,10 +144,10 @@ az account set --subscription $env:TF_VAR_subscription_id
 ### Command Prompt (Windows)
 <pre>
 <code>
-set TF_VAR_client_id=your-client-id
-set TF_VAR_client_secret=your-client-secret
-set TF_VAR_subscription_id=your-subscription-id
-set TF_VAR_tenant_id=your-tenant-id
+set TF_VAR_client_id="{your-client-id}"
+set TF_VAR_client_secret="{your-client-secret}"
+set TF_VAR_subscription_id="{your-subscription-id}"
+set TF_VAR_tenant_id="{your-tenant-id}"
 
 az login --service-principal -u %TF_VAR_client_id% -p %TF_VAR_client_secret% --tenant %TF_VAR_tenant_id% --allow-no-subscriptions
 az account set --subscription %TF_VAR_subscription_id%
@@ -161,31 +183,4 @@ Apply the planned changes and deploy the resources:
 terraform apply
 </code>
 </pre>
-When prompted, type `yes` to confirm the deployment.
 
----
-
-## Security Rules Default Configuration
-Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Adding any security rule will override the default "allow all inbound traffic" configuration.
-
-**Example:** To restrict inbound traffic, update the security_rules attribute in the network-security-group submodule configuration:
-<pre>
-<code>
-security_rules = [
-  {
-    name                       = "AllowSSH"
-    priority                   = "100"
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_ranges         = "*"
-    destination_port_ranges    = "22"
-    description                = "Allow SSH inbound connections"
-    source_address_prefix      = "10.0.0.0/8"
-    destination_address_prefix = "*"
-  }
-]
-</code>
-</pre>
-
-**Recommendation:** Always follow the principle of least privilege when configuring security rules to reduce exposure to threats.
