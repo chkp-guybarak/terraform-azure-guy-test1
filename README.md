@@ -61,17 +61,37 @@ Simplifies Virtual Network and subnet configurations.
 
 # Best Practices for Using Our Modules
 
-## Step 1: Open the Terminal
-Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) and open the appropriate terminal based on your operating system:
 
-- **Linux/macOS**: Open your default terminal or a terminal emulator like GNOME Terminal or iTerm2.
-- **Windows**:
-  - Use **PowerShell** or **Command Prompt**.
+## Step 1: Use the Required Module
+Add the required module in your Terraform configuration file (`main.tf`) to deploy resources. For example:
+
+<pre>
+<code>
+provider "azurerm" {
+  features {}
+}
+
+module "example_module" {
+  source  = "chkp-guybarak/guy-test1/azure//modules/{module_name}"
+  version = "{chosen_version}"
+  # Add the required inputs
+}
+</code>
+</pre>
 
 ---
 
-## Step 2: Set Environment Variables and Log in with Azure CLI
-Set the required environment variables and authenticate with Azure using your Service Principal credentials. Additionally, select the correct subscription.
+## Step 2: Open the Terminal
+Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli).
+Navigate to the directory where your (`main.tf`) file is located, using the appropriate terminal: 
+
+- **Linux/macOS**: use **Terminal**.
+- **Windows**: Use **PowerShell** or **Command Prompt**.
+
+---
+
+## Step 3: Set Environment Variables and Log in with Azure CLI
+Set the required environment variables and authenticate with Azure using your Service Principal. Additionally, select the correct subscription.
 
 ### Linux/macOS
 <pre>
@@ -114,20 +134,6 @@ az account set --subscription %TF_VAR_subscription_id%
 
 ---
 
-## Step 3: Use the Required Module
-Add the required module in your Terraform configuration file (`main.tf`) to deploy resources. For example:
-
-<pre>
-<code>
-module "example_module" {
-  source  = "chkp-guybarak/guy-test1/azure//modules/{module_name}"
-  version = "{chosen_version}"
-  # Add the required inputs
-}
-</code>
-</pre>
-
----
 
 ## Step 4: Deploy with Terraform
 Use Terraform commands to deploy resources securely.
