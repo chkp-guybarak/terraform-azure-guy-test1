@@ -83,7 +83,7 @@ module "example_module" {
 
 ## Step 2: Open the Terminal
 Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli).
-Navigate to the directory where your (`main.tf`) file is located, using the appropriate terminal: 
+Navigate to the directory where your `main.tf` file is located, using the appropriate terminal: 
 
 - **Linux/macOS**: use **Terminal**.
 - **Windows**: Use **PowerShell** or **Command Prompt**.
