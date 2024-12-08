@@ -64,25 +64,19 @@ Simplifies Virtual Network and subnet configurations.
 ## Security Rules Default Configuration
 Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Adding any security rule will override the default "allow all inbound traffic" configuration.
 
-**Important Considerations:**
-
-* Review and modify the security rules to meet your organization’s security requirements.
-* Update Network Security Groups (NSGs) to limit inbound traffic to only trusted sources.
-* Avoid deploying modules with default rules in sensitive or production environments without proper customization.
-
 **Example:** To restrict inbound traffic, update the security_rules attribute in the network-security-group submodule configuration:
-
 <pre>
 <code>
 security_rules = [
   {
-    name                       = "allow-https"
-    priority                   = 100
+    name                       = "AllowSSH"
+    priority                   = "100"
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
+    source_port_ranges         = "*"
+    destination_port_ranges    = "22"
+    description                = "Allow SSH inbound connections"
     source_address_prefix      = "10.0.0.0/8"
     destination_address_prefix = "*"
   }

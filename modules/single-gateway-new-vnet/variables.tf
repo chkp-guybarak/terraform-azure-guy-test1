@@ -270,11 +270,11 @@ variable "security_rules" {
           direction = "Inbound"
           access = "Allow"
           protocol = "*"
-          source_port_ranges = "22"
+          source_port_ranges = "*"
           destination_port_ranges = ""
           description = "Allow all inbound connections"
-          source_address_prefix = "10.10.10.10*"
-          destination_address_prefix = "11.11.11.11"
+          source_address_prefix = "*"
+          destination_address_prefix = ""
       }
   ]
 }
