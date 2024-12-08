@@ -64,10 +64,14 @@ Simplifies Virtual Network and subnet configurations.
 ## Step 1: Open the Terminal
 Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) and open the appropriate terminal based on your operating system:
 
+- **Linux/macOS**: Open your default terminal or a terminal emulator like GNOME Terminal or iTerm2.
+- **Windows**:
+  - Use **PowerShell** or **Command Prompt**.
+
 ---
 
-## Step 2: Add Environment Variables
-Set the required environment variables with names starting with `TF_VAR_`. Follow the instructions based on your operating system:
+## Step 2: Set Environment Variables and Log in with Azure CLI
+Set the required environment variables and authenticate with Azure using your Service Principal credentials. Additionally, select the correct subscription.
 
 ### Linux/macOS
 <pre>
@@ -76,6 +80,9 @@ export TF_VAR_client_id="your-client-id"
 export TF_VAR_client_secret="your-client-secret"
 export TF_VAR_subscription_id="your-subscription-id"
 export TF_VAR_tenant_id="your-tenant-id"
+
+az login --service-principal -u $TF_VAR_client_id -p $TF_VAR_client_secret --tenant $TF_VAR_tenant_id --allow-no-subscriptions
+az account set --subscription $TF_VAR_subscription_id
 </code>
 </pre>
 
@@ -86,6 +93,9 @@ $env:TF_VAR_client_id = "your-client-id"
 $env:TF_VAR_client_secret = "your-client-secret"
 $env:TF_VAR_subscription_id = "your-subscription-id"
 $env:TF_VAR_tenant_id = "your-tenant-id"
+
+az login --service-principal -u $env:TF_VAR_client_id -p $env:TF_VAR_client_secret --tenant $env:TF_VAR_tenant_id --allow-no-subscriptions
+az account set --subscription $env:TF_VAR_subscription_id
 </code>
 </pre>
 
@@ -96,23 +106,15 @@ set TF_VAR_client_id=your-client-id
 set TF_VAR_client_secret=your-client-secret
 set TF_VAR_subscription_id=your-subscription-id
 set TF_VAR_tenant_id=your-tenant-id
+
+az login --service-principal -u %TF_VAR_client_id% -p %TF_VAR_client_secret% --tenant %TF_VAR_tenant_id% --allow-no-subscriptions
+az account set --subscription %TF_VAR_subscription_id%
 </code>
 </pre>
 
 ---
 
-## Step 3: Log in with Azure CLI
-Authenticate with Azure using your Service Principal credentials and the environment variables:
-
-<pre>
-<code>
-az login --service-principal -u $env:TF_VAR_client_id -p $env:TF_VAR_client_secret --tenant $env:TF_VAR_tenant_id --allow-no-subscriptions
-</code>
-</pre>
-
----
-
-## Step 4: Use the Required Module
+## Step 3: Use the Required Module
 Add the required module in your Terraform configuration file (`main.tf`) to deploy resources. For example:
 
 <pre>
@@ -127,7 +129,7 @@ module "example_module" {
 
 ---
 
-## Step 5: Deploy with Terraform
+## Step 4: Deploy with Terraform
 Use Terraform commands to deploy resources securely.
 
 ### Initialize Terraform
@@ -155,6 +157,7 @@ terraform apply
 </pre>
 When prompted, type `yes` to confirm the deployment.
 
+---
 
 ## Security Rules Default Configuration
 Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Adding any security rule will override the default "allow all inbound traffic" configuration.
