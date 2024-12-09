@@ -76,7 +76,7 @@ Follow best practices for using our modules on [the root page](https://registry.
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
 |  |  |  |                |                                                                                                                                                                                                                                         | XXX           |
 | **security_rules**                        | Security rules for the Network Security Group using this format | list(string)      | [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description]
-| [
+| "[
       {
           name = "AllowAllInBound"
           priority = "100"
@@ -89,7 +89,7 @@ Follow best practices for using our modules on [the root page](https://registry.
           source_address_prefix = "*"
           destination_address_prefix = ""
       }
-  ]
+  ]"
 
 ## Conditional creation
 -  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
