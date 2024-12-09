@@ -41,3 +41,5 @@ terraform.rc
 
 # Ignore files used for Terraform lock and dependency management
 .terraform.lock.hcl
+
+*azure_public_key
