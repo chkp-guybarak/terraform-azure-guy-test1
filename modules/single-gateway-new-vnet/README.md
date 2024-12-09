@@ -13,63 +13,8 @@ This solution uses the following modules:
 - /terraform/azure/modules/vnet - used for creating new virtual network and subnets.
 - /terraform/azure/modules/network-security-group - used for creating new network security groups and rules.
 
-
-## Configurations
-- Install and configure Terraform to provision Azure resources: [Configure Terraform for Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure)
-- In order to use ssh connection to VMs, it is **required** to add a public key to the /terraform/azure/single-gateway-new-vnet/azure_public_key file.
-
 ## Usage
-- Choose the preferred login method to Azure in order to deploy the solution:
-    <br>1. Using Service Principal:
-    - Create a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) (or use the existing one) 
-    - Grant the Service Principal at least "**Managed Application Contributor**", "**Storage Account Contributor**", "**Network Contributor**", "**Virtual Machine Contributor**" permissions to the Azure subscription<br>
-    - The Service Principal credentials can be stored either in the terraform.tfvars or as [Environment Variables](https://www.terraform.io/docs/providers/azuread/guides/service_principal_client_secret.html)<br>
-    
-      In case the Environment Variables are used, perform modifications described below:<br>
-      
-       a. The next lines in the main.tf file, in the provider azurerm resource,  need to be deleted or commented:
-            
-                provider "azurerm" {
-                 
-                //  subscription_id = var.subscription_id
-                //  client_id = var.client_id
-                //  client_secret = var.client_secret
-                //  tenant_id = var.tenant_id
-                
-                   features {}
-                }
-            
-        b. In the terraform.tfvars file leave empty double quotes for client_secret, client_id , tenant_id and subscription_id variables:
-        
-                client_secret                   = ""
-                client_id                       = ""
-                tenant_id                       = ""
-                subscription_id                 = "" 
-        
-    <br>2. Using **az** commands from a command-line:
-    - Run  **az login** command 
-    - Sign in with your account credentials in the browser
-    - [Accept Azure Marketplace image terms](https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest) by running:
-     <br>**az vm image terms accept --urn publisher:offer:sku:version**, where:
-        - publisher = checkpoint;
-        - offer = vm_os_offer (see accepted values in the table below);
-        - sku = vm_os_sku (see accepted values in the table below);
-        - version = latest<br/>
-    <br>Example:<br>
-    az vm image terms accept --urn checkpoint:check-point-cg-r8120:sg-byol:latest
-    
-    - In the terraform.tfvars file leave empty double quotes for client_secret, client_id and tenant_id variables. 
- 
-- Fill all variables in the /terraform/azure/single-gateway-new-vnet/terraform.tfvars file with proper values (see below for variables descriptions).
-- From a command line initialize the Terraform configuration directory:
-
-        terraform init
-- Create an execution plan:
- 
-        terraform plan
-- Create or modify the deployment:
- 
-        terraform apply
+Follow best practices for using our modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
 
 ### terraform.tfvars variables:
  | Name          | Description | Type | Allowed values | Default        |
@@ -145,38 +90,66 @@ This solution uses the following modules:
   ```
 
 ## Example
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    source_image_vhd_uri            = "noCustomUri"
-    resource_group_name             = "checkpoint-single-gw-terraform"
-    single_gateway_name             = "checkpoint-single-gw-terraform"
-    location                        = "eastus"
-    vnet_name                       = "checkpoint-single-gw-vnet"
-    address_space                   = "10.0.0.0/16"
-    frontend_subnet_prefix          = "10.0.1.0/24"
-    backend_subnet_prefix           = "10.0.2.0/24"
-    management_GUI_client_network   = "0.0.0.0/0"
-    admin_password                  = "xxxxxxxxxxxx"
-    smart_1_cloud_token             = "xxxxxxxxxxxx"
-    sic_key                         = "xxxxxxxxxxxx"
-    vm_size                         = "Standard_D3_v2"
-    disk_size                       = "110"
-    vm_os_sku                       = "sg-byol"
-    vm_os_offer                     = "check-point-cg-r8110"
-    os_version                      = "R8110"
-    bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-    allow_upload_download           = true
-    authentication_type             = "Password"
-    enable_custom_metrics           = true
-    admin_shell                     = "/etc/cli.sh"
-    installation_type               = "gateway"
-    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    nsg_id                          = ""
-    add_storage_account_ip_rules    = false
-    storage_account_additional_ips  = []
+provider "azurerm" {
+  features {}
+}
+
+# Main Module Invocation
+module "single_gateway_new_vnet" {
+  source  = "chkp-guybarak/guy-test1/azure//modules/single-gateway-new-vnet"
+  
+  # Basic Configuration
+  single_gateway_name          = "checkpoint-single-gw-terraform"
+  resource_group_name          = "checkpoint-single-gw-terraform"
+  location                     = "East US"
+  admin_password               = "YourSecurePassword123!"
+  template_name                = "single"
+  template_version             = "20240613"
+  installation_type            = "gateway"
+  vm_size                      = "Standard_DS3_v2"
+  disk_size                    = "100"
+  os_version                   = "R8120"
+  vm_os_sku                    = "sg-byol"
+  vm_os_offer                  = "check-point-cg-r8120"
+  allow_upload_download        = true
+  authentication_type          = "Password"
+  serial_console_password_hash = ""
+  maintenance_mode_password_hash = ""
+  bootstrap_script             = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+  security_rules = [
+    {
+      name                       = "allowJenkins"
+      priority                   = "100"
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_ranges         = "*"
+      destination_port_ranges    = "*"
+      description                = "allow jenkins"
+      source_address_prefix      = "54.220.66.248/32"
+      destination_address_prefix = "74.235.20.103/32"
+    }
+  ]
+
+  # Networking
+  vnet_name            = "checkpoint-single-gw-vnet"
+  address_space        = "10.12.0.0/16"
+  frontend_subnet_prefix = "10.12.0.0/24"
+  backend_subnet_prefix  = "10.12.1.0/24"
+  nsg_id               = ""
+
+  # Public IP
+  vnet_allocation_method = "Static"
+  sku                    = "Standard"
+
+  # Additional configurations
+  management_GUI_client_network = "0.0.0.0/0"
+  is_blink                      = true
+  admin_shell                   = "/etc/cli.sh"
+  sic_key                       = "xxxxxxxxxxxx"
+  smart_1_cloud_token           = "your-smart-1-cloud-token"
+}
+
 
 ## Revision History
 In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
