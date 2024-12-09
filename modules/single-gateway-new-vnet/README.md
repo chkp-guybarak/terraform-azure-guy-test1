@@ -98,6 +98,7 @@ provider "azurerm" {
 # Main Module Invocation
 module "single_gateway_new_vnet" {
   source  = "chkp-guybarak/guy-test1/azure//modules/single-gateway-new-vnet"
+  version = "1.0.5"
   
   # Basic Configuration
   single_gateway_name          = "checkpoint-single-gw-terraform"
