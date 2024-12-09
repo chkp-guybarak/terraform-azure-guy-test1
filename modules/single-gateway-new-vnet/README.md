@@ -114,19 +114,19 @@ module "single_gateway_new_vnet" {
   maintenance_mode_password_hash = ""
   bootstrap_script             = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
   security_rules = [
-    {
-      name                       = "allowJenkins"
-      priority                   = "100"
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_ranges         = "*"
-      destination_port_ranges    = "*"
-      description                = "allow jenkins"
-      source_address_prefix      = "54.220.66.248/32"
-      destination_address_prefix = "74.235.20.103/32"
-    }
-  ]
+  {
+    name                       = "allowSSH"
+    priority                   = "100"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_ranges         = "*"
+    destination_port_ranges    = "22"
+    description                = "allow ssh"
+    source_address_prefix      = "0.0.0.0/0"  // Adjust as necessary to limit access
+    destination_address_prefix = "0.0.0.0/0"  // Typically the IP range of your network or server
+  }
+]
 
   # Networking
   vnet_name            = "checkpoint-single-gw-vnet"
