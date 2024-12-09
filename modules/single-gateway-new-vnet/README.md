@@ -74,7 +74,7 @@ Follow best practices for using our modules on [the root page](https://registry.
  | **add_storage_account_ip_rules** | Add Storage Account IP rules that allow access to the Serial Console only for IPs based on their geographic location, if false then accses will be allowed from all networks | boolean | true; <br/>false; |  false
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
-|  |  |  |                |                                                                                                                                                                                                                                         | XXX           |
+|  |  |  |                |                                                                                                                                                                                                                                         |
 | **security_rules**                        | Security rules for the Network Security Group using this format | list(string)      | [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description]
 | "[
       {
