@@ -8,10 +8,10 @@ As part of the deployment the following resources are created:
 - System assigned identity
 
 
-This solution uses the following modules:
-- /terraform/azure/modules/common - used for creating a resource group and defining common variables.
-- /terraform/azure/modules/vnet - used for creating new virtual network and subnets.
-- /terraform/azure/modules/network-security-group - used for creating new network security groups and rules.
+This solution uses the following submodules:
+- common - used for creating a resource group and defining common variables.
+- vnet - used for creating new virtual network and subnets.
+- network-security-group - used for creating new network security groups and rules.
 
 ## Usage
 Follow best practices for using our modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
@@ -147,15 +147,6 @@ module "single_gateway_new_vnet" {
   smart_1_cloud_token           = "your-smart-1-cloud-token"
 }
 ```
-
-## Revision History
-In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
-
-| Template Version | Description                                                                                       |
-|------------------|---------------------------------------------------------------------------------------------------|
-| 20241209         | First release of Check Point CloudGuard Network Security Single GW Terraform Registry deployment for Azure |
-|                  |                                                                                                   | |
-
 
 ## License
 
