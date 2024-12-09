@@ -153,9 +153,7 @@ In order to check the template version refer to the [sk116585](https://supportce
 
 | Template Version | Description                                                                                       |
 |------------------|---------------------------------------------------------------------------------------------------|
-| 20230910 | - R81.20 is the default version |
-| | | |
-| 20230629         | First release of Check Point CloudGuard Network Security Single GW Terraform deployment for Azure |
+| 20241209         | First release of Check Point CloudGuard Network Security Single GW Terraform Registry deployment for Azure |
 |                  |                                                                                                   | |
 
 
