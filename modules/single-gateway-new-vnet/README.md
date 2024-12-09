@@ -99,6 +99,7 @@ module "single_gateway_new_vnet" {
   source  = "chkp-guybarak/guy-test1/azure//modules/single-gateway-new-vnet"
   
   # Basic Configuration
+  ```hcl
   single_gateway_name          = "checkpoint-single-gw-terraform"
   resource_group_name          = "checkpoint-single-gw-terraform"
   location                     = "East US"
@@ -149,7 +150,7 @@ module "single_gateway_new_vnet" {
   sic_key                       = "xxxxxxxxxxxx"
   smart_1_cloud_token           = "your-smart-1-cloud-token"
 }
-
+```
 
 ## Revision History
 In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
