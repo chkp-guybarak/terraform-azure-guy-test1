@@ -15,43 +15,43 @@ Examples: Demonstrates how to use the modules together.
 
 **Submodules**
 
-* **high-availability-existing-vnet**
-Deploys a high-availability CloudGuard setup in an existing Virtual Network.
+* **high-availability-existing-vnet -** 
+Deploys Check Point CloudGuard IaaS High Availability solution into an existing Vnet in Azure.
 
 * **high-availability-new-vnet**
-Creates a new Virtual Network and deploys a high-availability CloudGuard setup.
+Deploys Check Point CloudGuard IaaS High Availability solution into a new Vnet in Azure.
 
-* **management-existing-vnet**
+* **management-existing-vnet -** Deploys
 Configures Check Point Management Servers within an existing Virtual Network.
 
-* **management-new-vnet**
+* **management-new-vnet -** Deploys
 Sets up Check Point Management Servers in a newly created Virtual Network.
 
-* **mds-existing-vnet**
+* **mds-existing-vnet -** Deploys
 Deploys Check Point Multi-Domain Servers in an existing Virtual Network.
 
-* **mds-new-vnet**
+* **mds-new-vnet -** Deploys
 Creates a new Virtual Network and deploys Multi-Domain Servers.
 
-* **nva-into-existing-hub**
+* **nva-into-existing-hub* -** Deploys
 Integrates Network Virtual Appliances (NVAs) into an existing hub-and-spoke architecture.
  
-* **nva-into-new-vwan**
+* **nva-into-new-vwan -** Deploys
 Configures NVAs into a new Virtual WAN for centralized management.
 
-* **single-gateway-existing-vnet**
+* **single-gateway-existing-vnet -** Deploys
 Deploys a single CloudGuard gateway in an existing Virtual Network.
 
-* **single-gateway-new-vnet**
+* **single-gateway-new-vnet -** Deploys
 Creates a new Virtual Network and deploys a single CloudGuard gateway.
 
-* **vmss-existing-vnet**
+* **vmss-existing-vnet -** Deploys
 Provisions Virtual Machine Scale Sets (VMSS) within an existing Virtual Network.
 
-* **vmss-new-vnet**
+* **vmss-new-vnet -** Deploys
 Creates a new Virtual Network and deploys CloudGuard gateways using VMSS.
 
-**Internal Submodules**
+**Internal Submodules -** Deploys
 
 * **common**
 Contains shared configurations and reusable components for all modules.
