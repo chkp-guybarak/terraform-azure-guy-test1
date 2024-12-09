@@ -90,6 +90,7 @@ Follow best practices for using our modules on [the root page](https://registry.
   ```
 
 ## Example
+```hcl
 provider "azurerm" {
   features {}
 }
@@ -99,7 +100,6 @@ module "single_gateway_new_vnet" {
   source  = "chkp-guybarak/guy-test1/azure//modules/single-gateway-new-vnet"
   
   # Basic Configuration
-  ```hcl
   single_gateway_name          = "checkpoint-single-gw-terraform"
   resource_group_name          = "checkpoint-single-gw-terraform"
   location                     = "East US"
