@@ -232,3 +232,4 @@ resource "azurerm_virtual_machine" "single-gateway-vm-instance" {
     disk_size_gb = module.common.disk_size
   }
 }
+
