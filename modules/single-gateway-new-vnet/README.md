@@ -75,6 +75,7 @@ Follow best practices for using our modules on [the root page](https://registry.
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
 | **XXX**                        | XXX                                                                                                                                                    | XXX      | XXX                                                                                                                                                                                                                                                  | XXX           |
+| **XXX**                        | XXX                                                                                                                                                    | XXX      | XXX                                                                                                                                                                                                                                                  | XXX           |
 
 ## Conditional creation
 -  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
