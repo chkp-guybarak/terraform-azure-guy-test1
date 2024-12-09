@@ -261,7 +261,7 @@ variable "sku" {
 }
 
 variable "security_rules" {
-  description = "Security rules for the Network Security Group using this format name = [priority, direction, access, protocol, source_port_range, destination_port_range, source_address_prefix, destination_address_prefix, description]"
+  description = "Security rules for the Network Security Group using this format [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description]"
   type    = list(any)
   default = [
       {
