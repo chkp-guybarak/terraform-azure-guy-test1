@@ -50,8 +50,9 @@ Deploys Check Point CloudGuard IaaS High Availability solution into a new Vnet.
 * **Vnet -** Simplifies Virtual Network and subnet configurations.
 
 
+
 ## Security Rules Default Configuration
-Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Adding any security rule will override the default "allow all inbound traffic" configuration.
+Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Add security rule to override the default "allow all traffic" configuration.
 
 **Example:** To restrict inbound traffic, update the security_rules attribute in the network-security-group submodule configuration:
 ```hcl
