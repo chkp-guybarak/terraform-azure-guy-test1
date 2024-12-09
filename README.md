@@ -15,52 +15,39 @@ Examples: Demonstrates how to use the modules together.
 
 **Submodules**
 
-* **high-availability-existing-vnet -** 
+* **High-availability-existing-vnet -** 
 Deploys Check Point CloudGuard IaaS High Availability solution into an existing Vnet in Azure.
 
-* **high-availability-new-vnet**
-Deploys Check Point CloudGuard IaaS High Availability solution into a new Vnet in Azure.
+* **High-availability-new-vnet**
+Deploys Check Point CloudGuard IaaS High Availability solution into a new Vnet.
 
-* **management-existing-vnet -** Deploys
-Configures Check Point Management Servers within an existing Virtual Network.
+* **Management-existing-vnet -** Deploys Check Point CloudGuard IaaS Management solution into an existing Vnet.
 
-* **management-new-vnet -** Deploys
-Sets up Check Point Management Servers in a newly created Virtual Network.
+* **Management-new-vnet -** Deploys Check Point CloudGuard IaaS Management solution into a new Vnet.
 
-* **mds-existing-vnet -** Deploys
-Deploys Check Point Multi-Domain Servers in an existing Virtual Network.
+* **Mds-existing-vnet -** Deploys Check Point CloudGuard Network Security Management solution into a new Vnet.
 
-* **mds-new-vnet -** Deploys
-Creates a new Virtual Network and deploys Multi-Domain Servers.
+* **Mds-new-vnet -** Deploys Check Point CloudGuard Network Security Management solution into a new Vnet.
 
-* **nva-into-existing-hub* -** Deploys
-Integrates Network Virtual Appliances (NVAs) into an existing hub-and-spoke architecture.
- 
-* **nva-into-new-vwan -** Deploys
-Configures NVAs into a new Virtual WAN for centralized management.
+* **Nva-into-existing-hub* -** Deploys Check Point CloudGuard Network Security Virtual WAN NVA solution into an existing vWAN Hub.
 
-* **single-gateway-existing-vnet -** Deploys
-Deploys a single CloudGuard gateway in an existing Virtual Network.
+* **Nva-into-new-vwan -** Deploys CloudGuard Network Security Virtual WAN NVA solution into a new vWAN Hub.
 
-* **single-gateway-new-vnet -** Deploys
-Creates a new Virtual Network and deploys a single CloudGuard gateway.
+* **Single-gateway-existing-vnet -** Deploys Check Point CloudGuard Network Security Single Gateway solution into an existing Vnet.
 
-* **vmss-existing-vnet -** Deploys
-Provisions Virtual Machine Scale Sets (VMSS) within an existing Virtual Network.
+* **Single-gateway-new-vnet -** Deploys Check Point CloudGuard Network Security Single Gateway solution into a new Vnet.
 
-* **vmss-new-vnet -** Deploys
-Creates a new Virtual Network and deploys CloudGuard gateways using VMSS.
+* **Vmss-existing-vnet -** Deploys Check Point CloudGuard IaaS VMSS solution into an existing Vnet.
+
+* **Vmss-new-vnet -** Deploys Check Point CloudGuard IaaS VMSS solution into a new Vnet.
 
 **Internal Submodules -** Deploys
 
-* **common**
-Contains shared configurations and reusable components for all modules.
+* **Common -** Contains shared configurations and reusable components for all modules.
 
-* **network-security-group**
-Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
+* **Network-security-group -** Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
 
-* **vnet**
-Simplifies Virtual Network and subnet configurations.
+* **Vnet -** Simplifies Virtual Network and subnet configurations.
 
 
 ## Security Rules Default Configuration
