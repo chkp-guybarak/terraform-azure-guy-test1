@@ -118,7 +118,7 @@ export TF_VAR_client_secret="{your-client-secret}"
 export TF_VAR_subscription_id="{your-subscription-id}"
 export TF_VAR_tenant_id="{your-tenant-id}"
 
-az login --service-principal -u $TF_VAR_client_id -p $TF_VAR_client_secret --tenant $TF_VAR_tenant_id --allow-no-subscriptions
+az login --service-principal -u $TF_VAR_client_id -p $TF_VAR_client_secret --tenant $TF_VAR_tenant_id
 az account set --subscription $TF_VAR_subscription_id
 ```
 ### PowerShell (Windows)
@@ -128,7 +128,7 @@ $env:TF_VAR_client_secret="{your-client-secret}"
 $env:TF_VAR_subscription_id="{your-subscription-id}"
 $env:TF_VAR_tenant_id="{your-tenant-id}"
 
-az login --service-principal -u $env:TF_VAR_client_id -p $env:TF_VAR_client_secret --tenant $env:TF_VAR_tenant_id --allow-no-subscriptions
+az login --service-principal -u $env:TF_VAR_client_id -p $env:TF_VAR_client_secret --tenant $env:TF_VAR_tenant_id
 az account set --subscription $env:TF_VAR_subscription_id
 ```
 ### Command Prompt (Windows)
@@ -138,7 +138,7 @@ set TF_VAR_client_secret="{your-client-secret}"
 set TF_VAR_subscription_id="{your-subscription-id}"
 set TF_VAR_tenant_id="{your-tenant-id}"
 
-az login --service-principal -u %TF_VAR_client_id% -p %TF_VAR_client_secret% --tenant %TF_VAR_tenant_id% --allow-no-subscriptions
+az login --service-principal -u %TF_VAR_client_id% -p %TF_VAR_client_secret% --tenant %TF_VAR_tenant_id%
 az account set --subscription %TF_VAR_subscription_id%
 ```
 ---
