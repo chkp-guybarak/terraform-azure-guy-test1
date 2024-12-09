@@ -64,8 +64,7 @@ Simplifies Virtual Network and subnet configurations.
 Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Adding any security rule will override the default "allow all inbound traffic" configuration.
 
 **Example:** To restrict inbound traffic, update the security_rules attribute in the network-security-group submodule configuration:
-<pre>
-<code>
+```hcl
 security_rules = [
   {
     name                       = "AllowSSH"
@@ -80,8 +79,7 @@ security_rules = [
     destination_address_prefix = "*"
   }
 ]
-</code>
-</pre>
+```
 
 **Recommendation:** Always follow the principle of least privilege when configuring security rules to reduce exposure to threats.
 
@@ -90,8 +88,7 @@ security_rules = [
 ## Step 1: Use the Required Module
 Add the required module in your Terraform configuration file (`main.tf`) to deploy resources. For example:
 
-<pre>
-<code>
+```hcl
 provider "azurerm" {
   features {}
 }
@@ -101,8 +98,7 @@ module "example_module" {
   version = "{chosen_version}"
   # Add the required inputs
 }
-</code>
-</pre>
+```
 ---
 
 ## Step 2: Open the Terminal
@@ -116,8 +112,7 @@ Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azur
 Set the required environment variables and authenticate with Azure using your Service Principal. Then, select the correct subscription.
 
 ### Linux/macOS
-<pre>
-<code>
+```hcl
 export TF_VAR_client_id="{your-client-id}"
 export TF_VAR_client_secret="{your-client-secret}"
 export TF_VAR_subscription_id="{your-subscription-id}"
@@ -125,12 +120,9 @@ export TF_VAR_tenant_id="{your-tenant-id}"
 
 az login --service-principal -u $TF_VAR_client_id -p $TF_VAR_client_secret --tenant $TF_VAR_tenant_id --allow-no-subscriptions
 az account set --subscription $TF_VAR_subscription_id
-</code>
-</pre>
-
+```
 ### PowerShell (Windows)
-<pre>
-<code>
+```hcl
 $env:TF_VAR_client_id="{your-client-id}"
 $env:TF_VAR_client_secret="{your-client-secret}"
 $env:TF_VAR_subscription_id="{your-subscription-id}"
@@ -138,12 +130,9 @@ $env:TF_VAR_tenant_id="{your-tenant-id}"
 
 az login --service-principal -u $env:TF_VAR_client_id -p $env:TF_VAR_client_secret --tenant $env:TF_VAR_tenant_id --allow-no-subscriptions
 az account set --subscription $env:TF_VAR_subscription_id
-</code>
-</pre>
-
+```
 ### Command Prompt (Windows)
-<pre>
-<code>
+```hcl
 set TF_VAR_client_id="{your-client-id}"
 set TF_VAR_client_secret="{your-client-secret}"
 set TF_VAR_subscription_id="{your-subscription-id}"
@@ -151,9 +140,7 @@ set TF_VAR_tenant_id="{your-tenant-id}"
 
 az login --service-principal -u %TF_VAR_client_id% -p %TF_VAR_client_secret% --tenant %TF_VAR_tenant_id% --allow-no-subscriptions
 az account set --subscription %TF_VAR_subscription_id%
-</code>
-</pre>
-
+```
 ---
 
 
@@ -162,25 +149,17 @@ Use Terraform commands to deploy resources securely.
 
 ### Initialize Terraform
 Prepare the working directory and download required provider plugins:
-<pre>
-<code>
+```hcl
 terraform init
-</code>
-</pre>
+```
 
 ### Plan Deployment
 Preview the changes Terraform will make:
-<pre>
-<code>
+```hcl
 terraform plan
-</code>
-</pre>
-
+```
 ### Apply Deployment
 Apply the planned changes and deploy the resources:
-<pre>
-<code>
+```hcl
 terraform apply
-</code>
-</pre>
-
+```
