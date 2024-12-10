@@ -1,6 +1,6 @@
 //********************** Basic Configuration **************************//
 module "common" {
-  source = "../modules/common"
+  source = "../common"
   resource_group_name = var.resource_group_name
   location = var.location
   admin_password = var.admin_password
@@ -42,7 +42,7 @@ resource "azurerm_public_ip" "public-ip" {
 }
 
 module "network-security-group" {
-  source = "../modules/network-security-group"
+  source = "../network-security-group"
   count = var.nsg_id == "" ? 1 : 0
   resource_group_name = module.common.resource_group_name
   security_group_name = "${module.common.resource_group_name}-nsg"

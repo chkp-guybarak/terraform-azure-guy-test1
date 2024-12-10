@@ -1,6 +1,6 @@
 //********************** Basic Configuration **************************//
 module "common" {
-  source = "../modules/common"
+  source = "../common"
   resource_group_name = var.resource_group_name
   location = var.location
   admin_password = var.admin_password
