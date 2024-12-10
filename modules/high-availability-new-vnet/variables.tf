@@ -305,3 +305,9 @@ locals{
   validation_message_unique = "Same Smart-1 Cloud token used for both memeber, you must provide unique token for each member"
   __ = local.is_tokens_used ? regex("^$", (local.is_both_tokens_the_same ? local.validation_message_unique : "")) : ""
 }
+
+variable "admin_SSH_key" {
+  type = string
+  description = "(Optional) The SSH public key for SSH authentication to the template instances. Leave this field blank to use all project-wide pre-configured SSH keys."
+  default = ""
+}

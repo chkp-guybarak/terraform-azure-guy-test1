@@ -281,7 +281,7 @@ resource "azurerm_virtual_machine" "mgmt-vm-instance" {
         1] : []
       content {
         path = "/home/notused/.ssh/authorized_keys"
-        key_data = file("${path.module}/azure_public_key")
+        key_data = var.admin_SSH_key
       }
     }
   }
