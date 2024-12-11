@@ -370,3 +370,8 @@ variable "enable_floating_ip" {
   type = bool
   default = false
 }
+
+variable "subscription_id" {
+  description = "Subscription ID"
+  type = string
+}
