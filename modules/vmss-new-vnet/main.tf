@@ -286,14 +286,15 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
     disable_password_authentication = local.SSH_authentication_type_condition
 
-    dynamic "admin_ssh_key" {
+    dynamic "ssh_keys" {
       for_each = local.SSH_authentication_type_condition ? [
         1] : []
       content {
-        public_key = file("azure_public_key")
-        username = "notused"
+        path = "/home/notused/.ssh/authorized_keys"
+        key_data = var.admin_SSH_key
       }
     }
+  
 
 
   boot_diagnostics {
