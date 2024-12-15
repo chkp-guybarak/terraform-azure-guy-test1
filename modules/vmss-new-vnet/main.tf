@@ -38,20 +38,7 @@ module "network-security-group" {
     resource_group_name = module.common.resource_group_name
     security_group_name = "${module.common.resource_group_name}_nsg"
     location = module.common.resource_group_location
-    security_rules = [
-      {
-        name = "AllowAllInBound"
-        priority = "100"
-        direction = "Inbound"
-        access = "Allow"
-        protocol = "*"
-        source_port_ranges = "*"
-        destination_port_ranges = "*"
-        description = "Allow all inbound connections"
-        source_address_prefix = "*"
-        destination_address_prefix = "*"
-      }
-    ]
+    security_rules = var.security_rules
 }
 
 //********************** Load Balancers **************************//
