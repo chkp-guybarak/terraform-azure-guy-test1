@@ -1,7 +1,6 @@
 //********************** Basic Configuration **************************//
 module "common" {
-  source = "..
-  /common"
+  source = "../common"
   resource_group_name = var.resource_group_name
   location = var.location
   admin_password = var.authentication_type == "SSH Public Key" ? random_id.random_id.hex : var.admin_password
