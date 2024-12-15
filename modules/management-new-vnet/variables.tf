@@ -167,6 +167,7 @@ variable "vnet_allocation_method" {
 variable "management_GUI_client_network" {
   description = "Allowed GUI clients - GUI clients network CIDR"
   type = string
+  default = "todlelte"
 }
 
 variable "mgmt_enable_api" {
