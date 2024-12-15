@@ -186,7 +186,8 @@ resource "azurerm_managed_application" "nva" {
 data "external" "update-routing-intent" {
   count = length(local.routing-intent-policies) != 0 ? 1 : 0
   depends_on = [azurerm_managed_application.nva]
-  program = ["python", "../modules/add-routing-intent.py", "${local.req_url}", "${local.req_body}", "${local.access_token}"]
+  program = ["python", "..
+  /add-routing-intent.py", "${local.req_url}", "${local.req_body}", "${local.access_token}"]
 }
 
 output "api_request_result" {
