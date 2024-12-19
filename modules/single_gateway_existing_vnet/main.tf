@@ -11,7 +11,7 @@ module "common" {
   allow_upload_download = var.allow_upload_download
   vm_size = var.vm_size
   disk_size = var.disk_size
-  is_blink = false
+  is_blink = var.is_blink
   os_version = var.os_version
   vm_os_sku = var.vm_os_sku
   vm_os_offer = var.vm_os_offer
@@ -22,157 +22,104 @@ module "common" {
 }
 
 //********************** Networking **************************//
-module "vnet" {
-  source = "../vnet"
-
-  vnet_name = var.vnet_name
-  resource_group_name = module.common.resource_group_name
-  location = module.common.resource_group_location
-  address_space = var.address_space
-  subnet_prefixes = [var.subnet_prefix]
-  subnet_names = ["${var.mds_name}-subnet"]
-  nsg_id = var.nsg_id == "" ? module.network-security-group[0].network_security_group_id: var.nsg_id
+data "azurerm_subnet" "frontend_subnet" {
+  name = var.subnet_frontend_name
+  virtual_network_name = var.vnet_name
+  resource_group_name = var.vnet_resource_group
 }
 
-module "network-security-group" {
-  source = "../network-security-group"
-  count = var.nsg_id == "" ? 1 : 0
-  resource_group_name = module.common.resource_group_name
-  security_group_name = "${module.common.resource_group_name}-nsg"
-  location = module.common.resource_group_location
-  security_rules = [
-    {
-      name = "SSH"
-      priority = "100"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "22"
-      description = "Allow inbound SSH connection"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "GAiA-portal"
-      priority = "110"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "443"
-      description = "Allow inbound HTTPS access to the GAiA portal"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "SmartConsole-1"
-      priority = "120"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18190"
-      description = "Allow inbound access using the SmartConsole GUI client"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "SmartConsole-2"
-      priority = "130"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "19009"
-      description = "Allow inbound access using the SmartConsole GUI client"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "Logs"
-      priority = "140"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "257"
-      description = "Allow inbound logging connections from managed gateways"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name = "ICA-pull"
-      priority = "150"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18210"
-      description = "Allow security gateways to pull a SIC certificate"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name = "CRL-fetch"
-      priority = "160"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18264"
-      description = "Allow security gateways to fetch CRLs"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name = "Policy-fetch"
-      priority = "170"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18191"
-      description = "Allow security gateways to fetch policy"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    }
-  ]
+data "azurerm_subnet" "backend_subnet" {
+  name = var.subnet_backend_name
+  virtual_network_name = var.vnet_name
+  resource_group_name = var.vnet_resource_group
 }
 
 resource "azurerm_public_ip" "public-ip" {
-  name = var.mds_name
+  name = var.single_gateway_name
   location = module.common.resource_group_location
   resource_group_name = module.common.resource_group_name
   allocation_method = var.vnet_allocation_method
   sku = var.sku
   idle_timeout_in_minutes = 30
   domain_name_label = join("", [
-    lower(var.mds_name),
+    lower(var.single_gateway_name),
     "-",
     random_id.randomId.hex])
 }
 
+module "network_security_group" {
+  source = "../network_security_group"
+  count = var.nsg_id == "" ? 1 : 0
+  resource_group_name = module.common.resource_group_name
+  security_group_name = "${module.common.resource_group_name}-nsg"
+  location = module.common.resource_group_location
+  security_rules = [
+    {
+      name                       = "AllowHTTPS"
+      priority                   = "100"
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_ranges         = "*"
+      destination_port_ranges    = ["443"]
+      description                = "Allow inbound HTTPS traffic"
+      source_address_prefix      = "0.0.0.0/0"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "AllowSSH"
+      priority                   = "110"
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_ranges         = "*"
+      destination_port_ranges    = ["22"]
+      description                = "Allow inbound SSH traffic"
+      source_address_prefix      = "0.0.0.0/0"
+      destination_address_prefix = "*"
+    }
+  ]
+}
+
 resource "azurerm_network_interface_security_group_association" "security_group_association" {
-  depends_on = [azurerm_network_interface.nic, module.network-security-group]
+  depends_on = [azurerm_network_interface.nic]
   network_interface_id = azurerm_network_interface.nic.id
-  network_security_group_id =  var.nsg_id == "" ? module.network-security-group[0].network_security_group_id: var.nsg_id
+  network_security_group_id = var.nsg_id == "" ? module.network_security_group[0].network_security_group_id: var.nsg_id
 }
 
 resource "azurerm_network_interface" "nic" {
   depends_on = [
     azurerm_public_ip.public-ip]
-  name = "${var.mds_name}-eth0"
+  name = "${var.single_gateway_name}-eth0"
   location = module.common.resource_group_location
   resource_group_name = module.common.resource_group_name
-  enable_ip_forwarding = false
+  enable_ip_forwarding = true
+  enable_accelerated_networking = true
+
 
   ip_configuration {
     name = "ipconfig1"
-    subnet_id = module.vnet.vnet_subnets[0]
+    subnet_id = data.azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = var.vnet_allocation_method
-    private_ip_address = cidrhost(var.subnet_prefix, 4)
+    private_ip_address = var.subnet_frontend_1st_Address
     public_ip_address_id = azurerm_public_ip.public-ip.id
+  }
+}
+
+resource "azurerm_network_interface" "nic1" {
+  depends_on = []
+  name = "${var.single_gateway_name}-eth1"
+  location = module.common.resource_group_location
+  resource_group_name = module.common.resource_group_name
+  enable_ip_forwarding = true
+  enable_accelerated_networking = true
+
+
+  ip_configuration {
+    name = "ipconfig2"
+    subnet_id = data.azurerm_subnet.backend_subnet.id
+    private_ip_address_allocation = var.vnet_allocation_method
+    private_ip_address = var.subnet_backend_1st_Address
   }
 }
 
@@ -224,13 +171,15 @@ resource "azurerm_image" "custom-image" {
   }
 }
 
-resource "azurerm_virtual_machine" "mds-vm-instance" {
+resource "azurerm_virtual_machine" "single-gateway-vm-instance" {
   depends_on = [
-    azurerm_network_interface.nic]
+    azurerm_network_interface.nic,
+    azurerm_network_interface.nic1]
   location = module.common.resource_group_location
-  name = var.mds_name
+  name = var.single_gateway_name
   network_interface_ids = [
-    azurerm_network_interface.nic.id]
+    azurerm_network_interface.nic.id, 
+    azurerm_network_interface.nic1.id]
   resource_group_name = module.common.resource_group_name
   vm_size = module.common.vm_size
   delete_os_disk_on_termination = module.common.delete_os_disk_on_termination
@@ -256,11 +205,11 @@ resource "azurerm_virtual_machine" "mds-vm-instance" {
   }
 
   os_profile {
-    computer_name = lower(var.mds_name)
+    computer_name = lower(var.single_gateway_name)
     admin_username = module.common.admin_username
     admin_password = module.common.admin_password
     custom_data = templatefile("${path.module}/cloud-init.sh", {
-      installation_type = var.installation_type
+      installation_type = module.common.installation_type
       allow_upload_download = module.common.allow_upload_download
       os_version = module.common.os_version
       template_name = module.common.template_name
@@ -269,17 +218,16 @@ resource "azurerm_virtual_machine" "mds-vm-instance" {
       is_blink = module.common.is_blink
       bootstrap_script64 = base64encode(var.bootstrap_script)
       location = module.common.resource_group_location
-      management_GUI_client_network = var.management_GUI_client_network
-      enable_api = var.mds_enable_api
       admin_shell = var.admin_shell
       sic_key = var.sic_key
-      primary = var.primary
-      secondary = var.secondary
-      logserver = var.logserver
+      management_GUI_client_network = var.management_GUI_client_network
+      smart_1_cloud_token = var.smart_1_cloud_token
+      enable_custom_metrics = var.enable_custom_metrics ? "yes" : "no"
       serial_console_password_hash = var.serial_console_password_hash
       maintenance_mode_password_hash = var.maintenance_mode_password_hash
     })
   }
+
 
   os_profile_linux_config {
     disable_password_authentication = local.SSH_authentication_type_condition
@@ -303,7 +251,7 @@ resource "azurerm_virtual_machine" "mds-vm-instance" {
   }
 
   storage_os_disk {
-    name = var.mds_name
+    name = var.single_gateway_name
     create_option = module.common.storage_os_disk_create_option
     caching = module.common.storage_os_disk_caching
     managed_disk_type = module.common.storage_account_type

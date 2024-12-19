@@ -1,4 +1,3 @@
-
 //********************** Basic Configuration **************************//
 module "common" {
   source = "../common"
@@ -23,10 +22,124 @@ module "common" {
 }
 
 //********************** Networking **************************//
-data "azurerm_subnet" "mgmt_subnet" {
-  name = var.management_subnet_name
-  virtual_network_name = var.vnet_name
-  resource_group_name = var.vnet_resource_group
+module "vnet" {
+  source = "../vnet"
+
+  vnet_name = var.vnet_name
+  resource_group_name = module.common.resource_group_name
+  location = module.common.resource_group_location
+  address_space = var.address_space
+  subnet_prefixes = [var.subnet_prefix]
+  subnet_names = ["${var.mgmt_name}-subnet"]
+  nsg_id = var.nsg_id == "" ? module.network_security_group[0].network_security_group_id: var.nsg_id
+}
+
+module "network_security_group" {
+  source = "../network_security_group"
+  count = var.nsg_id == "" ? 1 : 0
+  resource_group_name = module.common.resource_group_name
+  security_group_name = "${module.common.resource_group_name}-nsg"
+  location = module.common.resource_group_location
+  security_rules = var.security_rules
+  # [
+  #   {
+  #     name = "SSH"
+  #     priority = "100"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "22"
+  #     description = "Allow inbound SSH connection"
+  #     source_address_prefix = var.management_GUI_client_network
+  #     destination_address_prefix = "*"
+  #   },
+  #   {
+  #     name = "GAiA-portal"
+  #     priority = "110"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "443"
+  #     description = "Allow inbound HTTPS access to the GAiA portal"
+  #     source_address_prefix = var.management_GUI_client_network
+  #     destination_address_prefix = "*"
+  #   },
+  #   {
+  #     name = "SmartConsole-1"
+  #     priority = "120"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "18190"
+  #     description = "Allow inbound access using the SmartConsole GUI client"
+  #     source_address_prefix = var.management_GUI_client_network
+  #     destination_address_prefix = "*"
+  #   },
+  #   {
+  #     name = "SmartConsole-2"
+  #     priority = "130"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "19009"
+  #     description = "Allow inbound access using the SmartConsole GUI client"
+  #     source_address_prefix = var.management_GUI_client_network
+  #     destination_address_prefix = "*"
+  #   },
+  #   {
+  #     name = "Logs"
+  #     priority = "140"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "257"
+  #     description = "Allow inbound logging connections from managed gateways"
+  #     source_address_prefix = "*"
+  #     destination_address_prefix = "*"
+  #   },
+  #   {
+  #     name = "ICA-pull"
+  #     priority = "150"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "18210"
+  #     description = "Allow security gateways to pull a SIC certificate"
+  #     source_address_prefix = "*"
+  #     destination_address_prefix = "*"
+  #   },
+  #   {
+  #     name = "CRL-fetch"
+  #     priority = "160"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "18264"
+  #     description = "Allow security gateways to fetch CRLs"
+  #     source_address_prefix = "*"
+  #     destination_address_prefix = "*"
+  #   },
+  #   {
+  #     name = "Policy-fetch"
+  #     priority = "170"
+  #     direction = "Inbound"
+  #     access = "Allow"
+  #     protocol = "Tcp"
+  #     source_port_ranges = "*"
+  #     destination_port_ranges = "18191"
+  #     description = "Allow security gateways to fetch policy"
+  #     source_address_prefix = "*"
+  #     destination_address_prefix = "*"
+  #   }
+  # ]
+
 }
 
 resource "azurerm_public_ip" "public-ip" {
@@ -42,116 +155,10 @@ resource "azurerm_public_ip" "public-ip" {
     random_id.randomId.hex])
 }
 
-module "network-security-group" {
-  source = "../network-security-group"
-  count = var.nsg_id == "" ? 1 : 0
-  resource_group_name = module.common.resource_group_name
-  security_group_name = "${module.common.resource_group_name}-nsg"
-  location = module.common.resource_group_location
-  security_rules = [
-    {
-      name = "SSH"
-      priority = "100"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "22"
-      description = "Allow inbound SSH connection"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "GAiA-portal"
-      priority = "110"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "443"
-      description = "Allow inbound HTTPS access to the GAiA portal"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "SmartConsole-1"
-      priority = "120"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18190"
-      description = "Allow inbound access using the SmartConsole GUI client"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "SmartConsole-2"
-      priority = "130"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "19009"
-      description = "Allow inbound access using the SmartConsole GUI client"
-      source_address_prefix = var.management_GUI_client_network
-      destination_address_prefix = "*"
-    },
-    {
-      name = "Logs"
-      priority = "140"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "257"
-      description = "Allow inbound logging connections from managed gateways"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name = "ICA-pull"
-      priority = "150"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18210"
-      description = "Allow security gateways to pull a SIC certificate"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name = "CRL-fetch"
-      priority = "160"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18264"
-      description = "Allow security gateways to fetch CRLs"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name = "Policy-fetch"
-      priority = "170"
-      direction = "Inbound"
-      access = "Allow"
-      protocol = "Tcp"
-      source_port_ranges = "*"
-      destination_port_ranges = "18191"
-      description = "Allow security gateways to fetch policy"
-      source_address_prefix = "*"
-      destination_address_prefix = "*"
-    }
-  ]
-}
-
 resource "azurerm_network_interface_security_group_association" "security_group_association" {
-  depends_on = [azurerm_network_interface.nic]
+  depends_on = [azurerm_network_interface.nic, module.network_security_group]
   network_interface_id = azurerm_network_interface.nic.id
-  network_security_group_id =  var.nsg_id == "" ? module.network-security-group[0].network_security_group_id: var.nsg_id
+  network_security_group_id =  var.nsg_id == "" ? module.network_security_group[0].network_security_group_id: var.nsg_id
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -164,9 +171,9 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name = "ipconfig1"
-    subnet_id = data.azurerm_subnet.mgmt_subnet.id
+    subnet_id = module.vnet.vnet_subnets[0]
     private_ip_address_allocation = var.vnet_allocation_method
-    private_ip_address = var.subnet_1st_Address
+    private_ip_address = cidrhost(var.subnet_prefix, 4)
     public_ip_address_id = azurerm_public_ip.public-ip.id
   }
 }
@@ -197,7 +204,6 @@ resource "azurerm_storage_account" "vm-boot-diagnostics-storage" {
       days = "15"
     }
   }
-
 }
 
 //********************** Virtual Machines **************************//
@@ -271,7 +277,6 @@ resource "azurerm_virtual_machine" "mgmt-vm-instance" {
       maintenance_mode_password_hash = var.maintenance_mode_password_hash
     })
   }
-
 
   os_profile_linux_config {
     disable_password_authentication = local.SSH_authentication_type_condition

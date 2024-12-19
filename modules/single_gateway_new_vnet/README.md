@@ -11,7 +11,7 @@ As part of the deployment the following resources are created:
 This solution uses the following submodules:
 - common - used for creating a resource group and defining common variables.
 - vnet - used for creating new virtual network and subnets.
-- network-security-group - used for creating new network security groups and rules.
+- network_security_group - used for creating new network security groups and rules.
 
 ## Usage
 Follow best practices for using our modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).

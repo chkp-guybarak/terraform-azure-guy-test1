@@ -9,7 +9,7 @@ As part of the deployment the following resources are created:
 
 This solution uses the following modules:
 - /terraform/azure/modules/common - used for creating a resource group and defining common variables.
-- /terraform/azure/modules/network-security-group - used for creating new network security groups and rules.
+- /terraform/azure/modules/network_security_group - used for creating new network security groups and rules.
 
 
 ## Configurations

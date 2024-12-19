@@ -16,37 +16,37 @@ Examples: Demonstrates how to use the modules together.
 
 **Submodules:**
 
-* **`high_availability_existing_vnet` -** Deploys CloudGuard High Availability solution into an existing VNet in Azure.
+* [`high_availability_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/high_availability_existing_vnet) - Deploys CloudGuard High Availability solution into an existing VNet in Azure.
 
-* **`high_availability_new_vnet`** Deploys CloudGuard High Availability solution into a new VNet.
+* [`high_availability_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/high_availability_new_vnet) Deploys CloudGuard High Availability solution into a new VNet.
 
-* **`management-existing-vnet`-** Deploys CloudGuard Management solution into an existing VNet.
+* [`management_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/management_existing_vnet) - Deploys CloudGuard Management solution into an existing VNet.
 
-* **`management-new-vnet` -** Deploys CloudGuard Management solution into a new VNet.
+* [`management_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/management_new_vnet) - Deploys CloudGuard Management solution into a new VNet.
 
-* **`mds-existing-vnet` -** Deploys CloudGuard Management solution into a new VNet.
+* [`mds_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/mds_existing_vnet) - Deploys CloudGuard Management solution into a new VNet.
 
-* **`mds-new-vnet` -** Deploys CloudGuard Management solution into a new Vnet.
+* [`mds_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/mds_new_vnet) - Deploys CloudGuard Management solution into a new Vnet.
 
-* **`nva-into-existing-hub` -** Deploys CloudGuard Virtual WAN NVA solution into an existing vWAN Hub.
+* [`nva_into_existing_hub`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/nva_into_existing_hub) - Deploys CloudGuard Virtual WAN NVA solution into an existing vWAN Hub.
 
-* **`nva-into-new-vwan` -** Deploys CloudGuard Virtual WAN NVA solution into a new vWAN Hub.
+* [`nva_into_new_vwan`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/nva_into_new_vwan) - Deploys CloudGuard Virtual WAN NVA solution into a new vWAN Hub.
 
-* **`single-gateway-existing-vnet` -** Deploys CloudGuard Single Gateway solution into an existing VNet.
+* [`single_gateway_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/single_gateway_existing_vnet) - Deploys CloudGuard Single Gateway solution into an existing VNet.
 
-* **`single-gateway-new-vnet` -** Deploys CloudGuard Single Gateway solution into a new VNet.
+* [`single_gateway_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/single_gateway_new_vnet) - Deploys CloudGuard Single Gateway solution into a new VNet.                   
 
-* **`vmss-existing-vnet` -** Deploys CloudGuard VMSS solution into an existing VNet.
+* [`vmss_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vmss_existing_vnet) - Deploys CloudGuard VMSS solution into an existing VNet.
 
-* **`vmss-new-vnet` -** Deploys CloudGuard VMSS solution into a new VNet.
+* [`vmss_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vmss_new_vnet) - Deploys CloudGuard VMSS solution into a new VNet.
 
-**Internal Submodules -** 
+Internal Submodules - 
 
-* **`common` -** Contains shared configurations and reusable components for all modules.
+* [`common`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/common) - Contains shared configurations and reusable components for all modules.
 
-* [`network-security-group`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vnet) - Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
+* [`network_security_group`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/network_security_group) - Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
 
-- **[`vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vnet)** - Simplifies Virtual Network and subnet configurations.
+- [`vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vnet) - Simplifies Virtual Network and subnet configurations.
 
 
 ## Security Rules Default Configuration

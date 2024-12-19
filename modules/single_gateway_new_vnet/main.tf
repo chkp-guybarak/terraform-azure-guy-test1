@@ -31,11 +31,11 @@ module "vnet" {
   address_space = var.address_space
   subnet_prefixes = [var.frontend_subnet_prefix, var.backend_subnet_prefix]
   subnet_names = ["${var.single_gateway_name}-frontend-subnet", "${var.single_gateway_name}-backend-subnet"]
-  nsg_id = var.nsg_id == "" ? module.network-security-group[0].network_security_group_id: var.nsg_id
+  nsg_id = var.nsg_id == "" ? module.network_security_group[0].network_security_group_id: var.nsg_id
 }
 
-module "network-security-group" {
-  source = "../network-security-group"
+module "network_security_group" {
+  source = "../network_security_group"
   count = var.nsg_id == "" ? 1 : 0
   resource_group_name = module.common.resource_group_name
   security_group_name = "${module.common.resource_group_name}-nsg"
@@ -57,9 +57,9 @@ resource "azurerm_public_ip" "public-ip" {
 }
 
 resource "azurerm_network_interface_security_group_association" "security_group_association" {
-  depends_on = [azurerm_network_interface.nic, module.network-security-group]
+  depends_on = [azurerm_network_interface.nic, module.network_security_group]
   network_interface_id = azurerm_network_interface.nic.id
-  network_security_group_id =  var.nsg_id == "" ? module.network-security-group[0].network_security_group_id: var.nsg_id
+  network_security_group_id =  var.nsg_id == "" ? module.network_security_group[0].network_security_group_id: var.nsg_id
 }
 
 resource "azurerm_network_interface" "nic" {

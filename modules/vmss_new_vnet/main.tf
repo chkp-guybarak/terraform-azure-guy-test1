@@ -27,13 +27,13 @@ module "vnet" {
   vnet_name = var.vnet_name
   resource_group_name = module.common.resource_group_name
   location = module.common.resource_group_location
-  nsg_id = var.nsg_id == "" ? module.network-security-group[0].network_security_group_id: var.nsg_id
+  nsg_id = var.nsg_id == "" ? module.network_security_group[0].network_security_group_id: var.nsg_id
   address_space = var.address_space
   subnet_prefixes = var.subnet_prefixes
 }
 
-module "network-security-group" {
-    source = "../network-security-group"
+module "network_security_group" {
+    source = "../network_security_group"
     count = var.nsg_id == "" ? 1 : 0
     resource_group_name = module.common.resource_group_name
     security_group_name = "${module.common.resource_group_name}_nsg"
@@ -294,7 +294,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
      primary = true
      enable_ip_forwarding = true
      enable_accelerated_networking = true
-     network_security_group_id = module.network-security-group[0].network_security_group_id
+     network_security_group_id = module.network_security_group[0].network_security_group_id
      ip_configuration {
        name = "ipconfig1"
        subnet_id = module.vnet.vnet_subnets[0]
