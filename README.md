@@ -95,6 +95,7 @@ Ensure you have [Azure CLI installed](https://learn.microsoft.com/en-us/cli/azur
 
 - **Linux/macOS**: **Terminal**.
 - **Windows**: **PowerShell** or **Command Prompt**.
+
 ---
 
 ## Step 3: Set Environment Variables and Log in with Azure CLI
