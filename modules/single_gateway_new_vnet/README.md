@@ -16,7 +16,9 @@ This solution uses the following submodules:
 ## Usage
 Follow best practices for using our modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
+
 ### Module's variables:
+Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view the entire table.
  | Name          | Description | Type | Allowed values | Default        |
  |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------- | ------------- |----------------| ------------- |
  | **source_image_vhd_uri** | The URI of the blob containing the development image. Please use noCustomUri if you want to use marketplace images                                                                                                                                                                                                              | string | | "noCustomUri"  
@@ -75,9 +77,10 @@ Follow best practices for using our modules on [the root page](https://registry.
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
 |  |  |  |                |                                                                                                                                                                                                                                         |
-| **security_rules**                        | Security rules for the Network Security Group using this format | list(any)      | [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description] | [{     name="AllowAllInBound"         priority="100"          direction="Inbound"          access="Allow"          protocol="*"          source_port_ranges="*"          destination_port_ranges=""          description="Allow all inbound connections"          source_address_prefix="*"          destination_address_prefix=""      }]
+| **security_rules**                        | Security rules for the Network Security Group using this format | list(any)      | [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description] | [{     name="AllowAllInBound"         priority="100"          direction="Inbound"          access="Allow"          protocol="*"          source_port_ranges="*"          destination_port_ranges=""          description="Allow all inbound connections"          source_address_prefix="*"          destination_address_prefix=""      }] 
+ |                |                                                                               |
+| **admin_SSH_key**                        | "Used when the authentication_type is 'SSH Public Key' : The Used when the authentication_type is 'SSH Public Key'. The SSH public key for SSH authentication to the template instances." | string     | | ""
   
-
 ## Conditional creation
 -  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
   ```

@@ -281,6 +281,6 @@ variable "security_rules" {
 
 variable "admin_SSH_key" {
   type = string
-  description = "(Optional) The SSH public key for SSH authentication to the template instances. Leave this field blank to use all project-wide pre-configured SSH keys."
+  description = "(Optional) TheUsed when the authentication_type is 'SSH Public Key'. The SSH public key for SSH authentication to the template instances."
   default = ""
 }

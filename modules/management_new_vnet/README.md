@@ -1,6 +1,6 @@
-# Check Point CloudGuard IaaS Management Terraform deployment for Azure
+# Check Point CloudGuard Management Module - New  VNet 
 
-This Terraform module deploys Check Point CloudGuard IaaS Management solution into a new Vnet in Azure.
+This Terraform module deploys Check Point CloudGuard Network Security Management solution into a new  VNet in Azure.
 As part of the deployment the following resources are created:
 - Resource group
 - Virtual network
@@ -10,66 +10,9 @@ As part of the deployment the following resources are created:
 
 This solution uses the following modules:
 - /terraform/azure/modules/common - used for creating a resource group and defining common variables.
-- /terraform/azure/modules/vnet - used for creating new virtual network and subnets.
+- /terraform/azure/modules/  VNet - used for creating new virtual network and subnets.
 - /terraform/azure/modules/network_security_group - used for creating new network security groups and rules.
 
-
-## Configurations
-- Install and configure Terraform to provision Azure resources: [Configure Terraform for Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure)
-- In order to use ssh connection to VMs, it is **required** to add a public key to the /terraform/azure/management-new-vnet/azure_public_key file.
-
-## Usage
-- Choose the preferred login method to Azure in order to deploy the solution:
-    <br>1. Using Service Principal:
-    - Create a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) (or use the existing one) 
-    - Grant the Service Principal at least "**Managed Application Contributor**", "**Storage Account Contributor**", "**Network Contributor**", "**Virtual Machine Contributor**" permissions to the Azure subscription<br>
-    - The Service Principal credentials can be stored either in the terraform.tfvars or as [Environment Variables](https://www.terraform.io/docs/providers/azuread/guides/service_principal_client_secret.html)<br>
-    
-      In case the Environment Variables are used, perform modifications described below:<br>
-      
-       a. The next lines in the main.tf file, in the provider azurerm resource,  need to be deleted or commented:
-            
-                provider "azurerm" {
-                
-                //  subscription_id = var.subscription_id
-                //  client_id = var.client_id
-                //  client_secret = var.client_secret
-                //  tenant_id = var.tenant_id
-                
-                   features {}
-                }
-            
-        b. In the terraform.tfvars file leave empty double quotes for client_secret, client_id , tenant_id and subscription_id variables:
-        
-                client_secret                   = ""
-                client_id                       = ""
-                tenant_id                       = ""
-                subscription_id                 = "" 
-        
-    <br>2. Using **az** commands from a command-line:
-    - Run  **az login** command 
-    - Sign in with your account credentials in the browser
-    - [Accept Azure Marketplace image terms](https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest) by running:
-     <br>**az vm image terms accept --urn publisher:offer:sku:version**, where:
-        - publisher = checkpoint;
-        - offer = vm_os_offer (see accepted values in the table below);
-        - sku = vm_os_sku (see accepted values in the table below);
-        - version = latest<br/>
-    <br>Example:<br>
-    az vm image terms accept --urn checkpoint:check-point-cg-r8120:sg-byol:latest
-    
-    - In the terraform.tfvars file leave empty double quotes for client_secret, client_id and tenant_id variables. 
- 
-- Fill all variables in the /terraform/azure/management-new-vnet/terraform.tfvars file with proper values (see below for variables descriptions).
-- From a command line initialize the Terraform configuration directory:
-
-        terraform init
-- Create an execution plan:
- 
-        terraform plan
-- Create or modify the deployment:
- 
-        terraform apply
 
 ### terraform.tfvars variables:
  | Name          | Description   | Type          | Allowed values | Default |
@@ -90,7 +33,7 @@ This solution uses the following modules:
  |  |  |  |  |  |
  | **location** | The region where the resources will be deployed at  | string | The full list of Azure regions can be found at https://azure.microsoft.com/regions | n/a
  |  |  |  |  |  |
- | **vnet_name** | The name of virtual network that will be created  | string | The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens | n/a
+ | ** VNet_name** | The name of virtual network that will be created  | string | The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens | n/a
  |  |  |  |  |  |
  | **address_space** | The address space that is used by a Virtual Network  | string | A valid address in CIDR notation  | "10.0.0.0/16"
  |  |  |  |  |  |
@@ -140,7 +83,7 @@ This solution uses the following modules:
     resource_group_name             = "checkpoint-mgmt-terraform"
     mgmt_name                       = "checkpoint-mgmt-terraform"
     location                        = "eastus"
-    vnet_name                       = "checkpoint-mgmt-vnet"
+     VNet_name                       = "checkpoint-mgmt- VNet"
     address_space                   = "10.0.0.0/16"
     subnet_prefix                   = "10.0.0.0/24"
     management_GUI_client_network   = "0.0.0.0/0"
@@ -176,7 +119,7 @@ In order to check the template version refer to the [sk116585](https://supportce
 | | | |
 | 20210309 | - Add "source_image_vhd_uri" variable for using a custom development image |
 | | | |
-| 20210111 | First release of Check Point CloudGuard IaaS Management Terraform deployment into a new Vnet in Azure  |
+| 20210111 | First release of Check Point CloudGuard IaaS Management Terraform deployment into a new  VNet in Azure  |
 | | | |
 |  | Addition of "templateType" parameter to "cloud-version" files  |
 | | | |
