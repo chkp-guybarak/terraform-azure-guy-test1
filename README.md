@@ -44,9 +44,9 @@ Examples: Demonstrates how to use the modules together.
 
 * **`common` -** Contains shared configurations and reusable components for all modules.
 
-* **`network-security-group` -** Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
+* [`network-security-group`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vnet) - Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
 
-* **`vnet` -** Simplifies Virtual Network and subnet configurations.
+- **[`vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vnet)** - Simplifies Virtual Network and subnet configurations.
 
 
 ## Security Rules Default Configuration
