@@ -1,60 +1,58 @@
-# Terraform Modules for CloudGuard Network Security - Azure
-
 ![GitHub Release](https://img.shields.io/github/v/release/chkp-guybarak/terraform-azure-guy-test1)
 ![GitHub watchers](https://img.shields.io/github/watchers/chkp-guybarak/terraform-azure-guy-test1)
+
+# Terraform Modules for CloudGuard Network Security - Azure
+
 
 ## Introduction
 This repository provides a structured set of Terraform modules for deploying Check Point CloudGuard Network Security in Microsoft Azure. These modules automate the creation of high-availability architectures, virtual networks, gateways, and more, enabling secure and scalable cloud deployments.
 
-## Repository Layout
+## Repository Structure
 Submodules: Contains modular, reusable, production-grade Terraform components, each with its own documentation.
 
 Examples: Demonstrates how to use the modules together.
 
 ## Available Submodules
 
-**Submodules**
+**Submodules:**
 
-* **High-availability-existing-vnet -** 
-Deploys Check Point CloudGuard IaaS High Availability solution into an existing Vnet in Azure.
+* **`high_availability_existing_vnet` -** Deploys CloudGuard High Availability solution into an existing VNet in Azure.
 
-* **High-availability-new-vnet**
-Deploys Check Point CloudGuard IaaS High Availability solution into a new Vnet.
+* **`high_availability_new_vnet`** Deploys CloudGuard High Availability solution into a new VNet.
 
-* **Management-existing-vnet -** Deploys Check Point CloudGuard IaaS Management solution into an existing Vnet.
+* **`management-existing-vnet`-** Deploys CloudGuard Management solution into an existing VNet.
 
-* **Management-new-vnet -** Deploys Check Point CloudGuard IaaS Management solution into a new Vnet.
+* **`management-new-vnet` -** Deploys CloudGuard Management solution into a new VNet.
 
-* **Mds-existing-vnet -** Deploys Check Point CloudGuard Network Security Management solution into a new Vnet.
+* **`mds-existing-vnet` -** Deploys CloudGuard Management solution into a new VNet.
 
-* **Mds-new-vnet -** Deploys Check Point CloudGuard Network Security Management solution into a new Vnet.
+* **`mds-new-vnet` -** Deploys CloudGuard Management solution into a new Vnet.
 
-* **Nva-into-existing-hub* -** Deploys Check Point CloudGuard Network Security Virtual WAN NVA solution into an existing vWAN Hub.
+* **`nva-into-existing-hub` -** Deploys CloudGuard Virtual WAN NVA solution into an existing vWAN Hub.
 
-* **Nva-into-new-vwan -** Deploys CloudGuard Network Security Virtual WAN NVA solution into a new vWAN Hub.
+* **`nva-into-new-vwan` -** Deploys CloudGuard Virtual WAN NVA solution into a new vWAN Hub.
 
-* **Single-gateway-existing-vnet -** Deploys Check Point CloudGuard Network Security Single Gateway solution into an existing Vnet.
+* **`single-gateway-existing-vnet` -** Deploys CloudGuard Single Gateway solution into an existing VNet.
 
-* **Single-gateway-new-vnet -** Deploys Check Point CloudGuard Network Security Single Gateway solution into a new Vnet.
+* **`single-gateway-new-vnet` -** Deploys CloudGuard Single Gateway solution into a new VNet.
 
-* **Vmss-existing-vnet -** Deploys Check Point CloudGuard IaaS VMSS solution into an existing Vnet.
+* **`vmss-existing-vnet` -** Deploys CloudGuard VMSS solution into an existing VNet.
 
-* **Vmss-new-vnet -** Deploys Check Point CloudGuard IaaS VMSS solution into a new Vnet.
+* **`vmss-new-vnet` -** Deploys CloudGuard VMSS solution into a new VNet.
 
-**Internal Submodules -** Deploys
+**Internal Submodules -** 
 
-* **Common -** Contains shared configurations and reusable components for all modules.
+* **`common` -** Contains shared configurations and reusable components for all modules.
 
-* **Network-security-group -** Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
+* **`network-security-group` -** Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
 
-* **Vnet -** Simplifies Virtual Network and subnet configurations.
-
+* **`vnet` -** Simplifies Virtual Network and subnet configurations.
 
 
 ## Security Rules Default Configuration
 Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Add security rule to override the default "allow all traffic" configuration.
 
-**Example:** To restrict inbound traffic, update the security_rules attribute in the network-security-group submodule configuration:
+**Example:** To restrict inbound traffic, update the security_rules attribute in the submodule configuration:
 ```hcl
 security_rules = [
   {
@@ -72,9 +70,9 @@ security_rules = [
 ]
 ```
 
-**Recommendation:** Always follow the principle of least privilege when configuring security rules to reduce exposure to threats.
+**Check Point Recommendation:** Always follow the principle of least privilege when configuring security rules to reduce exposure to threats.
 
-# Best Practices for Using Our Modules
+# Best Practices for Using CloudGuard Modules
 
 ## Step 1: Use the Required Module
 Add the required module in your Terraform configuration file (`main.tf`) to deploy resources. For example:
@@ -85,7 +83,7 @@ provider "azurerm" {
 }
 
 module "example_module" {
-  source  = "chkp-guybarak/guy-test1/azure//modules/{module_name}"
+  source  = "*******/azure//modules/{module_name}"
   version = "{chosen_version}"
   # Add the required inputs
 }
