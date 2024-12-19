@@ -14,7 +14,7 @@ This solution uses the following submodules:
 - network-security-group - used for creating new network security groups and rules.
 
 ## Usage
-Follow best practices for using our modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
+Follow best practices for using our modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
 ### Module's variables:
  | Name          | Description | Type | Allowed values | Default        |
