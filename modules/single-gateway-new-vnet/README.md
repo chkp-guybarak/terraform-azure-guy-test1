@@ -147,8 +147,3 @@ module "single_gateway_new_vnet" {
   smart_1_cloud_token           = "your-smart-1-cloud-token"
 }
 ```
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
-

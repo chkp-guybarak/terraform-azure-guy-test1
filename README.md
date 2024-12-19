@@ -1,4 +1,4 @@
-# Terraform Modules for Cloudguard Security Networks - Azure
+# Terraform Modules for CloudGuard Network Security - Azure
 
 ![GitHub Release](https://img.shields.io/github/v/release/chkp-guybarak/terraform-azure-guy-test1)
 ![GitHub watchers](https://img.shields.io/github/watchers/chkp-guybarak/terraform-azure-guy-test1)
