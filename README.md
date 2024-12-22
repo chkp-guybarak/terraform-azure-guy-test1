@@ -1,16 +1,16 @@
 ![GitHub Release](https://img.shields.io/github/v/release/chkp-guybarak/terraform-azure-guy-test1)
 ![GitHub watchers](https://img.shields.io/github/watchers/chkp-guybarak/terraform-azure-guy-test1)
 
-# Terraform Modules for CloudGuard Network Security - Azure
+# Terraform Modules for CloudGuard Network Security (CGNS) - Azure
 
 
 ## Introduction
-This repository provides a structured set of Terraform modules for deploying Check Point CloudGuard Network Security in Microsoft Azure. These modules automate the creation of high-availability architectures, virtual networks, gateways, and more, enabling secure and scalable cloud deployments.
+This repository provides a structured set of Terraform modules for deploying Check Point CloudGuard Network Security in Microsoft Azure. These modules automate the creation of Virtual Networks, Security Gateways, High-Availability architectures, and more, enabling secure and scalable cloud deployments.
 
 ## Repository Structure
-Submodules: Contains modular, reusable, production-grade Terraform components, each with its own documentation.
+`Submodules`: Contains modular, reusable, production-grade Terraform components, each with its own documentation.
 
-Examples: Demonstrates how to use the modules together.
+`Examples`: Demonstrates how to use the modules.
 
 ## Available Submodules
 
@@ -26,7 +26,7 @@ Examples: Demonstrates how to use the modules together.
 
 * [`mds_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/mds_existing_vnet) - Deploys CloudGuard Management solution into a new VNet.
 
-* [`mds_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/mds_new_vnet) - Deploys CloudGuard Management solution into a new Vnet.
+* [`mds_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/mds_new_vnet) - Deploys CloudGuard Management solution into a new VNet.
 
 * [`nva_into_existing_hub`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/nva_into_existing_hub) - Deploys CloudGuard Virtual WAN NVA solution into an existing vWAN Hub.
 
@@ -71,6 +71,7 @@ security_rules = [
 ```
 
 **Check Point Recommendation:** Always follow the principle of least privilege when configuring security rules to reduce exposure to threats.
+___
 
 # Best Practices for Using CloudGuard Modules
 
