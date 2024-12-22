@@ -14,7 +14,7 @@ This solution uses the following submodules:
 - network_security_group - used for creating new network security groups and rules.
 
 ## Usage
-Follow best practices for using our modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
 
 ### Module's variables:
@@ -77,9 +77,9 @@ Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
 |  |  |  |                |                                                                                                                                                                                                                                         |
-| **security_rules**                        | Security rules for the Network Security Group using this format | list(any)      | [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description] | [{     name="AllowAllInBound"         priority="100"          direction="Inbound"          access="Allow"          protocol="*"          source_port_ranges="*"          destination_port_ranges=""          description="Allow all inbound connections"          source_address_prefix="*"          destination_address_prefix=""      }] 
+| **security_rules**                        | Security rules for the Network Security Group using this format | list(any)      | A list of valid security rules values.<br />A security rule composed of: <br />{name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description} | [{     name="AllowAllInBound"         priority="100"          direction="Inbound"          access="Allow"          protocol="*"          source_port_ranges="*"          destination_port_ranges=""          description="Allow all inbound connections"          source_address_prefix="*"          destination_address_prefix=""      }] 
  |                |                                                                               |
-| **admin_SSH_key**                        | "Used when the authentication_type is 'SSH Public Key' : The Used when the authentication_type is 'SSH Public Key'. The SSH public key for SSH authentication to the template instances." | string     | | ""
+| **admin_SSH_key**                        | The SSH public key for SSH connections to the instance. <br />Used when the authentication_type is 'SSH Public Key' | string     | | ""
   
 ## Conditional creation
 -  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
