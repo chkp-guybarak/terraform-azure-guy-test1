@@ -75,7 +75,8 @@ security_rules = [
 ```
 
 **Check Point Recommendation:** Always follow the principle of least privilege when configuring security rules to reduce exposure to threats.
-___
+
+***
 
 # Best Practices for Using CloudGuard Modules
 
