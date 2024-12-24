@@ -1,5 +1,9 @@
+![GitHub Wachers](https://img.shields.io/github/watchers/chkp-guybarak/terraform-azure-guy-test1)
 ![GitHub Release](https://img.shields.io/github/v/release/chkp-guybarak/terraform-azure-guy-test1)
-![GitHub watchers](https://img.shields.io/github/watchers/chkp-guybarak/terraform-azure-guy-test1)
+![GitHub Commits Since Last Commit](https://img.shields.io/github/commits-since/chkp-guybarak/terraform-azure-guy-test1/latest/main)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/chkp-guybarak/terraform-azure-guy-test1/main)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/chkp-guybarak/terraform-azure-guy-test1)
+![GitHub Downloads](https://img.shields.io/github/downloads/chkp-guybarak/terraform-azure-guy-test1/total)
 
 # Terraform Modules for CloudGuard Network Security (CGNS) - Azure
 
@@ -84,7 +88,7 @@ provider "azurerm" {
 }
 
 module "example_module" {
-  source  = "*******/azure//modules/{module_name}"
+  source  = "CheckPointSW/cloudguard-network-security/azure//modules/{module_name}"
   version = "{chosen_version}"
   # Add the required inputs
 }

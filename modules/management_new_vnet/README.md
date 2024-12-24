@@ -8,23 +8,20 @@ As part of the deployment the following resources are created:
 - Virtual Machine
 - System assigned identity
 
-This solution uses the following modules:
-- /terraform/azure/modules/common - used for creating a resource group and defining common variables.
-- /terraform/azure/modules/  VNet - used for creating new virtual network and subnets.
-- /terraform/azure/modules/network_security_group - used for creating new network security groups and rules.
+This solution uses the following submodules:
+- common - used for creating a resource group and defining common variables.
+- VNet - used for creating new virtual network and subnets.
+- network_security_group - used for creating new network security groups and rules.
 
 
-### terraform.tfvars variables:
+## Usage
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
+
+
+### Module's variables:
+Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view the entire table.
  | Name          | Description   | Type          | Allowed values | Default |
  | ------------- | ------------- | ------------- | -------------  | -------------  |
- | **client_secret** | The client secret of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
- | **client_id** | The client ID of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
- | **tenant_id** | The tenant ID of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
- | **subscription_id** | The subscription ID is used to pay for Azure cloud services | string | | n/a
- |  |  |  |  |  |
  | **source_image_vhd_uri** | The URI of the blob containing the development image. Please use noCustomUri if you want to use marketplace images  | string | | "noCustomUri"
  |  |  |  |  |  |
  | **resource_group_name** | The name of the resource group that will contain the contents of the deployment | string | Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period | n/a
@@ -72,59 +69,9 @@ This solution uses the following modules:
  | **add_storage_account_ip_rules** | Add Storage Account IP rules that allow access to the Serial Console only for IPs based on their geographic location, if false then accses will be allowed from all networks | boolean | true; <br/>false; |  false
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
-
-
-## Example
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    source_image_vhd_uri            = "noCustomUri"
-    resource_group_name             = "checkpoint-mgmt-terraform"
-    mgmt_name                       = "checkpoint-mgmt-terraform"
-    location                        = "eastus"
-     VNet_name                       = "checkpoint-mgmt- VNet"
-    address_space                   = "10.0.0.0/16"
-    subnet_prefix                   = "10.0.0.0/24"
-    management_GUI_client_network   = "0.0.0.0/0"
-    mgmt_enable_api                 = "disable"
-    admin_password                  = "xxxxxxxxxxxx"
-    vm_size                         = "Standard_D3_v2"
-    disk_size                       = "110"
-    vm_os_sku                       = "mgmt-byol"
-    vm_os_offer                     = "check-point-cg-r8110"
-    os_version                      = "R8110"
-    bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-    allow_upload_download           = true
-    authentication_type             = "Password"
-    admin_shell                     = "/etc/cli.sh"
-    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    nsg_id                          = ""
-    add_storage_account_ip_rules    = false
-    storage_account_additional_ips  = []
-
-## Revision History
-In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
-
-| Template Version | Description   |
-| ---------------- | ------------- |
-| 20240613 | - Updated Azure Terraform provider version <br> - Cosmetic fixes & default values <br> - Added option to limit storage account access by specify allowed sourcess <br> - Updated Public IP sku to Standard <br> - Added validation for os_version & os_offer |
-| | | |     
-| 20230910 | - R81.20 is the default version |
-| | | |
-| 20221124 | - Added R81.20 support   <br/> - Upgraded azurerm provider |
-| | | |
-| 20220111 | - Added support to select different shells  |
-| | | |
-| 20210309 | - Add "source_image_vhd_uri" variable for using a custom development image |
-| | | |
-| 20210111 | First release of Check Point CloudGuard IaaS Management Terraform deployment into a new  VNet in Azure  |
-| | | |
-|  | Addition of "templateType" parameter to "cloud-version" files  |
-| | | |
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
+|  |  |  |                |                                                                                                                                                                                                                                         |
+| **security_rules**                        | Security rules for the Network Security Group using this format | list(any)      | A list of valid security rules values.<br />A security rule composed of: <br />{name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description} | [{     name="AllowAllInBound"         priority="100"          direction="Inbound"          access="Allow"          protocol="*"          source_port_ranges="*"          destination_port_ranges=""          description="Allow all inbound connections"          source_address_prefix="*"          destination_address_prefix=""      }] 
+ |                |                                                                               |
+| **admin_SSH_key**                        | The SSH public key for SSH connections to the instance. <br />Used when the authentication_type is 'SSH Public Key' | string     | | ""
+  
 
