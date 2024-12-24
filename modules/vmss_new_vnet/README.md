@@ -22,6 +22,9 @@ Follow best practices for using CGNS modules on [the root page](https://registry
 
 
 ### terraform.tfvars variables:
+
+Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view the entire table.
+
  | Name          | Description   | Type          | Allowed values | Default |
  | ------------- | ------------- | ------------- |---------| -------------  |
  | **subscription_id** | The subscription ID is used to pay for Azure cloud services | string | | n/a
@@ -106,83 +109,7 @@ To create role assignment and enable CloudGuard metrics in order to send statuse
 enable_custom_metrics = true
 ```
 
-## Example
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    source_image_vhd_uri            = "noCustomUri"
-    resource_group_name             = "checkpoint-vmss-terraform"
-    location                        = "eastus"
-    vmss_name                       = "checkpoint-vmss-terraform"
-    vnet_name                       = "checkpoint-vmss-vnet"
-    address_space                   = "10.0.0.0/16"
-    subnet_prefixes                 = ["10.0.1.0/24","10.0.2.0/24"]
-    backend_lb_IP_address           = 4
-    admin_password                  = "xxxxxxxxxxxx"
-    sic_key                         = "xxxxxxxxxxxx"
-    vm_size                         = "Standard_D3_v2"
-    disk_size                       = "100"
-    vm_os_sku                       = "sg-byol"
-    vm_os_offer                     = "check-point-cg-r8110"
-    os_version                      = "R8110"
-    bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-    allow_upload_download           = true
-    authentication_type             = "Password"
-    availability_zones_num          = "1"
-    minimum_number_of_vm_instances  = 2
-    maximum_number_of_vm_instances  = 10
-    management_name                 = "mgmt"
-    management_IP                   = "13.92.42.181"
-    management_interface            = "eth1-private"
-    configuration_template_name     = "vmss_template"
-    notification_email              = ""
-    frontend_load_distribution      = "Default"
-    backend_load_distribution       = "Default"
-    enable_custom_metrics           = true
-    enable_floating_ip              = false
-    deployment_mode                 = "Standard"
-    admin_shell                     = "/etc/cli.sh"
-    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    nsg_id                          = ""
-    add_storage_account_ip_rules    = false
-    storage_account_additional_ips  = []
-
 ## Deploy Without Public IP
 
 1. By default, the VMSS is deployed with public IP
 2. To deploy without public IP, remove the "public_ip_address_configuration" block in main.tf
-
-## Known limitations
-
-## Revision History
-
-In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
-
-| Template Version | Description |
-| ---------------- | --------- |
-| 20240613 | - Updated Azure Terraform provider version <br> - Cosmetic fixes & default values <br> - Added option to limit storage account access by specify allowed sourcess <br> - Updated diskSizeGB <br> - Added validation for os_version & os_offer |
-| | | |
-| 20230910 | - R81.20 is the default version |
-| | | |
-| 20221124 | - Added R81.20 support   <br/> - Upgraded azurerm provider |
-| | | |
-| 20220111 | - Added support to select different shells  |
-| | | |
-| 20210309 | - Add "source_image_vhd_uri" variable for using a custom development image <br/> - Fix zones filed for scale set be installed as multi-zone <br/> - Modify "management_interface" variable and tags regarding managing the Gateways in the Scale Set |
-| | | |
-| 20210111 |- Update terraform version to 0.14.3 <br/> - Update azurerm version to 2.17.0 <br/> - Add authentication_type variable for choosing the authentication type. <br/> - Add support for R81.<br/> - Add public IP addresses support.<br/> - Add support to CloudGuards metrics. <br/> - Update resources for NSG https://github.com/CheckPointSW/CloudGuardIaaS/issues/67 <br/> - Avoid role-assignment re-creation when re-applying |
-| | | |
-| 20200323 | Remove the domain_name_label variable from the azurerm_public_ip resource |
-| | | |
-| 20200305 | First release of Check Point CloudGuard IaaS VMSS Terraform deployment for Azure |
-| | | |
-|  | Addition of "templateType" parameter to "cloud-version" files  |
-| | | |
-
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
-
