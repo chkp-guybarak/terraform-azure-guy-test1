@@ -53,32 +53,7 @@ module "network_security_group" {
   resource_group_name = module.common.resource_group_name
   security_group_name = "${module.common.resource_group_name}-nsg"
   location = module.common.resource_group_location
-  security_rules = [
-    {
-      name                       = "AllowHTTPS"
-      priority                   = "100"
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_ranges         = "*"
-      destination_port_ranges    = ["443"]
-      description                = "Allow inbound HTTPS traffic"
-      source_address_prefix      = "0.0.0.0/0"
-      destination_address_prefix = "*"
-    },
-    {
-      name                       = "AllowSSH"
-      priority                   = "110"
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_ranges         = "*"
-      destination_port_ranges    = ["22"]
-      description                = "Allow inbound SSH traffic"
-      source_address_prefix      = "0.0.0.0/0"
-      destination_address_prefix = "*"
-    }
-  ]
+  security_rules = var.security_rules
 }
 
 resource "azurerm_network_interface_security_group_association" "security_group_association" {

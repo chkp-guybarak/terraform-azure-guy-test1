@@ -311,3 +311,22 @@ variable "admin_SSH_key" {
   description = "(Optional) TheUsed when the authentication_type is 'SSH Public Key'. The SSH public key for SSH authentication to the template instances."
   default = ""
 }
+
+variable "security_rules" {
+  description = "Security rules for the Network Security Group using this format [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description]"
+  type    = list(any)
+  default = [
+    {
+      name = "AllowAllInBound"
+      priority = "100"
+      direction = "Inbound"
+      access = "Allow"
+      protocol = "*"
+      source_port_ranges = "*"
+      destination_port_ranges = "*"
+      description = "Allow all inbound connections"
+      source_address_prefix = "*"
+      destination_address_prefix = "*"
+    }
+  ]
+}
