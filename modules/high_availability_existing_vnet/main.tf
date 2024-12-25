@@ -364,6 +364,7 @@ resource "azurerm_virtual_machine" "vm-instance-availability-set" {
       bootstrap_script64 = base64encode(var.bootstrap_script)
       location = module.common.resource_group_location
       sic_key = var.sic_key
+      tenant_id = var.tenant_id
       virtual_network = var.vnet_name
       cluster_name = var.cluster_name
       external_private_addresses = azurerm_network_interface.nic_vip.ip_configuration[1].private_ip_address
@@ -457,6 +458,7 @@ resource "azurerm_virtual_machine" "vm-instance-availability-zone" {
       bootstrap_script64 = base64encode(var.bootstrap_script)
       location = module.common.resource_group_location
       sic_key = var.sic_key
+      tenant_id = var.tenant_id
       virtual_network = var.vnet_name
       cluster_name = var.cluster_name
       external_private_addresses = azurerm_network_interface.nic_vip.ip_configuration[1].private_ip_address

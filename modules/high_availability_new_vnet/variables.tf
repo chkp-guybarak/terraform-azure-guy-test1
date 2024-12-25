@@ -1,4 +1,9 @@
 //********************** Basic Configuration Variables **************************//
+variable "tenant_id" {
+  description = "Tenant ID"
+  type = string
+}
+
 variable "cluster_name" {
   description = "Cluster name"
   type = string
