@@ -40,7 +40,7 @@ module "network_security_group" {
   resource_group_name = module.common.resource_group_name
   security_group_name = "${module.common.resource_group_name}-nsg"
   location = module.common.resource_group_location
-  security_rules = var.security_rules + [
+  security_rules = setunion(var.security_rules ,[
     {
       name = "SSH"
       priority = "100"
@@ -137,7 +137,7 @@ module "network_security_group" {
       source_address_prefix = "*"
       destination_address_prefix = "*"
     }
-  ]
+  ])
 }
 
 resource "azurerm_public_ip" "public-ip" {
