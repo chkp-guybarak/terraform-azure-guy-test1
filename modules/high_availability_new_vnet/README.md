@@ -1,6 +1,6 @@
 # Check Point CloudGuard IaaS High Availability Terraform deployment for Azure
 
-This Terraform module deploys Check Point CloudGuard IaaS High Availability solution into a new Vnet in Azure.
+This Terraform module deploys Check Point CloudGuard IaaS High Availability solution into a new VNet in azure.
 As part of the deployment the following resources are created:
 - Resource group
 - Virtual network

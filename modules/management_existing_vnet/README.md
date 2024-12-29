@@ -1,6 +1,6 @@
 # Check Point CloudGuard IaaS Management Terraform deployment for Azure
 
-This Terraform module deploys Check Point CloudGuard IaaS Management solution into an existing Vnet in Azure.
+This Terraform module deploys Check Point CloudGuard IaaS Management solution into an existing VNet in azure.
 As part of the deployment the following resources are created:
 - Resource group
 - Network security group
@@ -178,7 +178,7 @@ In order to check the template version refer to the [sk116585](https://supportce
 | | | |
 | 20210309 | - Add "source_image_vhd_uri" variable for using a custom development image |
 | | | |
-| 20210111 | First release of Check Point CloudGuard IaaS Management Terraform deployment into an existing Vnet in Azure  |
+| 20210111 | First release of Check Point CloudGuard IaaS Management Terraform deployment into an existing VNet in azure  |
 | | | |
 |  | Addition of "templateType" parameter to "cloud-version" files  |
 | | | |

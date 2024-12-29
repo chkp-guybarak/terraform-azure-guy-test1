@@ -1,6 +1,6 @@
 # Check Point CloudGuard Network Security Single Gateway Terraform deployment for Azure
 
-This Terraform module deploys Check Point CloudGuard Network Security Single Gateway solution into an existing Vnet in Azure.
+This Terraform module deploys Check Point CloudGuard Network Security Single Gateway solution into an existing VNet in azure.
 As part of the deployment the following resources are created:
 - Resource group
 - System assigned identity

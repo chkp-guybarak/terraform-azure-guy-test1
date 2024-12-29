@@ -1,6 +1,6 @@
 # Check Point CloudGuard Management Module - New  VNet 
 
-This Terraform module deploys Check Point CloudGuard Network Security Management solution into a new  VNet in Azure.
+This Terraform module deploys Check Point CloudGuard Network Security Management solution into a new  VNet in azure.
 As part of the deployment the following resources are created:
 - Resource group
 - Virtual network

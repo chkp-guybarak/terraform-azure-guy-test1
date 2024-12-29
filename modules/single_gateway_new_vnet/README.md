@@ -1,6 +1,6 @@
 # Check Point CloudGuard Single Gateway Module - New VNet 
 
-This Terraform module deploys Check Point CloudGuard Network Security Single Gateway solution into a new Vnet in Azure.
+This Terraform module deploys Check Point CloudGuard Network Security Single Gateway solution into a new VNet in azure.
 As part of the deployment the following resources are created:
 - Resource group
 - Virtual network
