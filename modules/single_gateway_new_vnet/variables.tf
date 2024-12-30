@@ -274,7 +274,7 @@ variable "security_rules" {
           destination_port_ranges = "*"
           description = "Allow all inbound connections"
           source_address_prefix = "*"
-          destination_address_prefix = ""
+          destination_address_prefix = "*"
       }
   ]
 }
