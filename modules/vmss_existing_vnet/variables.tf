@@ -1,4 +1,9 @@
 //********************** Basic Configuration Variables **************************//
+variable "subscription_id" {
+  description = "Subscription ID"
+  type = string
+}
+
 variable "vmss_name"{
   description = "vmss name"
   type = string

@@ -64,6 +64,7 @@ module "example_module" {
   enable_custom_metrics = true
   ```
 
+
 ### Module's variables:
 Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view the entire table.
  | Name          | Description | Type | Allowed values | Default        |

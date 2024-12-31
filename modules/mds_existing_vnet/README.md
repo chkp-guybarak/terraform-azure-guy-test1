@@ -11,19 +11,57 @@ This solution uses the following modules:
 - common - used for creating a resource group and defining common variables.
 - network_security_group - used for creating new network security groups and rules.
 
+## Usage
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
+**Example:**
+```
+provider "azurerm" {
+  features {}
+}
+
+module "example_module" {
+
+	source  = "CheckPointSW/cloudguard-network-security/azure//modules/mds_existing_vnet"
+	version = "1.0.0"
+
+	source_image_vhd_uri            = "noCustomUri"
+	resource_group_name             = "checkpoint-mds-rg-terraform"
+	mds_name                        = "checkpoint-mds-terraform"
+	location                        = "eastus"
+	vnet_name                       = "checkpoint-mds-vnet"
+	vnet_resource_group             = "existing-vnet"
+	management_subnet_name          = "mgmt-subnet"
+	subnet_1st_Address              = "10.0.1.4"
+	management_GUI_client_network   = "0.0.0.0/0"
+	mds_enable_api                  = "disable"
+	admin_password                  = "xxxxxxxxxxxx"
+	vm_size                         = "Standard_D3_v2"
+	disk_size                       = "110"
+	vm_os_sku                       = "mgmt-byol"
+	vm_os_offer                     = "check-point-cg-r8110"
+	os_version                      = "R8110"
+	bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+	allow_upload_download           = true
+	authentication_type             = "Password"
+	admin_shell                     = "/etc/cli.sh"
+	sic_key                          = "xxxxxxxxxxxx"
+	installation_type               = "mds-primary"
+	primary                         = "true"
+	secondary                       = "false"
+	logserver                       = "false"
+    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+	maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    nsg_id                          = ""
+    add_storage_account_ip_rules    = false
+    storage_account_additional_ips  = []
+}
+```
+  
 
 ### Module's variables:
  | Name          | Description                                                                                                                                                                          | Type          | Allowed values | Default |
  | ------------- | ------------- | ------------- | -------------  | -------------  |
- | **client_secret** | The client secret value of the Service Principal used to deploy the solution                                                                                                      | string | | n/a
- |  |                                                                                                                                                                                      |  |  |  |
- | **client_id** | The client ID of the Service Principal used to deploy the solution                                                                                                                   | string | | n/a
- |  |                                                                                                                                                                                      |  |  |  |
- | **tenant_id** | The tenant ID of the Service Principal used to deploy the solution                                                                                                                   | string | | n/a
- |  |                                                                                                                                                                                      |  |  |  |
- | **subscription_id** | The subscription ID is used to pay for Azure cloud services                                                                                                                          | string | | n/a
- |  |                                                                                                                                                                                      |  |  |  |
  | **source_image_vhd_uri** | The URI of the blob containing the development image. Please use noCustomUri if you want to use marketplace images                                                                   | string | | "noCustomUri" 
  |  |                                                                                                                                                                                      |  |  |  |
  | **resource_group_name** | The name of the resource group that will contain the contents of the deployment                                                                                                      | string | Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period | n/a
@@ -83,42 +121,10 @@ This solution uses the following modules:
  | **add_storage_account_ip_rules** | Add Storage Account IP rules that allow access to the Serial Console only for IPs based on their geographic location, if false then accses will be allowed from all networks | boolean | true; <br/>false; |  false
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
+|  |  |  |                |                                                                                                                                                                                                                                         |
+| **security_rules**                        | Security rules for the Network Security Group using this format | list(any)      | A list of valid security rules values.<br />A security rule composed of: <br />{name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description} | [{     name="AllowAllInBound"         priority="100"          direction="Inbound"          access="Allow"          protocol="*"          source_port_ranges="*"          destination_port_ranges=""          description="Allow all inbound connections"          source_address_prefix="*"          destination_address_prefix=""      }] 
+ |                |                                                                               |
+| **admin_SSH_key**                        | The SSH public key for SSH connections to the instance. <br />Used when the authentication_type is 'SSH Public Key' | string     | | ""
 
-
-## Example
-	client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-	client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-	tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-	subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-	source_image_vhd_uri            = "noCustomUri"
-	resource_group_name             = "checkpoint-mds-rg-terraform"
-	mds_name                        = "checkpoint-mds-terraform"
-	location                        = "eastus"
-	vnet_name                       = "checkpoint-mds-vnet"
-	vnet_resource_group             = "existing-vnet"
-	management_subnet_name          = "mgmt-subnet"
-	subnet_1st_Address              = "10.0.1.4"
-	management_GUI_client_network   = "0.0.0.0/0"
-	mds_enable_api                  = "disable"
-	admin_password                  = "xxxxxxxxxxxx"
-	vm_size                         = "Standard_D3_v2"
-	disk_size                       = "110"
-	vm_os_sku                       = "mgmt-byol"
-	vm_os_offer                     = "check-point-cg-r8110"
-	os_version                      = "R8110"
-	bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-	allow_upload_download           = true
-	authentication_type             = "Password"
-	admin_shell                     = "/etc/cli.sh"
-	sic_key                          = "xxxxxxxxxxxx"
-	installation_type               = "mds-primary"
-	primary                         = "true"
-	secondary                       = "false"
-	logserver                       = "false"
-    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-	maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    nsg_id                          = ""
-    add_storage_account_ip_rules    = false
-    storage_account_additional_ips  = []
 
 

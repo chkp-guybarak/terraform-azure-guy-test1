@@ -72,8 +72,19 @@ module "example_module" {
     nsg_id                          = ""
     add_storage_account_ip_rules    = false
     storage_account_additional_ips  = []
+}
 ```
 
+## Conditional creation
+To create role assignment and enable CloudGuard metrics in order to send statuses and statistics collected from VMSS instances to the Azure Monitor service:
+```
+enable_custom_metrics = true
+```
+
+## Deploy Without Public IP
+
+1. By default, the VMSS is deployed with public IP
+2. To deploy without public IP, remove the "public_ip_address_configuration" block in main.tf
 ### Module's variables:
 
 Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view the entire table.
@@ -156,13 +167,3 @@ Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
 
-## Conditional creation
-To create role assignment and enable CloudGuard metrics in order to send statuses and statistics collected from VMSS instances to the Azure Monitor service:
-```
-enable_custom_metrics = true
-```
-
-## Deploy Without Public IP
-
-1. By default, the VMSS is deployed with public IP
-2. To deploy without public IP, remove the "public_ip_address_configuration" block in main.tf

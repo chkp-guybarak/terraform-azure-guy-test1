@@ -12,73 +12,53 @@ This solution uses the following modules:
 - network_security_group - used for creating new network security groups and rules.
 
 
-## Configurations
-- Install and configure Terraform to provision Azure resources: [Configure Terraform for Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure)
-- In order to use ssh connection to VMs, it is **required** to add a public key to the /terraform/azure/management-existing-vnet/azure_public_key file.
-
 ## Usage
-- Choose the preferred login method to Azure in order to deploy the solution:
-    <br>1. Using Service Principal:
-    - Create a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) (or use the existing one) 
-    - Grant the Service Principal at least "**Managed Application Contributor**", "**Storage Account Contributor**", "**Network Contributor**", "**Virtual Machine Contributor**" permissions to the Azure subscription<br>
-    - The Service Principal credentials can be stored either in the terraform.tfvars or as [Environment Variables](https://www.terraform.io/docs/providers/azuread/guides/service_principal_client_secret.html)<br>
-    
-      In case the Environment Variables are used, perform modifications described below:<br>
-      
-       a. The next lines in the main.tf file, in the provider azurerm resource,  need to be deleted or commented:
-            
-                provider "azurerm" {
-                
-                //  subscription_id = var.subscription_id
-                //  client_id = var.client_id
-                //  client_secret = var.client_secret
-                //  tenant_id = var.tenant_id
-                
-                   features {}
-                }
-            
-        b. In the terraform.tfvars file leave empty double quotes for client_secret, client_id , tenant_id and subscription_id variables:
-        
-                client_secret                   = ""
-                client_id                       = ""
-                tenant_id                       = ""
-                subscription_id                 = "" 
-        
-    <br>2. Using **az** commands from a command-line:
-    - Run  **az login** command 
-    - Sign in with your account credentials in the browser
-    - [Accept Azure Marketplace image terms](https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest) by running:
-     <br>**az vm image terms accept --urn publisher:offer:sku:version**, where:
-        - publisher = checkpoint;
-        - offer = vm_os_offer (see accepted values in the table below);
-        - sku = vm_os_sku (see accepted values in the table below);
-        - version = latest<br/>
-    <br>Example:<br>
-    az vm image terms accept --urn checkpoint:check-point-cg-r8120:sg-byol:latest
-    
-    - In the terraform.tfvars file leave empty double quotes for client_secret, client_id and tenant_id variables. 
- 
-- Fill all variables in the /terraform/azure/management-existing-vnet/terraform.tfvars file with proper values (see below for variables descriptions).
-- From a command line initialize the Terraform configuration directory:
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
-        terraform init
-- Create an execution plan:
- 
-        terraform plan
-- Create or modify the deployment:
- 
-        terraform apply
+**Example:**
+```
+provider "azurerm" {
+  features {}
+}
+
+module "example_module" {
+
+        source  = "CheckPointSW/cloudguard-network-security/azure//modules/management_existing_vnet"
+        version = "1.0.0"
+s
+        source_image_vhd_uri            = "noCustomUri"
+        resource_group_name             = "checkpoint-mgmt-terraform"
+        mgmt_name                       = "checkpoint-mgmt-terraform"
+        location                        = "eastus"
+        vnet_name                       = "checkpoint-mgmt-vnet"
+        vnet_resource_group             = "existing-vnet"
+        management_subnet_name          = "mgmt-subnet"
+        subnet_1st_Address              = "10.0.1.4"
+        management_GUI_client_network   = "0.0.0.0/0"
+        mgmt_enable_api                 = "disable"
+        admin_password                  = "xxxxxxxxxxxx"
+        vm_size                         = "Standard_D3_v2"
+        disk_size                       = "110"
+        vm_os_sku                       = "mgmt-byol"
+        vm_os_offer                     = "check-point-cg-r8110"
+        os_version                      = "R8110"
+        bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+        allow_upload_download           = true
+        authentication_type             = "Password"
+        admin_shell                     = "/etc/cli.sh"
+        serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        nsg_id                          = ""
+        add_storage_account_ip_rules    = false
+        storage_account_additional_ips  = []
+}
+```
+  
 
 ### Module's variables:
  | Name          | Description   | Type          | Allowed values | Default |
  | ------------- | ------------- | ------------- | -------------  | ------------- |
- | **client_secret** | The client secret of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
- | **client_id** | The client ID of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
  | **tenant_id** | The tenant ID of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
- | **subscription_id** | The subscription ID is used to pay for Azure cloud services | string | | n/a
  |  |  |  |  |  |
  | **source_image_vhd_uri** | The URI of the blob containing the development image. Please use noCustomUri if you want to use marketplace images  | string | | "noCustomUri"
  |  |  |  |  |  |
@@ -129,61 +109,3 @@ This solution uses the following modules:
  | **add_storage_account_ip_rules** | Add Storage Account IP rules that allow access to the Serial Console only for IPs based on their geographic location, if false then accses will be allowed from all networks | boolean | true; <br/>false; |  false
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
-
-
-## Example
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    source_image_vhd_uri            = "noCustomUri"
-    resource_group_name             = "checkpoint-mgmt-terraform"
-    mgmt_name                       = "checkpoint-mgmt-terraform"
-    location                        = "eastus"
-    vnet_name                       = "checkpoint-mgmt-vnet"
-    vnet_resource_group             = "existing-vnet"
-    management_subnet_name          = "mgmt-subnet"
-    subnet_1st_Address              = "10.0.1.4"
-    management_GUI_client_network   = "0.0.0.0/0"
-    mgmt_enable_api                 = "disable"
-    admin_password                  = "xxxxxxxxxxxx"
-    vm_size                         = "Standard_D3_v2"
-    disk_size                       = "110"
-    vm_os_sku                       = "mgmt-byol"
-    vm_os_offer                     = "check-point-cg-r8110"
-    os_version                      = "R8110"
-    bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-    allow_upload_download           = true
-    authentication_type             = "Password"
-    admin_shell                     = "/etc/cli.sh"
-    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    nsg_id                          = ""
-    add_storage_account_ip_rules    = false
-    storage_account_additional_ips  = []
-
-    
-## Revision History
-In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
-
-| Template Version | Description   |
-| ---------------- | ------------- |
-| 20240613 | - Updated Azure Terraform provider version <br> - Cosmetic fixes & default values <br> - Added option to limit storage account access by specify allowed sourcess <br> - Updated Public IP sku to Standard <br> - Added validation for os_version & os_offer |
-| | | |     
-| 20230910 | - R81.20 is the default version |
-| | | |
-| 20221124 | - Added R81.20 support   <br/> - Upgraded azurerm provider |
-| | | |
-| 20220111 | - Added support to select different shells  |
-| | | |
-| 20210309 | - Add "source_image_vhd_uri" variable for using a custom development image |
-| | | |
-| 20210111 | First release of Check Point CloudGuard Management Terraform deployment into an existing VNet in azure  |
-| | | |
-|  | Addition of "templateType" parameter to "cloud-version" files  |
-| | | |
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
-

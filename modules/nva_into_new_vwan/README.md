@@ -12,6 +12,59 @@ As part of the deployment the following resources are created:
 For additional information,
 please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CloudGuard_Network_for_Azure_vWAN/Default.htm)
 
+## Usage
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
+
+**Example:**
+```
+provider "azurerm" {
+  features {}
+}
+
+module "example_module" {
+
+    source  = "CheckPointSW/cloudguard-network-security/azure//modules/nva_into_new_vwan"
+    version = "1.0.0"
+
+    authentication_method           = "Service Principal"
+    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    resource-group-name             = "tf-managed-app-resource-group"
+    location                        = "westcentralus"
+    vwan-name                       = "tf-vwan"
+    vwan-hub-name                   = "tf-vwan-hub"
+    vwan-hub-address-prefix         = "10.0.0.0/16"
+    managed-app-name                = "tf-vwan-managed-app-nva"
+    nva-rg-name                     = "tf-vwan-nva-rg"
+    nva-name                        = "tf-vwan-nva"
+    os-version                      = "R8120"
+    license-type                    = "Security Enforcement (NGTP)"
+    scale-unit                      = "2"
+    bootstrap-script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+    admin-shell                     = "/etc/cli.sh"
+    sic-key                         = "xxxxxxxxxxxx"
+    ssh-public-key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
+    bgp-asn                         = "64512"
+    custom-metrics                  = "yes"
+    routing-intent-internet-traffic = "yes"
+    routing-intent-private-traffic  = "yes"
+    smart1-cloud-token-a            = ""
+    smart1-cloud-token-b            = ""
+    smart1-cloud-token-c            = ""
+    smart1-cloud-token-d            = ""
+    smart1-cloud-token-e            = ""   
+    existing-public-ip              = ""
+    new-public-ip                   = "yes"
+}
+```
+
+  ## Conditional creation
+-  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
+  ```
+  custom-metrics = yes
+  ```
 
 ### Module's variables:
  | Name          | Description | Type   | Allowed values | Default |
@@ -79,57 +132,4 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
  | **new-public-ip** | Deploy a new public IP resource as part of the managed app and attach to the NVA | string | yes; <br/>no;|    |
  |  |  
 
-## Conditional creation
--  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
-  ```
-  custom-metrics = yes
-  ```
-
-## Example
-    authentication_method           = "Service Principal"
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    resource-group-name             = "tf-managed-app-resource-group"
-    location                        = "westcentralus"
-    vwan-name                       = "tf-vwan"
-    vwan-hub-name                   = "tf-vwan-hub"
-    vwan-hub-address-prefix         = "10.0.0.0/16"
-    managed-app-name                = "tf-vwan-managed-app-nva"
-    nva-rg-name                     = "tf-vwan-nva-rg"
-    nva-name                        = "tf-vwan-nva"
-    os-version                      = "R8120"
-    license-type                    = "Security Enforcement (NGTP)"
-    scale-unit                      = "2"
-    bootstrap-script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-    admin-shell                     = "/etc/cli.sh"
-    sic-key                         = "xxxxxxxxxxxx"
-    admin_SSH_key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
-    bgp-asn                         = "64512"
-    custom-metrics                  = "yes"
-    routing-intent-internet-traffic = "yes"
-    routing-intent-private-traffic  = "yes"
-    smart1-cloud-token-a            = ""
-    smart1-cloud-token-b            = ""
-    smart1-cloud-token-c            = ""
-    smart1-cloud-token-d            = ""
-    smart1-cloud-token-e            = ""   
-    existing-public-ip              = ""
-    new-public-ip                   = "yes"
-
-## Revision History
-In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
-
-| Template Version | Description    |
-|------------------|-----------------------------------------------------------------------------------------------|
-| 20241028         |Added R82 version support                   |
-| 20240613 | Cosmetic fixes & default values |
-|  20240228         | Added public IP for ingress support                |                                                                                                   | |
-|  20231226         | First release of Check Point CloudGuard Network Security Virtual WAN Module - New VNet                |                                                                                                   | |
-
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
 

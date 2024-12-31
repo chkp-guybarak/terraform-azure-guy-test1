@@ -82,14 +82,8 @@ enable_custom_metrics = true
 ### Module's variables:
  | Name          | Description   | Type          | Allowed values | Default | 
  | ------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------- | -------------  | -------------  |
- | **client_secret** | The client secret of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
- | **client_id** | The client ID of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
- | **tenant_id** | The tenant ID of the Service Principal used to deploy the solution | string | | n/a
- |  |  |  |  |  |
  | **subscription_id** | The subscription ID is used to pay for Azure cloud services | string | | n/a
- |  |  |  |  |  |
+ |  |  |  |  |         |
  | **source_image_vhd_uri** | The URI of the blob containing the development image. Please use noCustomUri if you want to use marketplace images  | string | | "noCustomUri" 
  |  |  |  |  |  |
  | **resource_group_name** | The name of the resource group that will contain the contents of the deployment | string | Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period <br />Note: Resource group name must not contain reserved words based on: sk40179| n/a

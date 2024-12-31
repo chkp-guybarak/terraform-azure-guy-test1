@@ -10,53 +10,53 @@ As part of the deployment the following resources are created:
 For additional information,
 please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CloudGuard_Network_for_Azure_vWAN/Default.htm)
 
-## Configurations
-- Install and configure Terraform to provision Azure resources: [Configure Terraform for Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure).
-- In order to configure hub routing-intent policies it is **required** to have Python and 'requests' library installed. 
-
 ## Usage
-- Choose the preferred login method to Azure in order to deploy the solution:
-    <br>1. Using Service Principal:
-    - Create a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) (or use the existing one) 
-    - Grant the Service Principal at least "**Contributor**" permissions to the Azure subscription<br>
-    - The Service Principal credentials can be stored either in the terraform.tfvars or as [Environment Variables](https://www.terraform.io/docs/providers/azuread/guides/service_principal_client_secret.html)<br>
-    
-      In case the Environment Variables are used, perform modifications described below:<br>
-      
-       a. The next lines in the versions.tf file, in the provider azurerm resource,  need to be deleted or commented:
-            
-                provider "azurerm" {
-                 
-                //  subscription_id = var.subscription_id
-                //  client_id = var.client_id
-                //  client_secret = var.client_secret
-                //  tenant_id = var.tenant_id
-                
-                   features {}
-                }
-            
-        b. In the terraform.tfvars file leave empty double quotes for client_secret, client_id , tenant_id and subscription_id variables:
-        
-                client_secret                   = ""
-                client_id                       = ""
-                tenant_id                       = ""
-                subscription_id                 = "" 
-        
-    <br>2. Using **az** commands from a command-line:
-    - Run  **az login** command 
-    - Sign in with your account credentials in the browser
-    - In the terraform.tfvars file leave empty double quotes for client_secret, client_id and tenant_id variables. 
- 
-- Fill all variables in the /terraform/azure/nva-into-existing-hub/terraform.tfvars file with proper values (see below for variables descriptions).
-- From a command line initialize the Terraform configuration directory:
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
-        terraform init
-- Create an execution plan:
- 
-        terraform plan
-- Create or modify the deployment:
- 
-        terraform apply
+**Example:**
+```
+provider "azurerm" {
+  features {}
+}
+
+module "example_module" {
+
+        source  = "CheckPointSW/cloudguard-network-security/azure//modules/nva_into_existing_hub"
+        version = "1.0.0"
+
+        authentication_method           = "Service Principal"
+        client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        resource-group-name             = "tf-managed-app-resource-group"
+        location                        = "westcentralus"
+        vwan-hub-name                   = "tf-vwan-hub"
+        vwan-hub-resource-group         = "tf-vwan-hub-rg"
+        managed-app-name                = "tf-vwan-managed-app-nva"
+        nva-rg-name                     = "tf-vwan-nva-rg"
+        nva-name                        = "tf-vwan-nva"
+        os-version                      = "R8120"
+        license-type                    = "Security Enforcement (NGTP)"
+        scale-unit                      = "2"
+        bootstrap-script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+        admin-shell                     = "/etc/cli.sh"
+        sic-key                         = "xxxxxxxxxxxx"
+        ssh-public-key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
+        bgp-asn                         = "64512"
+        custom-metrics                  = "yes"
+        routing-intent-internet-traffic = "yes"
+        routing-intent-private-traffic  = "yes"
+        smart1-cloud-token-a            = ""
+        smart1-cloud-token-b            = ""
+        smart1-cloud-token-c            = ""
+        smart1-cloud-token-d            = ""
+        smart1-cloud-token-e            = ""   
+        existing-public-ip              = ""
+        new-public-ip                   = "yes"
+}
+```
+  
 
 ### Module's variables:
  | Name          | Description | Type   | Allowed values                              | Default |
@@ -118,43 +118,7 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
  | **smart1-cloud-token-e** | Smart-1 Cloud token to connect automatically ***NVA instance e*** to Check Point's Security Management as a Service. <br/><br/> Follow these instructions to quickly connect this member to Smart-1 Cloud - [SK180501](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk180501) | string | A valid token copied from the Connect Gateway screen in Smart-1 Cloud portal   | n/a                                                  |  |
  |  |  
 
-## Conditional creation
--  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
-  ```
-  custom-metrics = yes
-  ```
 
-## Example
-    authentication_method           = "Service Principal"
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    resource-group-name             = "tf-managed-app-resource-group"
-    location                        = "westcentralus"
-    vwan-hub-name                   = "tf-vwan-hub"
-    vwan-hub-resource-group         = "tf-vwan-hub-rg"
-    managed-app-name                = "tf-vwan-managed-app-nva"
-    nva-rg-name                     = "tf-vwan-nva-rg"
-    nva-name                        = "tf-vwan-nva"
-    os-version                      = "R8120"
-    license-type                    = "Security Enforcement (NGTP)"
-    scale-unit                      = "2"
-    bootstrap-script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-    admin-shell                     = "/etc/cli.sh"
-    sic-key                         = "xxxxxxxxxxxx"
-    admin_SSH_key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
-    bgp-asn                         = "64512"
-    custom-metrics                  = "yes"
-    routing-intent-internet-traffic = "yes"
-    routing-intent-private-traffic  = "yes"
-    smart1-cloud-token-a            = ""
-    smart1-cloud-token-b            = ""
-    smart1-cloud-token-c            = ""
-    smart1-cloud-token-d            = ""
-    smart1-cloud-token-e            = ""   
-    existing-public-ip              = ""
-    new-public-ip                   = "yes"
 
 
 

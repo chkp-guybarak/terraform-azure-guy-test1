@@ -21,13 +21,9 @@ provider "azurerm" {
 
 module "example_module" {
 
-        source  = "CheckPointSW/cloudguard-network-security/azure//modules/single_gateway_new_vnet"
+        source  = "CheckPointSW/cloudguard-network-security/azure//modules/single_gateway_existing_vnet"
         version = "1.0.0"
 
-        client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         source_image_vhd_uri            = "noCustomUri"
         resource_group_name             = "checkpoint-single-gw-terraform"
         single_gateway_name             = "checkpoint-single-gw-terraform"
@@ -71,15 +67,7 @@ module "example_module" {
 ### Module's variables:
  | Name          | Description | Type | Allowed values | Default |
  |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------- | ------------- |---------| -------------  |
- | **client_secret** | The client secret value of the Service Principal used to deploy the solution                                                                                                                                                                                                                                                 | string | | n/a     
- |  |                                                                                                                                                                                                                                                                                                                                 |  |  |         |
- | **client_id** | The client ID of the Service Principal used to deploy the solution                                                                                                                                                                                                                                                              | string | | n/a     
- |  |                                                                                                                                                                                                                                                                                                                                 |  |  |         |
- | **tenant_id** | The tenant ID of the Service Principal used to deploy the solution                                                                                                                                                                                                                                                              | string | | n/a     
- |  |                                                                                                                                                                                                                                                                                                                                 |  |  |         |
- | **subscription_id** | The subscription ID is used to pay for Azure cloud services                                                                                                                                                                                                                                                                     | string | | n/a     
- |  |                                                                                                                                                                                                                                                                                                                                 |  |  |         |
- | **source_image_vhd_uri** | The URI of the blob containing the development image. Please use noCustomUri if you want to use marketplace images                                                                                                                                                                                                              | string | | "noCustomUri"     
+  | **source_image_vhd_uri** | The URI of the blob containing the development image. Please use noCustomUri if you want to use marketplace images                                                                                                                                                                                                              | string | | "noCustomUri"     
  |  |                                                                                                                                                                                                                                                                                                                                 |  |  |         |
  | **resource_group_name** | The name of the resource group that will contain the contents of the deployment                                                                                                                                                                                                                                                 | string | Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period | n/a     
  |  |                                                                                                                                                                                                                                                                                                                                 |  |  |         |
