@@ -1,4 +1,4 @@
-# Check Point CloudGuard Network Security Virtual WAN Terraform deployment for Azure
+# Check Point CloudGuard Virtual WAN Module - Existing Hub
 
 This Terraform module deploys Check Point CloudGuard Network Security Virtual WAN NVA solution into an existing vWAN Hub in Azure.
 As part of the deployment the following resources are created:
@@ -58,7 +58,7 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
  
         terraform apply
 
-### terraform.tfvars variables:
+### Module's variables:
  | Name          | Description | Type   | Allowed values                              | Default |
  |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| -------------  | -------------  |
  | **authentication_method** | The authentication method used to deploy the solution                      | string | "Service Principal"; <br/>"Azure CLI";      | n/a        
@@ -97,7 +97,7 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
  |  |             |        |                                             |  |
  | **sic-key** | The Secure Internal Communication one time secret used to set up trust between the gateway object and the management server                                     | string | Only alphanumeric characters are allowed, and the value must be 12-30 characters long  | n/a                                            |
  |  |             |        |                                             |  |
- | **ssh-public-key** | The public ssh key used for ssh connection to the NVA GW instances         | string | ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx generated-by-azure; | n/a               |            | string | gateway; <br/>standalone; |
+ | **admin_SSH_key** | The public ssh key used for ssh connection to the NVA GW instances         | string | ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx generated-by-azure; | n/a               |            | string | gateway; <br/>standalone; |
  |  |             |        |                                             |  |
  | **bgp-asn** | The BGP autonomous system number                                           | string | 64512 | "64512" ||
  |  |             |        |                                             |  |
@@ -143,7 +143,7 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
     bootstrap-script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
     admin-shell                     = "/etc/cli.sh"
     sic-key                         = "xxxxxxxxxxxx"
-    ssh-public-key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
+    admin_SSH_key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
     bgp-asn                         = "64512"
     custom-metrics                  = "yes"
     routing-intent-internet-traffic = "yes"
@@ -156,18 +156,5 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
     existing-public-ip              = ""
     new-public-ip                   = "yes"
 
-## Revision History
-In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
 
-| Template Version | Description       |
-|------------------|-------------------|
-| 20241028         |Added R82 version support                   |
-| 20240613         | Cosmetic fixes & default values |
-| 20240228         | Added public IP for ingress support  |                                                              | |
-| 20231226         | First release of Check Point CloudGuard Network Security Virtual WAN Terraform deployment for Azure | |
-
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
 

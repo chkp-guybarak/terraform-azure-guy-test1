@@ -123,7 +123,7 @@ variable "sic-key" {
   }
 }
 
-variable "ssh-public-key" {
+variable "admin_SSH_key" {
   type    = string
   default = ""
 }

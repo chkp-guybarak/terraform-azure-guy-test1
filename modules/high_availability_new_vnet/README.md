@@ -1,6 +1,6 @@
-# Check Point CloudGuard IaaS High Availability Terraform deployment for Azure
+# Check Point CloudGuard High Availability Module - New VNet 
 
-This Terraform module deploys Check Point CloudGuard IaaS High Availability solution into a new VNet in azure.
+This Terraform module deploys Check Point CloudGuard Network Security High Availability solution into a new VNet in azure.
 As part of the deployment the following resources are created:
 - Resource group
 - Virtual network
@@ -12,69 +12,91 @@ For additional information,
 please see the [CloudGuard Network for Azure High Availability Cluster Deployment Guide](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CloudGuard_Network_for_Azure_HA_Cluster/Default.htm)
 
 This solution uses the following modules:
-- /terraform/azure/modules/common - used for creating a resource group and defining common variables.
-- /terraform/azure/modules/vnet - used for creating new virtual network and subnets.
-- /terraform/azure/modules/network_security_group - used for creating new network security groups and rules.
+- common - used for creating a resource group and defining common variables.
+- vnet - used for creating new virtual network and subnets.
+- network_security_group - used for creating new network security groups and rules.
 
-
-## Configurations
-- Install and configure Terraform to provision Azure resources: [Configure Terraform for Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure)
-- In order to use ssh connection to VMs, it is **required** to add a public key to the /terraform/azure/high-availability-new-vnet/azure_public_key file.
 
 ## Usage
-- Choose the preferred login method to Azure in order to deploy the solution:
-    <br>1. Using Service Principal:
-    - Create a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) (or use the existing one) 
-    - Grant the Service Principal at least "**Managed Application Contributor**", "**Storage Account Contributor**", "**Network Contributor**", "**Virtual Machine Contributor**", "**User Access Administrator**" permissions to the Azure subscription<br>
-    - The Service Principal credentials can be stored either in the terraform.tfvars or as [Environment Variables](https://www.terraform.io/docs/providers/azuread/guides/service_principal_client_secret.html)<br>
-    
-      In case the Environment Variables are used, perform modifications described below:<br>
-      
-       a. The next lines in the main.tf file, in the provider azurerm resource,  need to be deleted or commented:
-            
-                provider "azurerm" {
-                 
-                //  subscription_id = var.subscription_id
-                //  client_id = var.client_id
-                //  client_secret = var.client_secret
-                //  tenant_id = var.tenant_id
-                
-                   features {}
-                }
-            
-        b. In the terraform.tfvars file leave empty double quotes for client_secret, client_id , tenant_id and subscription_id variables:
-        
-                client_secret                   = ""
-                client_id                       = ""
-                tenant_id                       = ""
-                subscription_id                 = "" 
-        
-    <br>2. Using **az** commands from a command-line:
-    - Run  **az login** command 
-    - Sign in with your account credentials in the browser
-    - [Accept Azure Marketplace image terms](https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest) by running:
-     <br>**az vm image terms accept --urn publisher:offer:sku:version**, where:
-        - publisher = checkpoint;
-        - offer = vm_os_offer (see accepted values in the table below);
-        - sku = vm_os_sku (see accepted values in the table below);
-        - version = latest<br/>
-    <br>Example:<br>
-    az vm image terms accept --urn checkpoint:check-point-cg-r8120:sg-byol:latest
-    
-    - In the terraform.tfvars file leave empty double quotes for client_secret, client_id and tenant_id variables. 
- 
-- Fill all variables in the /terraform/azure/high-availability-new-vnet/terraform.tfvars file with proper values (see below for variables descriptions).
-- From a command line initialize the Terraform configuration directory:
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
-        terraform init
-- Create an execution plan:
- 
-        terraform plan
-- Create or modify the deployment:
- 
-        terraform apply
+**Example:**
+```
+provider "azurerm" {
+  features {}
+}
 
-### terraform.tfvars variables:
+module "example_module" {
+
+        source  = "CheckPointSW/cloudguard-network-security/azure//modules/single_gateway_new_vnet"
+        version = "1.0.0"
+
+        tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        source_image_vhd_uri            = "noCustomUri"
+        resource_group_name             = "checkpoint-ha-terraform"
+        cluster_name                    = "checkpoint-ha-terraform"
+        location                        = "eastus"
+        vnet_name                       = "checkpoint-ha-vnet"
+        address_space                   = "10.0.0.0/16"
+        subnet_prefixes                 = ["10.0.1.0/24","10.0.2.0/24"]
+        admin_password                  = "xxxxxxxxxxxx"
+        smart_1_cloud_token_a           = "xxxxxxxxxxxx"
+        smart_1_cloud_token_b           = "xxxxxxxxxxxx"
+        sic_key                         = "xxxxxxxxxxxx"
+        vm_size                         = "Standard_D3_v2"
+        disk_size                       = "110"
+        vm_os_sku                       = "sg-byol"
+        vm_os_offer                     = "check-point-cg-r8110"
+        os_version                      = "R8110"
+        bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+        allow_upload_download           = true
+        authentication_type             = "Password"
+        availability_type               = "Availability Zone"
+        enable_custom_metrics           = true
+        enable_floating_ip              = false
+        use_public_ip_prefix            = false
+        create_public_ip_prefix         = false
+        existing_public_ip_prefix_id    = ""
+        admin_shell                     = "/etc/cli.sh"
+        serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        nsg_id                          = ""
+        add_storage_account_ip_rules    = false
+        storage_account_additional_ips  = []
+
+
+
+}
+```
+
+## Conditional creation
+- To deploy the solution based on Azure Availability Set and create a new Availability Set for the virtual machines:
+```
+availability_type = "Availability Set"
+```
+   Otherwise, to deploy the solution based on Azure Availability Zone:
+```
+availability_type = "Availability Zone"
+```
+-  To enable CloudGuard metrics in order to send statuses and statistics collected from HA instances to the Azure Monitor service:
+  ```
+  enable_custom_metrics = true
+  ```
+- To create new public IP prefix for the public IP:
+  ```
+  use_public_ip_prefix            = true
+  create_public_ip_prefix         = true
+  ```
+- To use an exisiting public IP prefix for the public IP:
+  ```
+  use_public_ip_prefix            = true
+  create_public_ip_prefix         = false
+  existing_public_ip_prefix_id    = "public IP prefix resource id"
+  ```
+
+
+
+### Module's variables:
  | Name   | Description   | Type   | Allowed values      | Default |
  | ------------- | ------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------| ------------- |
  | **client_secret** | The client secret of the Service Principal used to deploy the solution | string | | n/a     |
@@ -147,96 +169,4 @@ This solution uses the following modules:
  |  |  |  |  |  |
  | **storage_account_additional_ips** | IPs/CIDRs that are allowed access to the Storage Account | list(string) | A list of valid IPs and CIDRs | []
 
-
-## Conditional creation
-- To deploy the solution based on Azure Availability Set and create a new Availability Set for the virtual machines:
-```
-availability_type = "Availability Set"
-```
-   Otherwise, to deploy the solution based on Azure Availability Zone:
-```
-availability_type = "Availability Zone"
-```
--  To enable CloudGuard metrics in order to send statuses and statistics collected from HA instances to the Azure Monitor service:
-  ```
-  enable_custom_metrics = true
-  ```
-- To create new public IP prefix for the public IP:
-  ```
-  use_public_ip_prefix            = true
-  create_public_ip_prefix         = true
-  ```
-- To use an exisiting public IP prefix for the public IP:
-  ```
-  use_public_ip_prefix            = true
-  create_public_ip_prefix         = false
-  existing_public_ip_prefix_id    = "public IP prefix resource id"
-  ```
-
-## Example
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    source_image_vhd_uri            = "noCustomUri"
-    resource_group_name             = "checkpoint-ha-terraform"
-    cluster_name                    = "checkpoint-ha-terraform"
-    location                        = "eastus"
-    vnet_name                       = "checkpoint-ha-vnet"
-    address_space                   = "10.0.0.0/16"
-    subnet_prefixes                 = ["10.0.1.0/24","10.0.2.0/24"]
-    admin_password                  = "xxxxxxxxxxxx"
-    smart_1_cloud_token_a           = "xxxxxxxxxxxx"
-    smart_1_cloud_token_b           = "xxxxxxxxxxxx"
-    sic_key                         = "xxxxxxxxxxxx"
-    vm_size                         = "Standard_D3_v2"
-    disk_size                       = "110"
-    vm_os_sku                       = "sg-byol"
-    vm_os_offer                     = "check-point-cg-r8110"
-    os_version                      = "R8110"
-    bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
-    allow_upload_download           = true
-    authentication_type             = "Password"
-    availability_type               = "Availability Zone"
-    enable_custom_metrics           = true
-    enable_floating_ip              = false
-    use_public_ip_prefix            = false
-    create_public_ip_prefix         = false
-    existing_public_ip_prefix_id    = ""
-    admin_shell                     = "/etc/cli.sh"
-    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    nsg_id                          = ""
-    add_storage_account_ip_rules    = false
-    storage_account_additional_ips  = []
-
-## Revision History
-In order to check the template version refer to the [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
-
-| Template Version | Description   |
-| ---------------- | ------------- |
-| 20240613 | - Updated Azure Terraform provider version <br> - Updated managed identity permissions <br> - Cosmetic fixes & default values <br> - Added option to limit storage account access by specify allowed sourcess <br> - Added validation for os_version & os_offer |
-| | | |     
-| 20230910 | - R81.20 is the default version |
-| | | |
-| 20230212 | - Added Smart-1 Cloud support  |
-| | | |
-| 20221124 | - Added R81.20 support   <br/> - Upgraded azurerm provider |
-| | | |
-| 20220111 | - Added support to select different shells  |
-| | | |
-| 20210309 | - Add "source_image_vhd_uri" variable for using a custom development image |
-| | | |
-| 20210111 |- Update terraform version to 0.14.3 <br/> - Update azurerm version to 2.17.0 <br/> - Add authentication_type variable for choosing the authentication type. <br/> - Merge ha-availability-set-new-vnet and ha-availability-zones-new-vnet deployments to one deployment.<br/> - Adding support for R81.<br/> - Add support to CloudGuards metrics. <br/> - Update resources for NSG https://github.com/CheckPointSW/CloudGuardIaaS/issues/67 <br/> - The cluster member current state is kept when redeploying. <br/> - Avoid role-assignment re-creation when re-apply |
-| | | |
-| 20200508 |- Add backend load balancer rules resource. <br/> - Rename the health probe for the backend load balancer. <br/> - Rename the template name to "ha" |
-| | | |
-| 20200305 | First release of Check Point CloudGuard IaaS High Availability Terraform deployment for Azure |
-| | | |
-|  | Addition of "templateType" parameter to "cloud-version" files  |
-| | | |
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
 

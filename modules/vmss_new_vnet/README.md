@@ -20,8 +20,61 @@ This solution uses the following modules:
 ## Usage
 Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
+**Example:**
+```
+provider "azurerm" {
+  features {}
+}
 
-### terraform.tfvars variables:
+module "example_module" {
+
+    source  = "CheckPointSW/cloudguard-network-security/azure//modules/vmss_new_vnet"
+    version = "1.0.0"
+
+    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    source_image_vhd_uri            = "noCustomUri"
+    resource_group_name             = "checkpoint-vmss-terraform"
+    location                        = "eastus"
+    vmss_name                       = "checkpoint-vmss-terraform"
+    vnet_name                       = "checkpoint-vmss-vnet"
+    address_space                   = "10.0.0.0/16"
+    subnet_prefixes                 = ["10.0.1.0/24","10.0.2.0/24"]
+    backend_lb_IP_address           = 4
+    admin_password                  = "xxxxxxxxxxxx"
+    sic_key                         = "xxxxxxxxxxxx"
+    vm_size                         = "Standard_D3_v2"
+    disk_size                       = "100"
+    vm_os_sku                       = "sg-byol"
+    vm_os_offer                     = "check-point-cg-r8110"
+    os_version                      = "R8110"
+    bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+    allow_upload_download           = true
+    authentication_type             = "Password"
+    availability_zones_num          = "1"
+    minimum_number_of_vm_instances  = 2
+    maximum_number_of_vm_instances  = 10
+    management_name                 = "mgmt"
+    management_IP                   = "13.92.42.181"
+    management_interface            = "eth1-private"
+    configuration_template_name     = "vmss_template"
+    notification_email              = ""
+    frontend_load_distribution      = "Default"
+    backend_load_distribution       = "Default"
+    enable_custom_metrics           = true
+    enable_floating_ip              = false
+    deployment_mode                 = "Standard"
+    admin_shell                     = "/etc/cli.sh"
+    serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    nsg_id                          = ""
+    add_storage_account_ip_rules    = false
+    storage_account_additional_ips  = []
+```
+
+### Module's variables:
 
 Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view the entire table.
 

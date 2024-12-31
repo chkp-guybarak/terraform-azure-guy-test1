@@ -1,4 +1,4 @@
-# Check Point CloudGuard Network Security MDS Terraform deployment for Azure
+# Check Point CloudGuard MDS Module - New VNet
 
 This Terraform module deploys Check Point CloudGuard Network Security Management solution into a new VNet in azure.
 As part of the deployment the following resources are created:
@@ -9,69 +9,14 @@ As part of the deployment the following resources are created:
 - System assigned identity
 
 This solution uses the following modules:
-- /terraform/azure/modules/common - used for creating a resource group and defining common variables.
-- /terraform/azure/modules/vnet - used for creating new virtual network and subnets.
-- /terraform/azure/modules/network_security_group - used for creating new network security groups and rules.
+- common - used for creating a resource group and defining common variables.
+- vnet - used for creating new virtual network and subnets.
+- network_security_group - used for creating new network security groups and rules.
 
 
-## Configurations
-- Install and configure Terraform to provision Azure resources: [Configure Terraform for Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure)
-- In order to use ssh connection to VMs, it is **required** to add a public key to the /terraform/azure/mds-new-vnet/azure_public_key file.
 
-## Usage
-- Choose the preferred login method to Azure in order to deploy the solution:
-    <br>1. Using Service Principal:
-    - Create a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) (or use the existing one) 
-    - Grant the Service Principal at least "**Managed Application Contributor**", "**Storage Account Contributor**", "**Network Contributor**", "**Virtual Machine Contributor**" permissions to the Azure subscription<br>
-    - The Service Principal credentials can be stored either in the terraform.tfvars or as [Environment Variables](https://www.terraform.io/docs/providers/azuread/guides/service_principal_client_secret.html)<br>
-    
-      In case the Environment Variables are used, perform modifications described below:<br>
-      
-       a. The next lines in the main.tf file, in the provider azurerm resource,  need to be deleted or commented:
-            
-                provider "azurerm" {
-                
-                //  subscription_id = var.subscription_id
-                //  client_id = var.client_id
-                //  client_secret = var.client_secret
-                //  tenant_id = var.tenant_id
-                
-                   features {}
-                }
-            
-        b. In the terraform.tfvars file leave empty double quotes for client_secret, client_id , tenant_id and subscription_id variables:
-        
-                client_secret                   = ""
-                client_id                       = ""
-                tenant_id                       = ""
-                subscription_id                 = "" 
-        
-    <br>2. Using **az** commands from a command-line:
-    - Run  **az login** command 
-    - Sign in with your account credentials in the browser
-    - [Accept Azure Marketplace image terms](https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest) by running:
-     <br>**az vm image terms accept --urn publisher:offer:sku:version**, where:
-        - publisher = checkpoint;
-        - offer = vm_os_offer (see accepted values in the table below);
-        - sku = vm_os_sku (see accepted values in the table below);
-        - version = latest<br/>
-    <br>Example:<br>
-    az vm image terms accept --urn checkpoint:check-point-cg-r8120:sg-byol:latest
-    
-    - In the terraform.tfvars file leave empty double quotes for client_secret, client_id and tenant_id variables. 
- 
-- Fill all variables in the /terraform/azure/mds-new-vnet/terraform.tfvars file with proper values (see below for variables descriptions).
-- From a command line initialize the Terraform configuration directory:
 
-        terraform init
-- Create an execution plan:
- 
-        terraform plan
-- Create or modify the deployment:
- 
-        terraform apply
-
-### terraform.tfvars variables:
+### Module's variables:
  | Name          | Description                                                                                                                                                                              | Type          | Allowed values | Default |
  | ------------- | ------------- | ------------- | -------------  | -------------  |
  | **client_secret** | The client secret value of the Service Principal used to deploy the solution                                                                                                          | string | | n/a
@@ -179,7 +124,7 @@ In order to check the template version refer to the [sk116585](https://supportce
 | | | |
 | 20230910 | - R81.20 is the default version |
 | | | |
-| 20230629         | First release of Check Point CloudGuard Network Security MDS Terraform deployment for Azure |
+| 20230629         | First release of Check Point CloudGuard Network Security MDS Module - New VNet |
 |                  |                                                                                             | |
 
 ## License

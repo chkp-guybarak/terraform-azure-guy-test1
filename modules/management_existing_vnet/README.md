@@ -1,6 +1,6 @@
-# Check Point CloudGuard IaaS Management Terraform deployment for Azure
+# Check Point CloudGuard Management Module - Existing VNet
 
-This Terraform module deploys Check Point CloudGuard IaaS Management solution into an existing VNet in azure.
+This Terraform module deploys Check Point CloudGuard Network Security Management solution into an existing VNet in azure.
 As part of the deployment the following resources are created:
 - Resource group
 - Network security group
@@ -8,8 +8,8 @@ As part of the deployment the following resources are created:
 - System assigned identity
 
 This solution uses the following modules:
-- /terraform/azure/modules/common - used for creating a resource group and defining common variables.
-- /terraform/azure/modules/network_security_group - used for creating new network security groups and rules.
+- common - used for creating a resource group and defining common variables.
+- network_security_group - used for creating new network security groups and rules.
 
 
 ## Configurations
@@ -69,7 +69,7 @@ This solution uses the following modules:
  
         terraform apply
 
-### terraform.tfvars variables:
+### Module's variables:
  | Name          | Description   | Type          | Allowed values | Default |
  | ------------- | ------------- | ------------- | -------------  | ------------- |
  | **client_secret** | The client secret of the Service Principal used to deploy the solution | string | | n/a
@@ -178,7 +178,7 @@ In order to check the template version refer to the [sk116585](https://supportce
 | | | |
 | 20210309 | - Add "source_image_vhd_uri" variable for using a custom development image |
 | | | |
-| 20210111 | First release of Check Point CloudGuard IaaS Management Terraform deployment into an existing VNet in azure  |
+| 20210111 | First release of Check Point CloudGuard Management Terraform deployment into an existing VNet in azure  |
 | | | |
 |  | Addition of "templateType" parameter to "cloud-version" files  |
 | | | |

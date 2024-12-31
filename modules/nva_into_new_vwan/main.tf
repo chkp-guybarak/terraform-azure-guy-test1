@@ -146,7 +146,7 @@ resource "azurerm_managed_application" "nva" {
       value = var.sic-key
     },
     sshPublicKey = {
-      value = var.ssh-public-key
+      value = var.admin_SSH_key
     },
     BGP = {
       value = var.bgp-asn

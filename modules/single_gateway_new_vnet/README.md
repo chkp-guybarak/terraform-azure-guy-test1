@@ -16,6 +16,53 @@ This solution uses the following submodules:
 ## Usage
 Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest#:~:text=Best%20Practices%20for%20Using%20Our%20Modules).
 
+**Example:**
+```
+provider "azurerm" {
+  features {}
+}
+
+module "example_module" {
+
+  source  = "CheckPointSW/cloudguard-network-security/azure//modules/single_gateway_new_vnet"
+  version = "1.0.0"
+
+  source_image_vhd_uri            = "noCustomUri"
+  resource_group_name             = "checkpoint-single-gw-terraform"
+  single_gateway_name             = "checkpoint-single-gw-terraform"
+  location                        = "eastus"
+  vnet_name                       = "checkpoint-single-gw-vnet"
+  address_space                   = "10.0.0.0/16"
+  frontend_subnet_prefix          = "10.0.1.0/24"
+  backend_subnet_prefix           = "10.0.2.0/24"
+  management_GUI_client_network   = "0.0.0.0/0"
+  admin_password                  = "xxxxxxxxxxxx"
+  smart_1_cloud_token             = "xxxxxxxxxxxx"
+  sic_key                         = "xxxxxxxxxxxx"
+  vm_size                         = "Standard_D3_v2"
+  disk_size                       = "110"
+  vm_os_sku                       = "sg-byol"
+  vm_os_offer                     = "check-point-cg-r8110"
+  os_version                      = "R8110"
+  bootstrap_script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
+  allow_upload_download           = true
+  authentication_type             = "Password"
+  enable_custom_metrics           = true
+  admin_shell                     = "/etc/cli.sh"
+  installation_type               = "gateway"
+  serial_console_password_hash    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  maintenance_mode_password_hash  = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  nsg_id                          = ""
+  add_storage_account_ip_rules    = false
+  storage_account_additional_ips  = []
+}
+```
+  
+## Conditional creation
+-  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
+  ```
+  enable_custom_metrics = true
+  ```
 
 ### Module's variables:
 Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view the entire table.
@@ -80,9 +127,3 @@ Use the right arrow (`→`) and left arrow (`←`) keys on your keyboard to view
 | **security_rules**                        | Security rules for the Network Security Group using this format | list(any)      | A list of valid security rules values.<br />A security rule composed of: <br />{name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description} | [{     name="AllowAllInBound"         priority="100"          direction="Inbound"          access="Allow"          protocol="*"          source_port_ranges="*"          destination_port_ranges=""          description="Allow all inbound connections"          source_address_prefix="*"          destination_address_prefix=""      }] 
  |                |                                                                               |
 | **admin_SSH_key**                        | The SSH public key for SSH connections to the instance. <br />Used when the authentication_type is 'SSH Public Key' | string     | | ""
-  
-## Conditional creation
--  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
-  ```
-  enable_custom_metrics = true
-  ```

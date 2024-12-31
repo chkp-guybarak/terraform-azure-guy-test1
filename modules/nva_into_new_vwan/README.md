@@ -1,4 +1,4 @@
-# Check Point CloudGuard Network Security Virtual WAN Terraform deployment for Azure
+# Check Point CloudGuard Virtual WAN Module - New Vietual WAN
 
 This Terraform module deploys Check Point CloudGuard Network Security Virtual WAN NVA solution into a new vWAN Hub in Azure.
 As part of the deployment the following resources are created:
@@ -13,55 +13,7 @@ For additional information,
 please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CloudGuard_Network_for_Azure_vWAN/Default.htm)
 
 
-## Configurations
-- Install and configure Terraform to provision Azure resources: [Configure Terraform for Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure).
-- In order to configure hub routing-intent policies it is **required** to have Python and 'requests' library installed.
-
-## Usage
-- Choose the preferred login method to Azure in order to deploy the solution:
-    <br>1. Using Service Principal:
-    - Create a [Service Principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) (or use the existing one) 
-    - Grant the Service Principal at least "**Contributor**" permissions to the Azure subscription<br>
-    - The Service Principal credentials can be stored either in the terraform.tfvars or as [Environment Variables](https://www.terraform.io/docs/providers/azuread/guides/service_principal_client_secret.html)<br>
-    
-      In case the Environment Variables are used, perform modifications described below:<br>
-      
-       a. The next lines in the versions.tf file, in the provider azurerm resource,  need to be deleted or commented:
-            
-                provider "azurerm" {
-                 
-                //  subscription_id = var.subscription_id
-                //  client_id = var.client_id
-                //  client_secret = var.client_secret
-                //  tenant_id = var.tenant_id
-                
-                   features {}
-                }
-            
-        b. In the terraform.tfvars file leave empty double quotes for client_secret, client_id , tenant_id and subscription_id variables:
-        
-                client_secret                   = ""
-                client_id                       = ""
-                tenant_id                       = ""
-                subscription_id                 = "" 
-        
-    <br>2. Using **az** commands from a command-line:
-    - Run  **az login** command 
-    - Sign in with your account credentials in the browser
-    - In the terraform.tfvars file leave empty double quotes for client_secret, client_id and tenant_id variables. 
- 
-- Fill all variables in the /terraform/azure/nva-into-new-vwan/terraform.tfvars file with proper values (see below for variables descriptions).
-- From a command line initialize the Terraform configuration directory:
-
-        terraform init
-- Create an execution plan:
- 
-        terraform plan
-- Create or modify the deployment:
- 
-        terraform apply
-
-### terraform.tfvars variables:
+### Module's variables:
  | Name          | Description | Type   | Allowed values | Default |
  |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| -------------  | -------------  |
  | **authentication_method** | The authentication method used to deploy the solution                             | string | "Service Principal"; <br/>"Azure CLI"; | n/a           
@@ -102,7 +54,7 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
  |  ||        |   |  |
  | **sic-key** | The Secure Internal Communication one time secret used to set up trust between the gateway object and the management server | string | Only alphanumeric characters are allowed, and the value must be 12-30 characters long | n/a      |
  |  ||        |   |  |
- | **ssh-public-key** | The public ssh key used for ssh connection to the NVA GW instances                | string | ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx generated-by-azure;  | n/a                |                  | string | gateway; <br/>standalone; |
+ | **admin_SSH_key** | The public ssh key used for ssh connection to the NVA GW instances                | string | ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx generated-by-azure;  | n/a                |                  | string | gateway; <br/>standalone; |
  |  ||        |   |  |
  | **bgp-asn** | The BGP autonomous system number. | string | 64512  | "64512" ||
  |  ||        |   |  |
@@ -153,7 +105,7 @@ please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https
     bootstrap-script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
     admin-shell                     = "/etc/cli.sh"
     sic-key                         = "xxxxxxxxxxxx"
-    ssh-public-key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
+    admin_SSH_key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
     bgp-asn                         = "64512"
     custom-metrics                  = "yes"
     routing-intent-internet-traffic = "yes"
@@ -174,7 +126,7 @@ In order to check the template version refer to the [sk116585](https://supportce
 | 20241028         |Added R82 version support                   |
 | 20240613 | Cosmetic fixes & default values |
 |  20240228         | Added public IP for ingress support                |                                                                                                   | |
-|  20231226         | First release of Check Point CloudGuard Network Security Virtual WAN Terraform deployment for Azure                |                                                                                                   | |
+|  20231226         | First release of Check Point CloudGuard Network Security Virtual WAN Module - New VNet                |                                                                                                   | |
 
 
 ## License
