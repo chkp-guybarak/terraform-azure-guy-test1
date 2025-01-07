@@ -269,3 +269,8 @@ variable "security_rules" {
   type    = list(any)
   default = []
 }
+
+
+variable "version" {
+  type = string
+}
