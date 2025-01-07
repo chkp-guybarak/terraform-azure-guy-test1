@@ -270,7 +270,6 @@ variable "security_rules" {
   default = []
 }
 
-
 variable "version" {
   type = string
 }

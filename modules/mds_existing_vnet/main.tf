@@ -23,7 +23,7 @@ module "common" {
 
 //********************** Networking **************************//
 data "azurerm_subnet" "mds_subnet" {
-  name = var.management_subnet_name
+  name = var.version
   virtual_network_name = var.vnet_name
   resource_group_name = var.vnet_resource_group
 }
