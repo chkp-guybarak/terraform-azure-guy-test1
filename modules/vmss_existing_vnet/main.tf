@@ -281,7 +281,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       for_each = local.SSH_authentication_type_condition ? [
         1] : []
       content {
-        public_key = file("azure_public_key")
+        public_key = var.admin_SSH_key
         username = "notused"
       }
     }
