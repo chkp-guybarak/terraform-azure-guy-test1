@@ -16,8 +16,7 @@ This repository provides a structured set of Terraform modules for deploying Che
 
 `Examples`: Demonstrates how to use the modules.
 
-## Available Submodules
-
+ 
 **Submodules:**
 
 * [`high_availability_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/high_availability_existing_vnet) - Deploys CloudGuard High Availability solution into an existing VNet in azure.

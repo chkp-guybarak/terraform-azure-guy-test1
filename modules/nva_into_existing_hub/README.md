@@ -42,7 +42,7 @@ module "example_module" {
         bootstrap-script                = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
         admin-shell                     = "/etc/cli.sh"
         sic-key                         = "xxxxxxxxxxxx"
-        ssh-public-key                  = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
+        admin_SSH_key                   = "ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxx imported-openssh-key"
         bgp-asn                         = "64512"
         custom-metrics                  = "yes"
         routing-intent-internet-traffic = "yes"
