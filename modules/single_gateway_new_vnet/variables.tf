@@ -101,7 +101,6 @@ variable "os_version" {
 
 locals { // locals for 'vm_os_offer' allowed values
   os_version_allowed_values = [
-    "R81",
     "R8110",
     "R8120",
     "R82"
