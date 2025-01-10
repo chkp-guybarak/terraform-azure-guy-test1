@@ -5,8 +5,8 @@ module "common" {
   location = var.location
   admin_password = var.authentication_type == "SSH Public Key" ? random_id.random_id.hex : var.admin_password
   installation_type = var.installation_type
-  template_name = var.template_name
-  template_version = var.template_version
+  template_name = local.template_name
+  template_version = file("../../current_version")
   number_of_vm_instances = var.number_of_vm_instances
   allow_upload_download = var.allow_upload_download
   vm_size = var.vm_size

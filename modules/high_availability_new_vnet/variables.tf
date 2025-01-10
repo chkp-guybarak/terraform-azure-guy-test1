@@ -79,18 +79,6 @@ resource "null_resource" "sic_key_invalid" {
   count = length(var.sic_key) >= 12 ? 0 : "SIC key must be at least 12 characters long"
 }
 
-variable "template_name" {
-  description = "Template name. Should be defined according to deployment type(ha, vmss)"
-  type = string
-  default = "ha_terraform"
-}
-
-variable "template_version" {
-  description = "Template version. It is reccomended to always use the latest template version"
-  type = string
-  default = "20230910"
-}
-
 variable "installation_type" {
   description = "Installaiton type"
   type = string

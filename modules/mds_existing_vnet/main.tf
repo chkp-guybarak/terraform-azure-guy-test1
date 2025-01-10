@@ -4,9 +4,9 @@ module "common" {
   resource_group_name = var.resource_group_name
   location = var.location
   admin_password = var.admin_password
-  template_name = var.template_name
+  template_name = local.template_name
   installation_type = var.installation_type
-  template_version = var.template_version
+  template_version = local.template_version
   number_of_vm_instances = 1
   allow_upload_download = var.allow_upload_download
   vm_size = var.vm_size

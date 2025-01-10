@@ -12,9 +12,9 @@
 This repository provides a structured set of Terraform modules for deploying Check Point CloudGuard Network Security in Microsoft Azure. These modules automate the creation of Virtual Networks, Security Gateways, High-Availability architectures, and more, enabling secure and scalable cloud deployments.
 
 ## Repository Structure
-`Submodules`: Contains modular, reusable, production-grade Terraform components, each with its own documentation.
+`Submodules:` Contains modular, reusable, production-grade Terraform components, each with its own documentation.
 
-`Examples`: Demonstrates how to use the modules.
+`Examples:` Demonstrates how to use the modules.
 
  
 **Submodules:**

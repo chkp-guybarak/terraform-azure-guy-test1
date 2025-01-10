@@ -5,8 +5,8 @@ module "common" {
   location = var.location
   admin_password = var.admin_password
   installation_type = var.installation_type
-  template_name = var.template_name
-  template_version = var.template_version
+  template_name = local.template_name
+  template_version = local.template_version
   number_of_vm_instances = 1
   allow_upload_download = var.allow_upload_download
   vm_size = var.vm_size
@@ -41,7 +41,6 @@ module "network_security_group" {
   security_group_name = "${module.common.resource_group_name}-nsg"
   location = module.common.resource_group_location
   security_rules = setunion(var.security_rules, [
-
     {
       name = "SSH"
       priority = "100"

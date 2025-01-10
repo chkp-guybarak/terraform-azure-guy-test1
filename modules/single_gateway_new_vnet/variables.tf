@@ -59,18 +59,6 @@ locals { // locals for 'authentication_type' allowed values
   validate_authentication_type_value = index(local.authentication_type_allowed_values, var.authentication_type)
 }
 
-variable "template_name" {
-  description = "Template name. Should be defined according to deployment type(mgmt, ha, vmss, sg)"
-  type = string
-  default = "single"
-}
-
-variable "template_version" {
-  description = "Template version. It is recommended to always use the latest template version"
-  type = string
-  default = "20230910"
-}
-
 variable "installation_type" {
   description = "installation type"
   type = string
