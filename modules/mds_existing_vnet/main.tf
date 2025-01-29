@@ -4,9 +4,9 @@ module "common" {
   resource_group_name = var.resource_group_name
   location = var.location
   admin_password = var.admin_password
-  template_name = local.template_name
+  module_name    = local.module_name
   installation_type = var.installation_type
-  template_version = local.template_version
+  module_version = local.module_version
   number_of_vm_instances = 1
   allow_upload_download = var.allow_upload_download
   vm_size = var.vm_size
@@ -257,8 +257,8 @@ resource "azurerm_virtual_machine" "mds-vm-instance" {
       installation_type = var.installation_type
       allow_upload_download = module.common.allow_upload_download
       os_version = module.common.os_version
-      template_name = module.common.template_name
-      template_version = module.common.template_version
+      module_name    = module.common.module_name
+      module_version = module.common.module_version
       template_type = "terraform"
       is_blink = module.common.is_blink
       bootstrap_script64 = base64encode(var.bootstrap_script)

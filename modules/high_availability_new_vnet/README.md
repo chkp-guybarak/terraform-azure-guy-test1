@@ -18,7 +18,7 @@ This solution uses the following modules:
 
 
 ## Usage
-Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest).
 
 **Example:**
 ```
@@ -29,7 +29,7 @@ provider "azurerm" {
 module "example_module" {
 
         source  = "CheckPointSW/cloudguard-network-security/azure//modules/high_availability_new_vnet"
-        version = "1.0.0"
+        version = "1.0.4"
 
         tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         source_image_vhd_uri            = "noCustomUri"

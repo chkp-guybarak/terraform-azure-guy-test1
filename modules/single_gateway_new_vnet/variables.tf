@@ -231,22 +231,6 @@ variable "bootstrap_script" {
   #"touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
 }
 
-//********************** Credentials **************************//
-
-variable "sic_key" {
-  type = string
-}
-
-resource "null_resource" "sic_key_invalid" {
-  count = length(var.sic_key) >= 12 ? 0 : "SIC key must be at least 12 characters long"
-}
-
-variable "sku" {
-  description = "SKU"
-  type = string
-  default = "Standard"
-}
-
 variable "security_rules" {
   description = "Security rules for the Network Security Group using this format [name, priority, direction, access, protocol, source_source_port_rangesport_range, destination_port_ranges, source_address_prefix, destination_address_prefix, description]"
   type    = list(any)
@@ -265,6 +249,22 @@ variable "security_rules" {
       }
   ]
 }
+//********************** Credentials **************************//
+
+variable "sic_key" {
+  type = string
+}
+
+resource "null_resource" "sic_key_invalid" {
+  count = length(var.sic_key) >= 12 ? 0 : "SIC key must be at least 12 characters long"
+}
+
+variable "sku" {
+  description = "SKU"
+  type = string
+  default = "Standard"
+}
+
 
 variable "admin_SSH_key" {
   type = string

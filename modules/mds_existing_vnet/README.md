@@ -12,7 +12,7 @@ This solution uses the following modules:
 - network_security_group - used for creating new network security groups and rules.
 
 ## Usage
-Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest).
 
 **Example:**
 ```
@@ -23,7 +23,7 @@ provider "azurerm" {
 module "example_module" {
 
 	source  = "CheckPointSW/cloudguard-network-security/azure//modules/mds_existing_vnet"
-	version = "1.0.0"
+	version = "1.0.4"
 
 	source_image_vhd_uri            = "noCustomUri"
 	resource_group_name             = "checkpoint-mds-rg-terraform"

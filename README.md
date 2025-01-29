@@ -1,9 +1,9 @@
-![GitHub Wachers](https://img.shields.io/github/watchers/chkp-guybarak/terraform-azure-guy-test1)
-![GitHub Release](https://img.shields.io/github/v/release/chkp-guybarak/terraform-azure-guy-test1)
-![GitHub Commits Since Last Commit](https://img.shields.io/github/commits-since/chkp-guybarak/terraform-azure-guy-test1/latest/main)
-![GitHub Last Commit](https://img.shields.io/github/last-commit/chkp-guybarak/terraform-azure-guy-test1/main)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/chkp-guybarak/terraform-azure-guy-test1)
-![GitHub Downloads](https://img.shields.io/github/downloads/chkp-guybarak/terraform-azure-guy-test1/total)
+![GitHub Wachers](https://img.shields.io/github/watchers/CheckPointSW/terraform-azure-cloudguard-network-security)
+![GitHub Release](https://img.shields.io/github/v/release/CheckPointSW/terraform-azure-cloudguard-network-security)
+![GitHub Commits Since Last Commit](https://img.shields.io/github/commits-since/CheckPointSW/terraform-azure-cloudguard-network-security/latest/main)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/CheckPointSW/terraform-azure-cloudguard-network-security/main)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/CheckPointSW/terraform-azure-cloudguard-network-security)
+![GitHub Downloads](https://img.shields.io/github/downloads/CheckPointSW/terraform-azure-cloudguard-network-security/total)
 
 # Terraform Modules for CloudGuard Network Security (CGNS) - Azure
 
@@ -18,44 +18,32 @@ This repository provides a structured set of Terraform modules for deploying Che
 
  
 **Submodules:**
-
-* [`high_availability_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/high_availability_existing_vnet) - Deploys CloudGuard High Availability solution into an existing VNet in azure.
-
-* [`high_availability_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/high_availability_new_vnet) Deploys CloudGuard High Availability solution into a new VNet.
-
-* [`management_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/management_existing_vnet) - Deploys CloudGuard Management solution into an existing VNet.
-
-* [`management_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/management_new_vnet) - Deploys CloudGuard Management solution into a new VNet.
-
-* [`mds_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/mds_existing_vnet) - Deploys CloudGuard Management solution into a new VNet.
-
-* [`mds_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/mds_new_vnet) - Deploys CloudGuard Management solution into a new VNet.
-
-* [`nva_into_existing_hub`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/nva_into_existing_hub) - Deploys CloudGuard Virtual WAN NVA solution into an existing vWAN Hub.
-
-* [`nva_into_new_vwan`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/nva_into_new_vwan) - Deploys CloudGuard Virtual WAN NVA solution into a new vWAN Hub.
-
-* [`single_gateway_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/single_gateway_existing_vnet) - Deploys CloudGuard Single Gateway solution into an existing VNet.
-
-* [`single_gateway_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/single_gateway_new_vnet) - Deploys CloudGuard Single Gateway solution into a new VNet.                   
-
-* [`vmss_existing_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vmss_existing_vnet) - Deploys CloudGuard VMSS solution into an existing VNet.
-
-* [`vmss_new_vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vmss_new_vnet) - Deploys CloudGuard VMSS solution into a new VNet.
+* [`high_availability_existing_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/high_availability_existing_vnet) - Deploys CloudGuard High Availability solution into an existing VNet in azure.
+* [`high_availability_new_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/high_availability_new_vnet) Deploys CloudGuard High Availability solution into a new VNet.
+* [`management_existing_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/management_existing_vnet) - Deploys CloudGuard Management solution into an existing VNet.
+* [`management_new_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/management_new_vnet) - Deploys CloudGuard Management solution into a new VNet
+* [`mds_existing_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/mds_existing_vnet) - Deploys CloudGuard Management solution into a new VNet.
+* [`mds_new_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/mds_new_vnet) - Deploys CloudGuard Management solution into a new VNet.
+* [`nva_into_existing_hub`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/nva_into_existing_hub) - Deploys CloudGuard Virtual WAN NVA solution into an existing vWAN Hub.
+* [`nva_into_new_vwan`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/nva_into_new_vwan) - Deploys CloudGuard Virtual WAN NVA solution into a new vWAN Hub.
+* [`single_gateway_existing_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/single_gateway_existing_vnet) - Deploys CloudGuard Single Gateway solution into an existing VNet.
+* [`single_gateway_new_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/single_gateway_new_vnet) - Deploys CloudGuard Single Gateway solution into a new VNet.                   
+* [`vmss_existing_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/vmss_existing_vnet) - Deploys CloudGuard VMSS solution into an existing VNet.
+* [`vmss_new_vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/vmss_new_vnet) - Deploys CloudGuard VMSS solution into a new VNet.
 
 Internal Submodules - 
 
-* [`common`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/common) - Contains shared configurations and reusable components for all modules.
+* [`common`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/common) - Contains shared configurations and reusable components for all modules.
 
-* [`network_security_group`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/network_security_group) - Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
+* [`network_security_group`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/network_security_group) - Manages Network Security Groups (NSGs) with CloudGuard-specific rules.
 
-- [`vnet`](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest/submodules/vnet) - Simplifies Virtual Network and subnet configurations.
+- [`vnet`](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest/submodules/vnet) - Simplifies Virtual Network and subnet configurations.
 
 
 ## Security Rules Default Configuration
-Some modules in this repository include default security rules configured for "allow all inbound traffic." These rules are provided for ease of deployment but are not intended for production use without further customization. Add security rule to override the default "allow all traffic" configuration.
+Each submodule in this repository includes **preconfigured security group rules** designed to ensure the solution works properly out of the box. These rules are tailored for the default deployment scenarios but may require adjustments to meet your specific security and compliance requirements.
 
-**Example:** To restrict inbound traffic, update the security_rules attribute in the submodule configuration:
+**Example:** To restrict inbound\outbound traffic, update the security_rules attribute in the submodule configuration:
 ```hcl
 security_rules = [
   {

@@ -13,7 +13,7 @@ This solution uses the following modules:
 - common - used for creating a resource group and defining common variables.
 
 ## Usage
-Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest).
 
 **Example:**
 ```
@@ -24,7 +24,7 @@ provider "azurerm" {
 module "example_module" {
 
   source  = "CheckPointSW/cloudguard-network-security/azure//modules/vmss_existing_vnet"
-  version = "1.0.0"
+  version = "1.0.4"
 
   ## Example
     source_image_vhd_uri            = "noCustomUri"
@@ -52,7 +52,7 @@ module "example_module" {
     management_name                 = "mgmt"
     management_IP                   = "13.92.42.181"
     management_interface            = "eth1-private"
-    configuration_template_name     = "vmss_template"
+    configuration_module_name     = "vmss_template"
     notification_email              = ""
     frontend_load_distribution      = "Default"
     backend_load_distribution       = "Default"
@@ -111,7 +111,7 @@ enable_custom_metrics = true
 | **management_name** | The name of the management server as it appears in the configuration file | string | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long. |
 | **management_IP** | The IP address used to manage the VMSS instances | string | A valid IP address. |
 | **management_interface** | Management option for the Gateways in the VMSS | string | "eth0-public" - Manages the GWs using their external NIC's public IP address;<br/>"eth0-private" - Manages the GWs using their external NIC's private IP address;<br/>"eth1-private" - Manages the GWs using their internal NIC's private IP address.<br/>**Default:** "eth1-private" |
-| **configuration_template_name** | The configuration template name as it appears in the configuration file | string | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long. |
+| **configuration_module_name** | The configuration template name as it appears in the configuration file | string | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long. |
 | **frontend_load_distribution** | The load balancing distribution method for the External Load Balancer | string | "Default" - None(5-tuple);<br/>"SourceIP" - ClientIP(2-tuple);<br/>"SourceIPProtocol" - ClientIP and protocol(3-tuple). |
 | **backend_load_distribution** | The load balancing distribution method for the Internal Load Balancer | string | "Default" - None(5-tuple);<br/>"SourceIP" - ClientIP(2-tuple);<br/>"SourceIPProtocol" - ClientIP and protocol(3-tuple). |
 | **notification_email** | An email address to notify about scaling operations | string | Leave empty double quotes or enter a valid email address. |

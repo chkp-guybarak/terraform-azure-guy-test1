@@ -14,7 +14,7 @@ This solution uses the following submodules:
 - network_security_group - used for creating new network security groups and rules.
 
 ## Usage
-Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest).
 
 **Example:**
 ```
@@ -25,7 +25,7 @@ provider "azurerm" {
 module "example_module" {
 
   source  = "CheckPointSW/cloudguard-network-security/azure//modules/single_gateway_new_vnet"
-  version = "1.0.0"
+  version = "1.0.4"
 
   source_image_vhd_uri            = "noCustomUri"
   resource_group_name             = "checkpoint-single-gw-terraform"
@@ -96,6 +96,6 @@ module "example_module" {
 | **nsg_id**                            | Optional ID for a Network Security Group that already exists in Azure. If not provided, a **Default** NSG will be created                                             | string         | Existing NSG resource ID<br />**Default:** ""                                                                                                                                                                 |
 | **add_storage_account_ip_rules**      | Add Storage Account IP rules that allow access to the Serial Console only for IPs based on their geographic location                                              | boolean        | true;<br />false;<br />**Default:** false                                                                                                                                                                     |
 | **storage_account_additional_ips**    | IPs/CIDRs that are allowed access to the Storage Account                                                                                                          | list(string)   | A list of valid IPs and CIDRs<br />**Default:** []                                                                                                                                                            |
-| **security_rules**                    | SSecurity rules for the Network Security                                                                                                 | list(any)      | A security rule composed of: {name, priority, direction, access, protocol, source_port_ranges, destination_port_ranges, source_address_prefix, destination_address_prefix, description}  |
+| **security_rules**                    | Security  rules for the Network Security                                                                                                 | list(any)      | A security rule composed of: {name, priority, direction, access, protocol, source_port_ranges, destination_port_ranges, source_address_prefix, destination_address_prefix, description}<br />**Default:** []  |
 | **admin_SSH_key**                     | The SSH public key for SSH connections to the instance. Used when the authentication_type is 'SSH Public Key'                                                     | string         | **Default:** ""                                                                                                                                                                                                                                      |
 | **is_blink**                    | Define if blink image is used for deployment | boolean      | true;<br />false;<br />**Default:** true  |

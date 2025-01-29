@@ -1,4 +1,4 @@
 locals {
-  template_name = "ha_tr"
-  version       = "1.6.2"
+  module_name    = "high_availability"
+  module_version = "1.0.4"
 }

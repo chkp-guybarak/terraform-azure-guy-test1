@@ -18,7 +18,7 @@ This solution uses the following modules:
 
 
 ## Usage
-Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest).
 
 **Example:**
 ```
@@ -29,11 +29,8 @@ provider "azurerm" {
 module "example_module" {
 
     source  = "CheckPointSW/cloudguard-network-security/azure//modules/vmss_new_vnet"
-    version = "1.0.0"
+    version = "1.0.4"
 
-    client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    client_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    tenant_id                       = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     subscription_id                 = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     source_image_vhd_uri            = "noCustomUri"
     resource_group_name             = "checkpoint-vmss-terraform"
@@ -59,7 +56,7 @@ module "example_module" {
     management_name                 = "mgmt"
     management_IP                   = "13.92.42.181"
     management_interface            = "eth1-private"
-    configuration_template_name     = "vmss_template"
+    configuration_module_name     = "vmss_template"
     notification_email              = ""
     frontend_load_distribution      = "Default"
     backend_load_distribution       = "Default"
@@ -113,7 +110,7 @@ enable_custom_metrics = true
 | **management_name**                   | The name of the management server as it appears in the configuration file                                                                                               | string         | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long<br />                                                                    |
 | **management_IP**                     | The IP address used to manage the VMSS instances                                                                                                                       | string         | A valid IP address<br />                                                                                                                                                                       |
 | **management_interface**              | Management option for the Gateways in the VMSS                                                                                                                         | string         | "eth0-public" - Manages the GWs using their external NIC's public IP address;<br />"eth0-private" - Manages the GWs using their external NIC's private IP address;<br />"eth1-private" - Manages the GWs using their internal NIC's private IP address;<br />**Default:** "eth1-private" |
-| **configuration_template_name**       | The configuration template name as it appears in the configuration file                                                                                                | string         | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long<br />                                                                    |
+| **configuration_module_name**       | The configuration template name as it appears in the configuration file                                                                                                | string         | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long<br />                                                                    |
 | **frontend_load_distribution**        | The load balancing distribution method for the External Load Balancer                                                                                                   | string         | "Default" - None (5-tuple);<br />"SourceIP" - ClientIP (2-tuple);<br />"SourceIPProtocol" - ClientIP and protocol (3-tuple)<br />                                                               |
 | **backend_load_distribution**         | The load balancing distribution method for the Internal Load Balancer                                                                                                   | string         | "Default" - None (5-tuple);<br />"SourceIP" - ClientIP (2-tuple);<br />"SourceIPProtocol" - ClientIP and protocol (3-tuple)<br />                                                               |
 | **notification_email**                | An email address to notify about scaling operations                                                                                                                    | string         | Leave empty double quotes or enter a valid email address<br />                                                                                                                                 |
@@ -126,6 +123,6 @@ enable_custom_metrics = true
 | **nsg_id**                            | Optional ID for a Network Security Group that already exists in Azure. If not provided, will create a default NSG                                                      | string         | Existing NSG resource ID<br />**Default:** ""                                                                                                                                                                  |
 | **add_storage_account_ip_rules**      | Add Storage Account IP rules that allow access to the Serial Console only for IPs based on their geographic location                                                   | boolean        | true;<br />false;<br />**Default:** false                                                                                                                                                                     |
 | **storage_account_additional_ips**    | IPs/CIDRs that are allowed access to the Storage Account                                                                                                               | list(string)   | A list of valid IPs and CIDRs<br />**Default:** []                                                                                                                                                            |
-| **security_rules**                    | SSecurity rules for the Network Security                                                                                                 | list(any)      | A security rule composed of: {name, priority, direction, access, protocol, source_port_ranges, destination_port_ranges, source_address_prefix, destination_address_prefix, description}<br />**Default:** []  |
+| **security_rules**                    | Security  rules for the Network Security                                                                                                 | list(any)      | A security rule composed of: {name, priority, direction, access, protocol, source_port_ranges, destination_port_ranges, source_address_prefix, destination_address_prefix, description}<br />**Default:** []  |
 | **admin_SSH_key**                     | The SSH public key for SSH connections to the instance. Used when the authentication_type is 'SSH Public Key'                                                     | string         | **Default:** ""                                                                                                                                        |
 | **is_blink**                    | Define if blink image is used for deployment | boolean      | true;<br />false;<br />**Default:** true  |

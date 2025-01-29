@@ -11,7 +11,7 @@ For additional information,
 please see the [CloudGuard Network for Azure Virtual WAN Deployment Guide](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CloudGuard_Network_for_Azure_vWAN/Default.htm)
 
 ## Usage
-Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/chkp-guybarak/guy-test1/azure/latest).
+Follow best practices for using CGNS modules on [the root page](https://registry.terraform.io/modules/CheckPointSW/cloudguard-network-security/azure/latest).
 
 **Example:**
 ```
@@ -22,7 +22,7 @@ provider "azurerm" {
 module "example_module" {
 
         source  = "CheckPointSW/cloudguard-network-security/azure//modules/nva_into_existing_hub"
-        version = "1.0.0"
+        version = "1.0.4"
 
         authentication_method           = "Service Principal"
         client_secret                   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"

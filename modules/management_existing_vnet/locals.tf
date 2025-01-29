@@ -1,4 +1,4 @@
 locals {
-  template_name = "mgmt_tr"
-  version       = "1.6.2"
+  module_name    = "management_terraform_registry"
+  module_version = "1.0.4"
 }

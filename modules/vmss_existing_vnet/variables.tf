@@ -176,7 +176,7 @@ locals { // locals for 'management_interface' allowed values
   validate_management_interface_value = index(local.management_interface_allowed_values, var.management_interface)
 }
 
-variable "configuration_template_name" {
+variable "configuration_module_name" {
   description = "The configuration template name as it appears in the configuration file"
   type = string
 }

@@ -1,4 +1,4 @@
 locals {
-  template_name = "vmss_tr"
-  version       = "1.6.2"
+  module_name    = "vmss_terraform_registry"
+  module_module_version = "1.0.4"
 }

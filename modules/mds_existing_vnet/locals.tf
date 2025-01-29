@@ -1,4 +1,4 @@
 locals {
-  template_name = "mds_tr"
-  version       = "1.6.2"
+  module_name    = "mds_terraform_registry"
+  module_version = "1.0.4"
 }

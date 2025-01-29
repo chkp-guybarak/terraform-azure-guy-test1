@@ -1,4 +1,4 @@
 locals {
-  template_name = "single_tr"
-  version       = "1.0.0"
+  module_name    = "single_terraform_registry"
+  module_version = "1.0.4"
 }
