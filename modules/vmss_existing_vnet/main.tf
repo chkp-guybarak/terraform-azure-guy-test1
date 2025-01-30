@@ -5,8 +5,8 @@ module "common" {
   location = var.location
   admin_password = var.authentication_type == "SSH Public Key" ? random_id.random_id.hex : var.admin_password
   installation_type = var.installation_type
-  module_name    = local.module_name
-  module_version = file("../../current_version")
+  module_name = local.module_name
+  module_version = local.module_version
   number_of_vm_instances = var.number_of_vm_instances
   allow_upload_download = var.allow_upload_download
   vm_size = var.vm_size
@@ -256,23 +256,25 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   computer_name_prefix = lower(var.vmss_name)
   admin_username = module.common.admin_username
   admin_password = module.common.admin_password
-  custom_data = base64encode(templatefile("${path.module}/cloud-init.sh", {
-    installation_type = module.common.installation_type
-    allow_upload_download = module.common.allow_upload_download
-    os_version = module.common.os_version
-    module_name    = module.common.module_name
-    module_version = module.common.module_version
-    template_type = "terraform"
-    is_blink = module.common.is_blink
-    bootstrap_script64 = base64encode(var.bootstrap_script)
-    location = module.common.resource_group_location
-    sic_key = var.sic_key
-    vnet = data.azurerm_subnet.frontend.address_prefixes[0]
-    enable_custom_metrics = var.enable_custom_metrics ? "yes" : "no"
-    admin_shell = var.admin_shell
-    serial_console_password_hash = var.serial_console_password_hash
-    maintenance_mode_password_hash = var.maintenance_mode_password_hash
-    }))
+  custom_data = replace(
+    base64encode(templatefile("${path.module}/cloud-init.sh", {
+      installation_type = module.common.installation_type
+      allow_upload_download = module.common.allow_upload_download
+      os_version = module.common.os_version
+      module_name = module.common.module_name
+      module_version = module.common.module_version
+      template_type = "terraform"
+      is_blink = module.common.is_blink
+      bootstrap_script64 = base64encode(var.bootstrap_script)
+      location = module.common.resource_group_location
+      sic_key = var.sic_key
+      vnet = data.azurerm_subnet.frontend.address_prefixes[0]
+      enable_custom_metrics = var.enable_custom_metrics ? "yes" : "no"
+      admin_shell = var.admin_shell
+      serial_console_password_hash = var.serial_console_password_hash
+      maintenance_mode_password_hash = var.maintenance_mode_password_hash
+    }), "\r\n", "\n"))
+
 
 
     disable_password_authentication = local.SSH_authentication_type_condition
@@ -327,7 +329,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   tags = var.management_interface == "eth0"?{
     x-chkp-management = var.management_name,
-    x-chkp-template = var.configuration_module_name,
+    x-chkp-template = var.configuration_template_name,
     x-chkp-ip-address = local.management_ip_address_type,
     x-chkp-management-interface = local.management_interface_name,
     x-chkp-management-address = var.management_IP,
@@ -336,7 +338,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     x-chkp-srcImageUri = var.source_image_vhd_uri
   }:{
     x-chkp-management = var.management_name,
-    x-chkp-template = var.configuration_module_name,
+    x-chkp-template = var.configuration_template_name,
     x-chkp-ip-address = local.management_ip_address_type,
     x-chkp-management-interface = local.management_interface_name,
     x-chkp-topology = "eth0:external,eth1:internal",

@@ -6,7 +6,7 @@ module "common" {
   location = var.location
   admin_password = var.admin_password
   installation_type = var.installation_type
-  module_name    = local.module_name
+  module_name = local.module_name
   module_version = local.module_version
   number_of_vm_instances = 1
   allow_upload_download = var.allow_upload_download
@@ -86,7 +86,6 @@ module "network_security_group" {
       destination_address_prefix = "*"
     },
     {
-     
       name = "SmartConsole-2"
       priority = "130"
       direction = "Inbound"
@@ -255,22 +254,22 @@ resource "azurerm_virtual_machine" "mgmt-vm-instance" {
     computer_name = lower(var.mgmt_name)
     admin_username = module.common.admin_username
     admin_password = module.common.admin_password
-    custom_data = templatefile("${path.module}/cloud-init.sh", {
-      installation_type = module.common.installation_type
-      allow_upload_download = module.common.allow_upload_download
-      os_version = module.common.os_version
-      module_name    = module.common.module_name
-      module_version = module.common.module_version
-      template_type = "terraform"
-      is_blink = module.common.is_blink
-      bootstrap_script64 = base64encode(var.bootstrap_script)
-      location = module.common.resource_group_location
-      management_GUI_client_network = var.management_GUI_client_network
-      enable_api = var.mgmt_enable_api
-      admin_shell = var.admin_shell
-      serial_console_password_hash = var.serial_console_password_hash
-      maintenance_mode_password_hash = var.maintenance_mode_password_hash
-    })
+    custom_data = replace(
+      templatefile("${path.module}/cloud-init.sh", {      installation_type = module.common.installation_type
+        allow_upload_download = module.common.allow_upload_download
+        os_version = module.common.os_version
+        module_name = module.common.module_name
+        module_version = module.common.module_version
+        template_type = "terraform"
+        is_blink = module.common.is_blink
+        bootstrap_script64 = base64encode(var.bootstrap_script)
+        location = module.common.resource_group_location
+        management_GUI_client_network = var.management_GUI_client_network
+        enable_api = var.mgmt_enable_api
+        admin_shell = var.admin_shell
+        serial_console_password_hash = var.serial_console_password_hash
+        maintenance_mode_password_hash = var.maintenance_mode_password_hash
+      }), "\r\n", "\n")
   }
 
 

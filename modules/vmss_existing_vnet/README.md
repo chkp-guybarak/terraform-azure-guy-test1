@@ -52,7 +52,7 @@ module "example_module" {
     management_name                 = "mgmt"
     management_IP                   = "13.92.42.181"
     management_interface            = "eth1-private"
-    configuration_module_name     = "vmss_template"
+    configuration_template_name     = "vmss_template"
     notification_email              = ""
     frontend_load_distribution      = "Default"
     backend_load_distribution       = "Default"
@@ -100,7 +100,7 @@ enable_custom_metrics = true
 | **vm_size** | Specifies the size of Virtual Machine | string | "Standard_DS2_v2", "Standard_DS3_v2", "Standard_DS4_v2", "Standard_DS5_v2", "Standard_F2s", "Standard_F4s", "Standard_F8s", "Standard_F16s", "Standard_D4s_v3", "Standard_D8s_v3", "Standard_D16s_v3", "Standard_D32s_v3", "Standard_D64s_v3", "Standard_E4s_v3", "Standard_E8s_v3", "Standard_E16s_v3", "Standard_E20s_v3", "Standard_E32s_v3", "Standard_E64s_v3", "Standard_E64is_v3", "Standard_F4s_v2", "Standard_F8s_v2", "Standard_F16s_v2", "Standard_F32s_v2", "Standard_F64s_v2", "Standard_M8ms", "Standard_M16ms", "Standard_M32ms", "Standard_M64ms", "Standard_M64s", "Standard_D2_v2", "Standard_D3_v2", "Standard_D4_v2", "Standard_D5_v2", "Standard_D11_v2", "Standard_D12_v2", "Standard_D13_v2", "Standard_D14_v2", "Standard_D15_v2", "Standard_F2", "Standard_F4", "Standard_F8", "Standard_F16", "Standard_D4_v3", "Standard_D8_v3", "Standard_D16_v3", "Standard_D32_v3", "Standard_D64_v3", "Standard_E4_v3", "Standard_E8_v3", "Standard_E16_v3", "Standard_E20_v3", "Standard_E32_v3", "Standard_E64_v3", "Standard_E64i_v3", "Standard_DS11_v2", "Standard_DS12_v2", "Standard_DS13_v2", "Standard_DS14_v2", "Standard_DS15_v2", "Standard_D2_v5", "Standard_D4_v5", "Standard_D8_v5", "Standard_D16_v5","Standard_D32_v5", "Standard_D2s_v5", "Standard_D4s_v5", "Standard_D8s_v5", "Standard_D16s_v5", "Standard_D2d_v5", "Standard_D4d_v5", "Standard_D8d_v5", "Standard_D16d_v5", "Standard_D32d_v5", "Standard_D2ds_v5", "Standard_D4ds_v5", "Standard_D8ds_v5", "Standard_D16ds_v5", "Standard_D32ds_v5". |
 | **disk_size** | Storage data disk size size(GB) must be 100 for versions R81.20 and below | string | A number in the range 100 - 3995 (GB).<br/>**Default:** 100 |
 | **vm_os_sku** | A sku of the image to be deployed | string | "sg-byol" - BYOL license;<br/>"sg-ngtp" - NGTP PAYG license;<br/>"sg-ngtx" - NGTX PAYG license. |
-| **vm_os_offer** | The name of the image offer to be deployed | string | "check-point-cg-r81";<br/>"check-point-cg-r8110";<br/>"check-point-cg-r8120";<br/>"check-point-cg-r82". |
+| **vm_os_offer** | The name of the image offer to be deployed | string | "check-point-cg-r8110";<br/>"check-point-cg-r8120";<br/>"check-point-cg-r82". |
 | **os_version** | GAIA OS version | string | "R8110";<br/>"R8120";<br/>"R82". |
 | **bootstrap_script** | An optional script to run on the initial boot | string | Bootstrap script example:<br/>"touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt".<br/>The script will create bootstrap.txt file in the /home/admin/ and add 'hello word' string into it. |
 | **allow_upload_download** | Automatically download Blade Contracts and other important data. Improve product experience by sending data to Check Point | boolean | true;<br/>false. |
@@ -111,7 +111,7 @@ enable_custom_metrics = true
 | **management_name** | The name of the management server as it appears in the configuration file | string | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long. |
 | **management_IP** | The IP address used to manage the VMSS instances | string | A valid IP address. |
 | **management_interface** | Management option for the Gateways in the VMSS | string | "eth0-public" - Manages the GWs using their external NIC's public IP address;<br/>"eth0-private" - Manages the GWs using their external NIC's private IP address;<br/>"eth1-private" - Manages the GWs using their internal NIC's private IP address.<br/>**Default:** "eth1-private" |
-| **configuration_module_name** | The configuration template name as it appears in the configuration file | string | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long. |
+| **configuration_template_name** | The configuration template name as it appears in the configuration file | string | Field cannot be empty. Only alphanumeric characters or '_'/'-' are allowed, and the name must be 1-30 characters long. |
 | **frontend_load_distribution** | The load balancing distribution method for the External Load Balancer | string | "Default" - None(5-tuple);<br/>"SourceIP" - ClientIP(2-tuple);<br/>"SourceIPProtocol" - ClientIP and protocol(3-tuple). |
 | **backend_load_distribution** | The load balancing distribution method for the Internal Load Balancer | string | "Default" - None(5-tuple);<br/>"SourceIP" - ClientIP(2-tuple);<br/>"SourceIPProtocol" - ClientIP and protocol(3-tuple). |
 | **notification_email** | An email address to notify about scaling operations | string | Leave empty double quotes or enter a valid email address. |

@@ -171,7 +171,7 @@ locals { // locals for 'management_interface' allowed values
   validate_management_interface_value = index(local.management_interface_allowed_values, var.management_interface)
 }
 
-variable "configuration_module_name" {
+variable "configuration_template_name" {
   description = "The configuration template name as it appears in the configuration file"
   type = string
 }
@@ -314,13 +314,12 @@ locals { // locals for 'frontend_load_distribution' allowed values
 //********************** Scale Set variables *******************//
 
 variable "vm_os_offer" {
-  description = "The name of the offer of the image that you want to deploy.Choose from:  check-point-cg-r81, check-point-cg-r8110, check-point-cg-r8120, check-point-cg-r82"
+  description = "The name of the offer of the image that you want to deploy.Choose from:  check-point-cg-r8110, check-point-cg-r8120, check-point-cg-r82"
   type = string
 }
 
 locals { // locals for 'vm_os_offer' allowed values
   vm_os_offer_allowed_values = [
-    "check-point-cg-r81",
     "check-point-cg-r8110",
     "check-point-cg-r8120",
     "check-point-cg-r82"
