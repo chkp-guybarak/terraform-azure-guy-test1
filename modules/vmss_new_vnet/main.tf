@@ -269,7 +269,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       admin_shell = var.admin_shell
       serial_console_password_hash = var.serial_console_password_hash
       maintenance_mode_password_hash = var.maintenance_mode_password_hash
-    }), "\r\n", "\n"))
+    })), "\r\n", "\n")
 
 
     disable_password_authentication = local.SSH_authentication_type_condition
