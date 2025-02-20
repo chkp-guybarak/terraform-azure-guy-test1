@@ -267,7 +267,6 @@ resource "azurerm_virtual_machine" "mds-vm-instance" {
         management_GUI_client_network = var.management_GUI_client_network
         enable_api = var.mds_enable_api
         admin_shell = var.admin_shell
-        sic_key = var.sic_key
         primary = var.primary
         secondary = var.secondary
         logserver = var.logserver
