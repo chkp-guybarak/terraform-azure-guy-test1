@@ -85,7 +85,7 @@ module "example_module" {
 | **allow_upload_download** | Automatically download Blade Contracts and other important data. Improve product experience by sending data to Check Point | boolean | true;<br/>false. |
 | **authentication_type** | Specifies whether a password authentication or SSH Public Key authentication should be used | string | "Password";<br/>"SSH Public Key". |
 | **admin_shell** | Enables to select different admin shells | string | /etc/cli.sh;<br/>/bin/bash;<br/>/bin/csh;<br/>/bin/tcsh.<br/>**Default:** "/etc/cli.sh" |
-| **sic_key** | Set the Secure Internal Communication one time secret used to set up trust between the primary and secondary servers. SIC key must be provided if installing a secondary Multi-Domain Server | string | Only alphanumeric characters are allowed, and the value must be 12-30 characters long. |
+| **sic_key** | Set the Secure Internal Communication one time secret used to set up trust between the primary and secondary servers. SIC key must be provided if installing a secondary Multi-Domain Server or a Multi-Domain Log Server | string | Only alphanumeric characters are allowed, and the value must be 12-30 characters long. |
 | **installation_type** | Enables to select installation type - gateway/standalone | string | mds-primary;<br/>mds-secondary;<br/>mds-logserver. |
 | **primary** | Indicates if the installation type is mds-primary | boolean | true;<br/>false. |
 | **secondary** | Indicates if the installation type is mds-secondary | boolean | true;<br/>false. |
