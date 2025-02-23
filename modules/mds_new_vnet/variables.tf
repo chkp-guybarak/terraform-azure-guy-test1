@@ -228,6 +228,15 @@ variable "storage_account_additional_ips" {
   default = []
 }
 
+variable "sic_key" {
+  description = "sic key"
+  type = string
+}
+
+resource "null_resource" "sic_key_invalid" {
+  count = length(var.sic_key) >= 12 ? 0 : "SIC key must be at least 12 characters long"
+}
+
 variable "sku" {
   description = "SKU"
   type = string
