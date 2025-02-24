@@ -182,7 +182,7 @@ resource "azapi_resource" "managed-app" {
 			  value = var.sic-key
 			},
 			sshPublicKey = {
-			  value = var.ssh-public-key
+			  value = var.admin_SSH_key
 			},
 			BGP = {
 			  value = var.bgp-asn
