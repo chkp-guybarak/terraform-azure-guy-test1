@@ -60,11 +60,9 @@ module "example_module" {
 }
 ```
 
-  ## Conditional creation
--  To enable CloudGuard metrics in order to send statuses and statistics collected from the gateway instance to the Azure Monitor service:
-  ```
-  custom-metrics = yes
-  ```
+## Known limitations
+1. 'terraform destroy' doesn't work if routing-intent is configured. To destroy the deployment, the routing-intent should be deleted manually first. 
+
 
 ### Module's variables:
 

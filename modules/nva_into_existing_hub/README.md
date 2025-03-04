@@ -57,6 +57,8 @@ module "example_module" {
 }
 ```
   
+## Known limitations
+1. 'terraform destroy' doesn't work if routing-intent is configured. To destroy the deployment, the routing-intent should be deleted manually first. 
 
 ### Module's variables:
 
