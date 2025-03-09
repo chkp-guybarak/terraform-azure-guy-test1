@@ -71,10 +71,12 @@ availability_type = "Availability Set"
 ```
 availability_type = "Availability Zone"
 ```
+
 -  To enable CloudGuard metrics in order to send statuses and statistics collected from HA instances to the Azure Monitor service:
   ```
   enable_custom_metrics = true
   ```
+
 - To create new public IP prefix for the public IP:
   ```
   use_public_ip_prefix            = true
@@ -85,6 +87,7 @@ availability_type = "Availability Zone"
   use_public_ip_prefix            = true
   create_public_ip_prefix         = false
   existing_public_ip_prefix_id    = "public IP prefix resource id"
+  ```
 
 ### Module's variables:
  | Name                                  | Description                                                                                                                                                      | Type           | Allowed values                                                                                                                                                                                                                                    |
