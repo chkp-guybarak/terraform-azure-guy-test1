@@ -183,8 +183,7 @@ resource "azurerm_virtual_machine" "single-gateway-vm-instance" {
     computer_name = lower(var.single_gateway_name)
     admin_username = module.common.admin_username
     admin_password = module.common.admin_password
-    custom_data = replace(
-      templatefile("${path.module}/cloud-init.sh", {
+    custom_data = templatefile("${path.module}/cloud-init.sh", {
         installation_type = module.common.installation_type
         allow_upload_download = module.common.allow_upload_download
         os_version = module.common.os_version
@@ -201,7 +200,7 @@ resource "azurerm_virtual_machine" "single-gateway-vm-instance" {
         enable_custom_metrics = var.enable_custom_metrics ? "yes" : "no"
         serial_console_password_hash = var.serial_console_password_hash
         maintenance_mode_password_hash = var.maintenance_mode_password_hash
-      }), "\r\n", "\n")
+      })
   }
 
   os_profile_linux_config {

@@ -360,8 +360,7 @@ resource "azurerm_virtual_machine" "vm-instance-availability-set" {
     computer_name = "${lower(var.cluster_name)}${count.index+1}"
     admin_username = module.common.admin_username
     admin_password = module.common.admin_password
-    custom_data = replace(
-      templatefile("${path.module}/cloud-init.sh", {
+    custom_data = templatefile("${path.module}/cloud-init.sh", {
         installation_type = module.common.installation_type
         allow_upload_download = module.common.allow_upload_download
         os_version = module.common.os_version
@@ -381,7 +380,7 @@ resource "azurerm_virtual_machine" "vm-instance-availability-set" {
         smart_1_cloud_token = count.index == 0 ? var.smart_1_cloud_token_a : var.smart_1_cloud_token_b
         serial_console_password_hash = var.serial_console_password_hash
         maintenance_mode_password_hash = var.maintenance_mode_password_hash
-      }), "\r\n", "\n")
+      })
   }
 
   os_profile_linux_config {
@@ -455,8 +454,7 @@ resource "azurerm_virtual_machine" "vm-instance-availability-zone" {
     computer_name = "${lower(var.cluster_name)}${count.index+1}"
     admin_username = module.common.admin_username
     admin_password = module.common.admin_password
-    custom_data = replace(
-      templatefile("${path.module}/cloud-init.sh", {
+    custom_data = templatefile("${path.module}/cloud-init.sh", {
         installation_type = module.common.installation_type
         allow_upload_download = module.common.allow_upload_download
         os_version = module.common.os_version
@@ -476,7 +474,7 @@ resource "azurerm_virtual_machine" "vm-instance-availability-zone" {
         smart_1_cloud_token = count.index == 0 ? var.smart_1_cloud_token_a : var.smart_1_cloud_token_b
         serial_console_password_hash = var.serial_console_password_hash
         maintenance_mode_password_hash = var.maintenance_mode_password_hash
-      }), "\r\n", "\n")
+      })
   }
 
   os_profile_linux_config {

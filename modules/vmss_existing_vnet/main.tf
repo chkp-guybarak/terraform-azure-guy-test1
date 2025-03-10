@@ -256,7 +256,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   computer_name_prefix = lower(var.vmss_name)
   admin_username = module.common.admin_username
   admin_password = module.common.admin_password
-  custom_data = base64encode(replace(templatefile("${path.module}/cloud-init.sh", {
+  custom_data = base64encode(templatefile("${path.module}/cloud-init.sh", {
       installation_type = module.common.installation_type
       allow_upload_download = module.common.allow_upload_download
       os_version = module.common.os_version
@@ -272,7 +272,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       admin_shell = var.admin_shell
       serial_console_password_hash = var.serial_console_password_hash
       maintenance_mode_password_hash = var.maintenance_mode_password_hash
-    }), "\r\n", "\n"))
+    }))
 
 
 

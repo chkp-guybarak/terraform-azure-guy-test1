@@ -254,8 +254,7 @@ resource "azurerm_virtual_machine" "mgmt-vm-instance" {
     computer_name = lower(var.mgmt_name)
     admin_username = module.common.admin_username
     admin_password = module.common.admin_password
-    custom_data = replace(
-      templatefile("${path.module}/cloud-init.sh", {      installation_type = module.common.installation_type
+    custom_data = templatefile("${path.module}/cloud-init.sh", {      installation_type = module.common.installation_type
         allow_upload_download = module.common.allow_upload_download
         os_version = module.common.os_version
         module_name = module.common.module_name
@@ -269,7 +268,7 @@ resource "azurerm_virtual_machine" "mgmt-vm-instance" {
         admin_shell = var.admin_shell
         serial_console_password_hash = var.serial_console_password_hash
         maintenance_mode_password_hash = var.maintenance_mode_password_hash
-      }), "\r\n", "\n")
+      })
   }
 
 
